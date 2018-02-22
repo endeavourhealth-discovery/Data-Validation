@@ -68,7 +68,7 @@ values (
            <input id="CarerOrg" class="form-control" type="text" disabled value="{{careProvider.display}}">
          </div>
          <div class="form-group" *ngIf="careProvider.reference.startsWith(''Practitioner'')" >
-           <label for="CarerPrac">Caring practitioner</label>
+           <label for="CarerPrac">Usual GP</label>
            <input id="CarerPrac" class="form-control" type="text" disabled value="{{careProvider.display}}">
          </div>
        </div>
