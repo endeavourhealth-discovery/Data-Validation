@@ -318,9 +318,13 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding">
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].display}}">
+      </div>
+      <div class="form-group" *ngIf="!resource.resourceJson.medicationCodeableConcept.coding">
+        <label for="Display">Display term</label>
+        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.text}}">
       </div>
       <div class="form-group">
         <label for="Dosage">Dosage</label>
@@ -330,13 +334,13 @@ values (
         <label for="Date">Issued</label>
         <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.dateWritten | date:''dd/MM/y''}}">
       </div>
-	  <div class="form-group">
+      <div class="form-group">
         <label for="Text">Comments</label>
         <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.notes}}">
       </div>
     </div>
     <div class="col-md-6">
-	  <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding">
         <label for="Code">Code</label>
         <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].code}}">
       </div>
