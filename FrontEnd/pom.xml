@@ -53,7 +53,6 @@
               <arguments>run build</arguments>
             </configuration>
           </execution>
-<!--
           <execution>
             <id>javascript tests</id>
             <goals>
@@ -61,7 +60,6 @@
             </goals>
             <phase>test</phase>
           </execution>
--->
         </executions>
       </plugin>
     </plugins>
