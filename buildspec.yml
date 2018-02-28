@@ -4,12 +4,11 @@ phases:
   install:
     commands:
       - apt-get -y update
-#      - apt-get -y install chromium-codecs-ffmpeg-extra=34.0.1847.116-0ubuntu2
-#      - apt-get -y install chromium-browser=34.0.1847.116-0ubuntu2
       - apt-get -y install chromium-browser
       - apt-get -y install xvfb
       - Xvfb :99 &
       - export DISPLAY=:99
+      - export CHROME_BIN=/usr/bin/chromium-browser
   pre_build:
     commands:
       - IP=$(curl http://checkip.amazonaws.com)/32
