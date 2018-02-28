@@ -53,13 +53,13 @@
               <arguments>run build</arguments>
             </configuration>
           </execution>
-          <execution>
+<!--          <execution>
             <id>javascript tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
             <phase>test</phase>
-          </execution>
+          </execution>-->
         </executions>
       </plugin>
     </plugins>
