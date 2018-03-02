@@ -74,6 +74,12 @@ values (
            <input id="CarerPrac" class="form-control" type="text" disabled value="{{careProvider.display}}">
          </div>
        </div>
+       <div *ngFor="let telecom of resource.resourceJson.telecom">
+         <div class="form-group">
+           <label for="Telecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
+           <input id="Telecom" class="form-control" type="text" disabled value="{{telecom.value}}">
+         </div>
+       </div>       
      </div>
    </div>
  </form>
