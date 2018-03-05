@@ -63,6 +63,10 @@ values (
            <label for="Ethnicity">Ethnicity</label>
            <input id="Ethnicity" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
          </div>
+         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-religion-category-extension''" >
+           <label for="Religion">Religion</label>
+           <input id="Religion" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
+         </div>
        </div>
        <div *ngFor="let careProvider of resource.resourceJson.careProvider">
          <div class="form-group" *ngIf="careProvider.reference.startsWith(''Organization'')" >
