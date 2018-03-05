@@ -83,7 +83,11 @@ values (
            <label for="Telecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
            <input id="Telecom" class="form-control" type="text" disabled value="{{telecom.value}}">
          </div>
-       </div>       
+       </div>
+       <div *ngIf="resource.resourceJson.deceasedDateTime" class="form-group">
+         <label for="DOD">Date of death</label>
+         <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
+       </div>
      </div>
    </div>
  </form>
