@@ -88,6 +88,38 @@ values (
          <label for="DOD">Date of death</label>
          <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
        </div>
+		<div *ngFor="let contact of resource.resourceJson.contact">         
+		  <h5>Contact Information</h5>
+		 <div *ngFor="let relationship of contact.relationship" class="form-group">
+		   <label for="relationshipType">Relationship Type</label>
+		   <input id="relationshipType" class="form-control" type="text" disabled value="{{relationship.text}}">
+		 </div>
+		 <div *ngIf="contact.name">
+		   <div class="form-group">
+			 <label for="ContactTitle">Contact Title</label>
+			 <input id="ContactTitle" class="form-control" type="text" disabled value="{{contact.name.prefix}}">
+		   </div>
+		   <div class="form-group">
+			 <label for="ContactGiven">Contact Given name</label>
+			 <input id="ContactGiven" class="form-control" type="text" disabled value="{{contact.name.given}}">
+		   </div>
+		   <div class="form-group">
+			 <label for="ContactFamily">Contact Family name</label>
+			 <input id="ContactFamily" class="form-control" type="text" disabled value="{{contact.name.family}}">
+		   </div>
+		 </div>
+		 <div class="form-group" *ngIf="contact.address">
+		   <label for="ContactAddress">Contact Address ({{contact.address.use}})</label>
+		   <div class="form-control looks-disabled">
+			 <div class="scrollbox-100">
+			   <div *ngFor="let item of contact.address.line">{{item}}</div>
+			   <div>{{contact.address.city}}</div>
+			   <div>{{contact.address.district}}</div>
+			   <div>{{contact.address.postalCode}}</div>
+			 </div>
+		   </div>
+		 </div>
+		</div>
      </div>
    </div>
  </form>
