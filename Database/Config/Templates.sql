@@ -118,6 +118,12 @@ values (
 			   <div>{{contact.address.postalCode}}</div>
 			 </div>
 		   </div>
+		 </div>         
+		 <div *ngFor="let telecom of contact.telecom">
+		  <div class="form-group">
+		    <label for="ContactTelecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
+			<input id="ContactTelecom" class="form-control" type="text" disabled value="{{telecom.value}}">
+		  </div>
 		 </div>
 		</div>
      </div>
