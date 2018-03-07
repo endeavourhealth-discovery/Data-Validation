@@ -5,6 +5,7 @@ import {
 import {ServicePatientResource} from '../../models/Resource';
 import {ResourcesService} from '../resources.service';
 import {CommonModule} from '@angular/common';
+import {PipesModule} from "eds-angular4/dist/pipes/pipes.module";
 
 @Component({
   selector: 'app-template-view',
@@ -41,7 +42,7 @@ export class TemplateViewComponent implements AfterViewInit {
 
     const tmpCmp = Component({template: template})(class {
     });
-    const tmpModule = NgModule({imports: [CommonModule], declarations: [tmpCmp]})(class {
+    const tmpModule = NgModule({imports: [CommonModule, PipesModule], declarations: [tmpCmp]})(class {
     });
 
     this._compiler.compileModuleAndAllComponentsAsync(tmpModule)
