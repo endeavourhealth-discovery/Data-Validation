@@ -19,23 +19,13 @@ values (
            <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
          </div>
        </div>
-       <div *ngIf="resource.resourceJson.name">
-         <div class="form-group">
-           <label for="CuiName">Name</label>
-           <input id="CuiName" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0] | cuiNamePipe }}">
-         </div>
-         <div class="form-group">
-           <label for="Title">Title</label>
-           <input id="Title" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0].prefix}}">
-         </div>
-         <div class="form-group">
-           <label for="Given">Given name</label>
-           <input id="Given" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0].given}}">
-         </div>
-         <div class="form-group">
-           <label for="Family">Family name</label>
-           <input id="Family" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0].family}}">
-         </div>
+       <div class="form-group" *ngIf="resource.resourceJson.name">
+         <div *ngFor="let name of resource.resourceJson.name"> 
+           <div class="form-group">
+             <label for="CuiName">Name</label>
+             <input id="CuiName" class="form-control" type="text" disabled value="{{name | cuiNamePipe }} ({{ name.use }})">
+           </div>
+		 </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.maritalStatus">
          <label for="Marital">Marital status</label>
