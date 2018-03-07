@@ -21,6 +21,10 @@ values (
        </div>
        <div *ngIf="resource.resourceJson.name">
          <div class="form-group">
+           <label for="CuiName">Name</label>
+           <input id="CuiName" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0] | cuiNamePipe }}">
+         </div>
+         <div class="form-group">
            <label for="Title">Title</label>
            <input id="Title" class="form-control" type="text" disabled value="{{resource.resourceJson.name[0].prefix}}">
          </div>
@@ -481,6 +485,10 @@ values (
         <div class="form-group" *ngIf="resource.resourceJson.participant!=null">
           <label for="Practitioner">Practitioner</label>
           <input id="Practitioner" class="form-control" type="text" disabled value="{{resource.resourceJson.participant[0].individual.display}}">
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.period !=null">
+          <label for="Period">Period</label>
+          <input id="Period" class="form-control" type="text" disabled value="{{resource.resourceJson.period | periodPipe}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.contained!=null">
           <label for="Linked">Linked resources</label>
