@@ -12,11 +12,11 @@ values (
        <div *ngFor="let identifier of resource.resourceJson.identifier">
          <div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/barts-mrn''" >
            <label for="MRN">MRN number</label>
-           <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}}">
+           <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
          </div>
          <div class="form-group" *ngIf="identifier.system==''http://fhir.nhs.net/Id/nhs-number''" >
            <label for="NHS">NHS number</label>
-           <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
+           <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
          </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
