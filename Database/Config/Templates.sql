@@ -9,7 +9,7 @@ values (
  <form>
    <div class="row">
      <div class="col-md-6">
-       <div *ngFor="let identifier of resource.resourceJson.identifier">
+       <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
          <div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/barts-mrn''" >
            <label for="MRN">MRN number</label>
            <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
@@ -20,7 +20,7 @@ values (
          </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
-         <div *ngFor="let name of resource.resourceJson.name"> 
+         <div *ngFor="let name of getActiveOnly(resource.resourceJson.name)"> 
            <div class="form-group">
              <label for="CuiName">Name</label>
              <input id="CuiName" class="form-control" type="text" disabled value="{{name | cuiNamePipe }} ({{ name.use }})">

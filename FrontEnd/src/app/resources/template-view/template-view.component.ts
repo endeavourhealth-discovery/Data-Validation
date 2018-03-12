@@ -41,6 +41,40 @@ export class TemplateViewComponent implements AfterViewInit {
       template = '<div class="container"><h3>No clinical template configured for this resource type</h3></div>';
 
     const tmpCmp = Component({template: template})(class {
+
+      private getActiveOnly(resources: any[]) : any[] {
+        console.log(resources);
+        let active: any[] = [];
+        for (const resource of resources) {
+          if (!resource.period || !resource.period.end) {
+            active.push(resource);
+          } else {
+            var endDate = new Date(resource.period.end);
+            if (endDate > new Date()) {
+              active.push(resource);
+            }
+          }
+        }
+        console.log(active);
+        return active.length > 0 ? active : this.getLatestEnded(resources);
+      }
+
+      private getLatestEnded(resources: any[]) : any[] {
+        // all resources have an end date in the period at this point
+        let latest: any[] = [];
+        let latestDate : Date = new Date('1750-01-01');
+        for (const resource of resources) {
+          var endDate = new Date(resource.period.end);
+          if (endDate == latestDate) {
+            latest.push(resource);
+          } else if (endDate > latestDate) {
+            latest = [];
+            latest.push(resource);
+          }
+        }
+
+        return latest;
+      }
     });
     const tmpModule = NgModule({imports: [CommonModule, PipesModule], declarations: [tmpCmp]})(class {
     });
