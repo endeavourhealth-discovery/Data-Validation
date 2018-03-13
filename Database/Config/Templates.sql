@@ -82,7 +82,7 @@ values (
          <label for="DOD">Date of death</label>
          <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
        </div>
-		<div *ngFor="let contact of resource.resourceJson.contact">         
+		<div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">         
 		  <h5>Contact Information</h5>
 		 <div *ngFor="let relationship of contact.relationship" class="form-group">
 		   <label for="relationshipType">Relationship Type</label>

@@ -43,7 +43,6 @@ export class TemplateViewComponent implements AfterViewInit {
     const tmpCmp = Component({template: template})(class {
 
       private getActiveOnly(resources: any[]) : any[] {
-        console.log(resources);
         let active: any[] = [];
         for (const resource of resources) {
           if (!resource.period || !resource.period.end) {
@@ -55,7 +54,6 @@ export class TemplateViewComponent implements AfterViewInit {
             }
           }
         }
-        console.log(active);
         return active.length > 0 ? active : this.getLatestEnded(resources);
       }
 
