@@ -493,12 +493,12 @@ values (
         <div class="form-group" *ngIf="resource.resourceJson.type!=null">
           <label for="Place">Type history</label>
           <div class="form-control looks-disabled">
-            <div class="scrollbox-100">
-              <div *ngFor="let item of resource.resourceJson.type">{{item.text}}</div>
-            </div>
+			<div class="scrollbox-100">
+			  <div *ngFor="let item of resource.resourceJson.type">{{item.text}}</div>
+			</div>
           </div>
         </div>
-      </div>
+	  </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="Class">Class</label>
@@ -520,6 +520,16 @@ values (
             <div class="scrollbox-100">
               <div *ngFor="let entry of resource.resourceJson.reason">
                 <div>{{entry.text}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.location!=null">
+          <label for="Linked">Location(s)</label>
+          <div class="form-control looks-disabled">
+            <div class="scrollbox-100">
+              <div *ngFor="let entry of resource.resourceJson.location">
+                <div>{{entry.location.display}}</div>
               </div>
             </div>
           </div>
