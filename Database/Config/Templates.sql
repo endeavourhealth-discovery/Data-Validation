@@ -32,15 +32,17 @@ values (
          <input id="Marital" class="form-control" type="text" disabled value="{{resource.resourceJson.maritalStatus.coding[0].display}}">
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.address">
-          <label for="Address">Address ({{resource.resourceJson.address[0].use}})</label>
+         <div *ngFor="let address of getActiveOnly(resource.resourceJson.address)">
+          <label for="Address">Address ({{address.use}})</label>
           <div class="form-control looks-disabled">
             <div class="scrollbox-100">
-              <div *ngFor="let item of resource.resourceJson.address[0].line">{{item}}</div>
-              <div>{{resource.resourceJson.address[0].city}}</div>
-              <div>{{resource.resourceJson.address[0].district}}</div>
-              <div>{{resource.resourceJson.address[0].postalCode}}</div>
+              <div *ngFor="let item of address.line">{{item}}</div>
+              <div>{{address.city}}</div>
+              <div>{{address.district}}</div>
+              <div>{{address.postalCode}}</div>
             </div>
           </div>
+		 </div>
         </div>
       </div>
       <div class="col-md-6">
@@ -82,6 +84,7 @@ values (
          <label for="DOD">Date of death</label>
          <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
        </div>
+       <div class="form-group" *ngIf="resource.resourceJson.contact">
 		<div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">         
 		  <h5>Contact Information</h5>
 		 <div *ngFor="let relationship of contact.relationship" class="form-group">
@@ -112,7 +115,8 @@ values (
 			   <div>{{contact.address.postalCode}}</div>
 			 </div>
 		   </div>
-		 </div>         
+		 </div>    
+         </div>
 		 <div *ngFor="let telecom of contact.telecom">
 		  <div class="form-group">
 		    <label for="ContactTelecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
