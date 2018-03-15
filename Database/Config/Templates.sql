@@ -25,7 +25,7 @@ values (
              <label for="CuiName">Name</label>
              <input id="CuiName" class="form-control" type="text" disabled value="{{name | cuiNamePipe }} ({{ name.use }})">
            </div>
-		 </div>
+         </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.maritalStatus">
          <label for="Marital">Marital status</label>
@@ -42,7 +42,7 @@ values (
               <div>{{address.postalCode}}</div>
             </div>
           </div>
-		 </div>
+         </div>
         </div>
       </div>
       <div class="col-md-6">
@@ -85,45 +85,45 @@ values (
          <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.contact">
-		<div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">         
-		  <h5>Contact Information</h5>
-		 <div *ngFor="let relationship of contact.relationship" class="form-group">
-		   <label for="relationshipType">Relationship Type</label>
-		   <input id="relationshipType" class="form-control" type="text" disabled value="{{relationship.text}}">
-		 </div>
-		 <div *ngIf="contact.name">
-		   <div class="form-group">
-			 <label for="ContactTitle">Contact Title</label>
-			 <input id="ContactTitle" class="form-control" type="text" disabled value="{{contact.name.prefix}}">
-		   </div>
-		   <div class="form-group">
-			 <label for="ContactGiven">Contact Given name</label>
-			 <input id="ContactGiven" class="form-control" type="text" disabled value="{{contact.name.given}}">
-		   </div>
-		   <div class="form-group">
-			 <label for="ContactFamily">Contact Family name</label>
-			 <input id="ContactFamily" class="form-control" type="text" disabled value="{{contact.name.family}}">
-		   </div>
-		 </div>
-		 <div class="form-group" *ngIf="contact.address">
-		   <label for="ContactAddress">Contact Address ({{contact.address.use}})</label>
-		   <div class="form-control looks-disabled">
-			 <div class="scrollbox-100">
-			   <div *ngFor="let item of contact.address.line">{{item}}</div>
-			   <div>{{contact.address.city}}</div>
-			   <div>{{contact.address.district}}</div>
-			   <div>{{contact.address.postalCode}}</div>
-			 </div>
-		   </div>  
+        <div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">         
+          <h5>Contact Information</h5>
+         <div *ngFor="let relationship of contact.relationship" class="form-group">
+           <label for="relationshipType">Relationship Type</label>
+           <input id="relationshipType" class="form-control" type="text" disabled value="{{relationship.text}}">
          </div>
-		 <div *ngFor="let telecom of contact.telecom">
-		  <div class="form-group">
-		    <label for="ContactTelecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
-			<input id="ContactTelecom" class="form-control" type="text" disabled value="{{telecom.value}}">
-		  </div>
-		 </div>         
-		 </div>  
-		</div>
+         <div *ngIf="contact.name">
+           <div class="form-group">
+             <label for="ContactTitle">Contact Title</label>
+             <input id="ContactTitle" class="form-control" type="text" disabled value="{{contact.name.prefix}}">
+           </div>
+           <div class="form-group">
+             <label for="ContactGiven">Contact Given name</label>
+             <input id="ContactGiven" class="form-control" type="text" disabled value="{{contact.name.given}}">
+           </div>
+           <div class="form-group">
+             <label for="ContactFamily">Contact Family name</label>
+             <input id="ContactFamily" class="form-control" type="text" disabled value="{{contact.name.family}}">
+           </div>
+         </div>
+         <div class="form-group" *ngIf="contact.address">
+           <label for="ContactAddress">Contact Address ({{contact.address.use}})</label>
+           <div class="form-control looks-disabled">
+             <div class="scrollbox-100">
+               <div *ngFor="let item of contact.address.line">{{item}}</div>
+               <div>{{contact.address.city}}</div>
+               <div>{{contact.address.district}}</div>
+               <div>{{contact.address.postalCode}}</div>
+             </div>
+           </div>  
+         </div>
+         <div *ngFor="let telecom of contact.telecom">
+          <div class="form-group">
+            <label for="ContactTelecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
+            <input id="ContactTelecom" class="form-control" type="text" disabled value="{{telecom.value}}">
+          </div>
+         </div>         
+         </div>  
+        </div>
      </div>
    </div>
  </form>
@@ -205,7 +205,7 @@ values (
         </div>
       </div>
       <div *ngFor="let extension of resource.resourceJson.extension">
-		<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
           <label for="Episodicity">Is a review</label>
           <input id="Episodicity" class="form-control" type="text" disabled value="Yes">
         </div>
@@ -242,7 +242,7 @@ values (
          <label for="Display">Display term</label>
          <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
        </div>
- 	  <div class="form-group" *ngIf="resource.resourceJson.performer!=null">
+       <div class="form-group" *ngIf="resource.resourceJson.performer!=null">
          <label for="Performer">Performed by</label>
          <input id="Performer" class="form-control" type="text" disabled value="{{resource.resourceJson.performer[0].actor.display}}">
        </div>
@@ -274,52 +274,52 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-		<div class="form-group">
-			<label for="Display">Display term</label>
-			<input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
-		</div>
         <div class="form-group">
-			<label for="Date">Effective date</label>
-			<input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.effectiveDateTime | date:''dd/MM/y''}}">
-		</div>
-        <div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
-			<label for="Value">Value</label>
-			<input id="Value" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.value}}">
-		</div>
-        <div *ngFor="let component of resource.resourceJson.component">
-			<div class="form-group">
-				<label for="code">Code</label>
-				<input id="code" class="form-control" type="text" disabled value="{{component.code.coding[0].code}}">
-			</div>
-            <div class="form-group">
-				<label for="display">Display term</label>
-				<input id="display" class="form-control" type="text" disabled value="{{component.code.coding[0].display}}">
-			</div>
-            <div class="form-group">
-				<label for="codeValue">Value</label>
-				<input id="codeValue" class="form-control" type="text" disabled value="{{component.valueQuantity.value}}">
-			</div>
+            <label for="Display">Display term</label>
+            <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
         </div>
-		<div class="form-group">
-			<label for="Comments">Comments</label>
-			<input id="Comments" class="form-control" type="text" disabled value="{{resource.resourceJson.comments}}">
-		</div>
+        <div class="form-group">
+            <label for="Date">Effective date</label>
+            <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.effectiveDateTime | date:''dd/MM/y''}}">
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
+            <label for="Value">Value</label>
+            <input id="Value" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.value}}">
+        </div>
+        <div *ngFor="let component of resource.resourceJson.component">
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input id="code" class="form-control" type="text" disabled value="{{component.code.coding[0].code}}">
+            </div>
+            <div class="form-group">
+                <label for="display">Display term</label>
+                <input id="display" class="form-control" type="text" disabled value="{{component.code.coding[0].display}}">
+            </div>
+            <div class="form-group">
+                <label for="codeValue">Value</label>
+                <input id="codeValue" class="form-control" type="text" disabled value="{{component.valueQuantity.value}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Comments">Comments</label>
+            <input id="Comments" class="form-control" type="text" disabled value="{{resource.resourceJson.comments}}">
+        </div>
     </div>
     <div class="col-md-6">
-		<div class="form-group">
-			<label for="Code">Code</label>
-			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
-		</div>
         <div class="form-group">
-			<label for="Recorder">Recorded by</label>
-			<input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.performer[0].display}}">
-		</div>
-		<div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
-			<label for="Value1Units">Units</label>
-			<input id="Value1Units" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.unit}}">
-		</div>
+            <label for="Code">Code</label>
+            <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
+        </div>
+        <div class="form-group">
+            <label for="Recorder">Recorded by</label>
+            <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.performer[0].display}}">
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
+            <label for="Value1Units">Units</label>
+            <input id="Value1Units" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.unit}}">
+        </div>
       <div *ngFor="let extension of resource.resourceJson.extension">
-		<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
           <label for="Episodicity">Is a review</label>
           <input id="Episodicity" class="form-control" type="text" disabled value="Yes">
         </div>
@@ -434,30 +434,30 @@ values (
         <label for="Status">Status</label>
         <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
       </div>
-	    <div class="form-group">
+        <div class="form-group">
         <label for="Text">Comments</label>
         <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.notes}}">
       </div>
     </div>
     <div class="col-md-6">
-	    <div class="form-group">
-			<label for="Code">Code</label>
-			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].code}}">
-		</div>
-		<div *ngFor="let extension of resource.resourceJson.extension">
-			<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-quantity-extension''" >
-				<label for="Qty">Quantity</label>
-				<input id="Qty" class="form-control" type="text" disabled value="{{extension.valueQuantity.value}} {{extension.valueQuantity.unit}}">
-			</div>
-			<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-type-extension''">
-				<label for="Type">Type</label>
-				<input id="Type" class="form-control" type="text" disabled value="{{extension.valueCoding.display}}">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="Source">Source</label>
-			<input id="Source" class="form-control" type="text" disabled value="{{resource.resourceJson.informationSource?.display}}">
-		</div>
+        <div class="form-group">
+            <label for="Code">Code</label>
+            <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].code}}">
+        </div>
+        <div *ngFor="let extension of resource.resourceJson.extension">
+            <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-quantity-extension''" >
+                <label for="Qty">Quantity</label>
+                <input id="Qty" class="form-control" type="text" disabled value="{{extension.valueQuantity.value}} {{extension.valueQuantity.unit}}">
+            </div>
+            <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-type-extension''">
+                <label for="Type">Type</label>
+                <input id="Type" class="form-control" type="text" disabled value="{{extension.valueCoding.display}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Source">Source</label>
+            <input id="Source" class="form-control" type="text" disabled value="{{resource.resourceJson.informationSource?.display}}">
+        </div>
     </div>
   </div>
 </form>
@@ -497,12 +497,12 @@ values (
         <div class="form-group" *ngIf="resource.resourceJson.type!=null">
           <label for="Place">Type history</label>
           <div class="form-control looks-disabled">
-			<div class="scrollbox-100">
-			  <div *ngFor="let item of resource.resourceJson.type">{{item.text}}</div>
-			</div>
+            <div class="scrollbox-100">
+              <div *ngFor="let item of resource.resourceJson.type">{{item.text}}</div>
+            </div>
           </div>
         </div>
-	  </div>
+      </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="Class">Class</label>
@@ -600,30 +600,30 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-		<div class="form-group">
-			<label for="Display">Display term</label>
-			<input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].code.coding[0].display}}">
-		</div>
         <div class="form-group">
-			<label for="Relation">Relation</label>
-			<input id="Relation" class="form-control" type="text" disabled value="{{resource.resourceJson.relationship.coding[0].display}}">
-		</div>
-		<div class="form-group" >
-			<label for="Text">Comments</label>
-			<input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].note?.text}}">
-		</div>
+            <label for="Display">Display term</label>
+            <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].code.coding[0].display}}">
+        </div>
+        <div class="form-group">
+            <label for="Relation">Relation</label>
+            <input id="Relation" class="form-control" type="text" disabled value="{{resource.resourceJson.relationship.coding[0].display}}">
+        </div>
+        <div class="form-group" >
+            <label for="Text">Comments</label>
+            <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].note?.text}}">
+        </div>
     </div>
     <div class="col-md-6">
-		<div class="form-group">
-			<label for="Code">Code</label>
-			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].code.coding[0].code}}">
-		</div>
+        <div class="form-group">
+            <label for="Code">Code</label>
+            <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].code.coding[0].code}}">
+        </div>
         <div *ngFor="let extension of resource.resourceJson.extension">
-			<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-family-member-history-reporter-extension''" >
-				<label for="Reporter">Reported by</label>
-				<input id="Reporter" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
-			</div>
-		</div>
+            <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-family-member-history-reporter-extension''" >
+                <label for="Reporter">Reported by</label>
+                <input id="Reporter" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+            </div>
+        </div>
     </div>
   </div>
 </form>
@@ -637,8 +637,8 @@ values (
   '<div class="container">
 <form>
   <div class="row">
-	<div class="col-md-6">
-	  <div *ngFor="let extension of resource.resourceJson.extension">
+    <div class="col-md-6">
+      <div *ngFor="let extension of resource.resourceJson.extension">
         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-referral-request-send-mode-extension''">
           <label for="RequestMode">Request mode</label>
           <input id="RequestMode" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
@@ -656,7 +656,7 @@ values (
         <label for="Service">Service requested</label>
         <input id="Service" class="form-control" type="text" disabled value="{{resource.resourceJson.serviceRequested[0].text}}">
       </div>
-	</div>
+    </div>
     <div class="col-md-6">
       <div class="form-group" *ngIf="resource.resourceJson.type">
         <label for="RequestType">Request type</label>
@@ -687,26 +687,26 @@ values (
   '<div class="container">
 <form>
   <div class="row">
-	<div class="col-md-6">
-		<div class="form-group">
-			<label for="Display">Display term</label>
-			<input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
-		</div>
-		<div class="form-group">
-			<label for="Requester">Requested by</label>
-			<input id="Requester" class="form-control" type="text" disabled value="{{resource.resourceJson.orderer.display}}">
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="form-group">
-			<label for="Code">Code</label>
-			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
-		</div>
-		<div class="form-group">
-			<label for="RequestDate">Requested date</label>
-			<input id="RequestDate" class="form-control" type="text" disabled value="{{resource.resourceJson.orderedOn}}">
-		</div>
-	</div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="Display">Display term</label>
+            <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
+        </div>
+        <div class="form-group">
+            <label for="Requester">Requested by</label>
+            <input id="Requester" class="form-control" type="text" disabled value="{{resource.resourceJson.orderer.display}}">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="Code">Code</label>
+            <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
+        </div>
+        <div class="form-group">
+            <label for="RequestDate">Requested date</label>
+            <input id="RequestDate" class="form-control" type="text" disabled value="{{resource.resourceJson.orderedOn}}">
+        </div>
+    </div>
   </div>
 </form>
 </div>');
