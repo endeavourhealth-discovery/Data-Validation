@@ -67,7 +67,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt, service_id, patient_id " +
                 "from patient_search " +
                 "where date_of_birth = ? " +
-                "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +" "+
+                "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
                 "group by nhs_number, forenames, surname, service_id, patient_id";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {

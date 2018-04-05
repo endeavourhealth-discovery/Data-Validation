@@ -1,6 +1,9 @@
 package org.endeavourhealth.dataassurance.logic;
 
 import org.apache.commons.lang3.StringUtils;
+import org.endeavourhealth.common.config.ConfigManager;
+import org.endeavourhealth.core.database.dal.DalProvider;
+import org.endeavourhealth.core.database.dal.eds.PatientSearchDalI;
 import org.endeavourhealth.dataassurance.dal.PersonPatientDAL;
 import org.endeavourhealth.dataassurance.dal.PersonPatientDAL_Jdbc;
 import org.endeavourhealth.dataassurance.helpers.SearchTermsParser;
@@ -9,9 +12,7 @@ import org.endeavourhealth.dataassurance.models.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PersonPatientLogic {
     private static final Logger LOG = LoggerFactory.getLogger(PersonPatientLogic.class);
@@ -81,4 +82,115 @@ public class PersonPatientLogic {
 
         return dal.getPatient(serviceId, systemId, patientId);
     }
+
+    /**
+     * simple fn to test all methods in the DAL to ensure compatability
+     */
+    /*public static void main(String[] args) {
+
+        try {
+            ConfigManager.Initialize("queuereader");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+
+        try {
+
+            UUID serviceId = UUID.fromString("11572db8-ae34-4465-9f2f-35cc1e8a1e95");
+
+            Set<String> serviceIds = new HashSet<>();
+            serviceIds.add(serviceId.toString());
+
+            Patient patient = null;
+            List<Person> l = null;
+
+            PersonPatientLogic o = new PersonPatientLogic();
+
+            LOG.info("Search by NHS number");
+            l = o.findPersonsInOrganisations(serviceIds, "9435754902");
+            LOG.info("Got " + l.size() + " results");
+            for (Person person: l) {
+                LOG.info("   " + person.getNhsNumber() + ", " + person.getName() + ", " + person.getPatientId() + ", " + person.getPatientCount());
+
+                List<Patient> patients = o.getPatientsForPerson(serviceIds, person.getNhsNumber());
+                LOG.info("    Got " + patients.size() + " patients");
+                for (Patient patient2: patients) {
+                    LOG.info("   " + patient2.getPatientName() + ", " + patient2.getDob() + ", " + patient2.getLocalIds() + ", " + patient2.getId());
+
+                    patient = o.getPatient(serviceIds, serviceId.toString(), "", patient2.getId().getPatientId());
+                    if (patient == null) {
+                        LOG.info("       Failed to get patient");
+                    } else {
+                        LOG.info("       " + patient.getPatientName() + ", " + patient.getDob() + ", " + patient.getLocalIds() + ", " + patient.getId());
+                    }
+                }
+            }
+
+            LOG.info("Search by Emis number");
+            l = o.findPersonsInOrganisations(serviceIds, "4358");
+            LOG.info("Got " + l.size() + " results");
+            for (Person person: l) {
+                LOG.info("   " + person.getNhsNumber() + ", " + person.getName() + ", " + person.getPatientId() + ", " + person.getPatientCount());
+
+                List<Patient> patients = o.getPatientsForPerson(serviceIds, person.getNhsNumber());
+                LOG.info("    Got " + patients.size() + " patients");
+                for (Patient patient2: patients) {
+                    LOG.info("   " + patient2.getPatientName() + ", " + patient2.getDob() + ", " + patient2.getLocalIds() + ", " + patient2.getId());
+
+                    patient = o.getPatient(serviceIds, serviceId.toString(), "", patient2.getId().getPatientId());
+                    if (patient == null) {
+                        LOG.info("       Failed to get patient");
+                    } else {
+                        LOG.info("       " + patient.getPatientName() + ", " + patient.getDob() + ", " + patient.getLocalIds() + ", " + patient.getId());
+                    }
+                }
+            }
+
+            LOG.info("Search by DoB");
+            l = o.findPersonsInOrganisations(serviceIds, "22-Nov-2005");
+            LOG.info("Got " + l.size() + " results");
+            for (Person person: l) {
+                LOG.info("   " + person.getNhsNumber() + ", " + person.getName() + ", " + person.getPatientId() + ", " + person.getPatientCount());
+
+                List<Patient> patients = o.getPatientsForPerson(serviceIds, person.getNhsNumber());
+                LOG.info("    Got " + patients.size() + " patients");
+                for (Patient patient2: patients) {
+                    LOG.info("   " + patient2.getPatientName() + ", " + patient2.getDob() + ", " + patient2.getLocalIds() + ", " + patient2.getId());
+
+                    patient = o.getPatient(serviceIds, serviceId.toString(), "", patient2.getId().getPatientId());
+                    if (patient == null) {
+                        LOG.info("       Failed to get patient");
+                    } else {
+                        LOG.info("       " + patient.getPatientName() + ", " + patient.getDob() + ", " + patient.getLocalIds() + ", " + patient.getId());
+                    }
+                }
+            }
+
+            LOG.info("Search by Names");
+            l = o.findPersonsInOrganisations(serviceIds, "LUO");
+            LOG.info("Got " + l.size() + " results");
+            for (Person person: l) {
+                LOG.info("   " + person.getNhsNumber() + ", " + person.getName() + ", " + person.getPatientId() + ", " + person.getPatientCount());
+
+                List<Patient> patients = o.getPatientsForPerson(serviceIds, person.getNhsNumber());
+                LOG.info("    Got " + patients.size() + " patients");
+                for (Patient patient2: patients) {
+                    LOG.info("   " + patient2.getPatientName() + ", " + patient2.getDob() + ", " + patient2.getLocalIds() + ", " + patient2.getId());
+
+                    patient = o.getPatient(serviceIds, serviceId.toString(), "", patient2.getId().getPatientId());
+                    if (patient == null) {
+                        LOG.info("       Failed to get patient");
+                    } else {
+                        LOG.info("       " + patient.getPatientName() + ", " + patient.getDob() + ", " + patient.getLocalIds() + ", " + patient.getId());
+                    }
+                }
+            }
+
+
+        } catch (Exception ex) {
+            LOG.error("", ex);
+        }
+    }*/
+
 }
