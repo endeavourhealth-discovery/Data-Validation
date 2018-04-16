@@ -474,15 +474,21 @@ values (
       <div class="col-md-6">
         <div class="form-group">
           <label for="Date">Date</label>
-          <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y''}}">
+          <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y hh:mm:ss''}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.participant!=null">
           <label for="Practitioner">Practitioner</label>
-          <input id="Practitioner" class="form-control" type="text" disabled value="{{resource.resourceJson.participant[0].individual.display}}">
+          <div class="form-control looks-disabled">
+            <div class="scrollbox-100">
+              <div *ngFor="let item of resource.resourceJson.participant">
+                {{item.individual.display}} <span *ngIf="item.type && item.type[0].coding"> <i>({{item.type[0].coding[0].display}})</i></span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.period !=null">
           <label for="Period">Period</label>
-          <input id="Period" class="form-control" type="text" disabled value="{{resource.resourceJson.period | periodPipe}}">
+          <input id="Period" class="form-control" type="text" disabled value="{{resource.resourceJson.period | periodPipe:''dd/MM/y hh:mm:ss''}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.contained!=null">
           <label for="Linked">Linked resources</label>
@@ -508,10 +514,18 @@ values (
           <label for="Class">Class</label>
           <input id="Class" class="form-control" type="text" disabled value="{{resource.resourceJson.class}}">
         </div>
+        <div class="form-group">
+          <label for="Status">Status</label>
+          <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+        </div>
         <div *ngFor="let extension of resource.resourceJson.extension">
           <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-encounter-source''" >
             <label for="Source">Source</label>
             <input id="Source" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.text}}">
+          </div>
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-encounter-treatment-function-extension''" >
+            <label for="Treatment">Treatment</label>
+            <input id="Source" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
           </div>
         </div>
         <div class="form-group">
