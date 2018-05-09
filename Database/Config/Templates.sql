@@ -221,8 +221,8 @@ values (
         <input id="Category" class="form-control" type="text" disabled value="{{resource.resourceJson.category.coding[0].code}}">
       </div>
       <div class="form-group">
-        <label for="Text">Comments</label>
-        <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.code.text}}">
+        <label for="Text">Notes</label>
+        <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.notes}}">
       </div>
     </div>
   </div>
