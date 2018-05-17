@@ -394,8 +394,6 @@ export class ResourcesComponent implements OnInit {
       const leftRecorded = this.dateValue(this.getRecordedDate(left[0]));
       const rightRecorded = this.dateValue(this.getRecordedDate(right[0]));
 
-      this.logger.info('leftRecorded: '+leftRecorded+ ' rightRecorded: '+rightRecorded);
-
       if (leftRecorded == rightRecorded) {
         if (this.getDate(left[0]) > this.getDate(right[0])) {
           result.push(left.shift());
