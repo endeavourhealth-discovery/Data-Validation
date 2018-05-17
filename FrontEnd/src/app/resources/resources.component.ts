@@ -391,7 +391,16 @@ export class ResourcesComponent implements OnInit {
   private mergeResources(left, right) {
     let result = [];
     while ((left.length > 0) && (right.length > 0)) {
-      if (this.getRecordedDate(left[0]) > this.getRecordedDate(right[0])) {
+      const leftRecorded = this.getRecordedDate(left[0]);
+      const rightRecorded = this.getRecordedDate(right[0]);
+
+      if (leftRecorded == rightRecorded) {
+        if (this.getDate(left[0]) > this.getDate(right[0])) {
+          result.push(left.shift());
+        } else {
+          result.push(right.shift());
+        }
+      } else if (leftRecorded > rightRecorded) {
         result.push(left.shift());
       } else {
         result.push(right.shift());
