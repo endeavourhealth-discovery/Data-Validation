@@ -391,8 +391,8 @@ export class ResourcesComponent implements OnInit {
   private mergeResources(left, right) {
     let result = [];
     while ((left.length > 0) && (right.length > 0)) {
-      const leftRecorded = this.getRecordedDate(left[0]);
-      const rightRecorded = this.getRecordedDate(right[0]);
+      const leftRecorded = this.dateValue(this.getRecordedDate(left[0]));
+      const rightRecorded = this.dateValue(this.getRecordedDate(right[0]));
 
       if (leftRecorded == rightRecorded) {
         if (this.getDate(left[0]) > this.getDate(right[0])) {
@@ -409,6 +409,13 @@ export class ResourcesComponent implements OnInit {
 
     result = result.concat(left, right);
     return result;
+  }
+
+  private dateValue(date: Date) : number {
+    if (date == null)
+      return null;
+
+    return date.valueOf();
   }
 
   private setPatientTooltip(patient: any) {
