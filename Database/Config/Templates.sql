@@ -18,6 +18,14 @@ values (
            <label for="NHS">NHS number</label>
            <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
          </div>
+         <div class="form-group" *ngIf="identifier.system.endsWith(''patient-guid'')" >
+           <label for="ID">Local system number</label>
+           <input id="ID" class="form-control" type="text" disabled value="{{identifier.value}}">
+         </div>
+         <div class="form-group" *ngIf="identifier.system.endsWith(''patient-number'')" >
+           <label for="NHS">Local patient number</label>
+           <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
+         </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
          <div *ngFor="let name of getActiveOnly(resource.resourceJson.name)"> 
@@ -343,8 +351,16 @@ values (
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].display}}">
       </div>
       <div class="form-group">
-        <label for="Recorder">Recorded by</label>
-        <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.recorder?.display}}">
+        <label for="Date">Effective date</label>
+        <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.onset | date:''dd/MM/y''}}">
+      </div>
+      <div class="form-group" *ngIf="resource.resourceJson.reaction[0].severity!=null">
+        <label for="Severity">Severity</label>
+        <input id="Severity" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].severity}}">
+      </div>
+      <div class="form-group" >
+        <label for="Text">Comments</label>
+        <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.note?.text}}">
       </div>
     </div>
     <div class="col-md-6">
@@ -352,9 +368,13 @@ values (
         <label for="Code">Code</label>
         <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].code}}">
       </div>
-      <div class="form-group" >
-        <label for="Text">Comments</label>
-        <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.note?.text}}">
+      <div class="form-group">
+        <label for="Recorder">Recorded by</label>
+        <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.recorder?.display}}">
+      </div>
+      <div class="form-group" *ngIf="resource.resourceJson.reaction[0].certainty!=null">
+        <label for="Certainty">Certainty</label>
+        <input id="Certainty" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].certainty}}">
       </div>
     </div>
   </div>
@@ -652,6 +672,10 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
+      <div class="form-group">
+        <label for="Date">Referral date</label>
+        <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.date | date:''dd/MM/y''}}">
+      </div>
       <div *ngFor="let extension of resource.resourceJson.extension">
         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-referral-request-send-mode-extension''">
           <label for="RequestMode">Request mode</label>
