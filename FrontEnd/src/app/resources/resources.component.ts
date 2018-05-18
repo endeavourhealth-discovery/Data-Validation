@@ -322,17 +322,18 @@ export class ResourcesComponent implements OnInit {
   }
 
   private getCodeTerm(code: any, comments?: any): string {
-    if (code == null)
+    if (code == null) {
+      if (comments != null)
+        return comments;
+
       return null;
+    }
 
     if (code.text != null)
       return code.text;
 
     if (code.coding)
       return code.coding[0].display;
-
-    if (comments != null)
-      return comments;
 
     return null;
   }
