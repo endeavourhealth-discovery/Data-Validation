@@ -398,7 +398,7 @@ values (
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.text}}">
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.dosageInstruction!=null">
         <label for="Dosage">Dosage</label>
         <input id="Dosage" class="form-control" type="text" disabled value="{{resource.resourceJson.dosageInstruction[0].text}}">
       </div>
@@ -442,7 +442,7 @@ values (
         <label for="Display">Drug</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].display}}">
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.dosage!=null">
         <label for="Dosage">Dosage</label>
         <input id="Dosage" class="form-control" type="text" disabled value="{{resource.resourceJson.dosage[0].text}}">
       </div>
