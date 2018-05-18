@@ -310,7 +310,7 @@ export class ResourcesComponent implements OnInit {
       case 'Medication':
         return this.getCodeTerm(resource.resourceJson.code);
       case 'Observation':
-        return this.getCodeTerm(resource.resourceJson.code);
+        return this.getCodeTerm(resource.resourceJson.code, resource.resourceJson.comments);
       case 'Procedure':
         return this.getCodeTerm(resource.resourceJson.code);
       case 'ReferralRequest':
@@ -321,7 +321,7 @@ export class ResourcesComponent implements OnInit {
     }
   }
 
-  private getCodeTerm(code: any): string {
+  private getCodeTerm(code: any, comments?: any): string {
     if (code == null)
       return null;
 
@@ -330,6 +330,9 @@ export class ResourcesComponent implements OnInit {
 
     if (code.coding)
       return code.coding[0].display;
+
+    if (comments != null)
+      return comments;
 
     return null;
   }

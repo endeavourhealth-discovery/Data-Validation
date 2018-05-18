@@ -282,7 +282,7 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" *ngIf="resource.resourceJson.code!=null">
             <label for="Display">Display term</label>
             <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
         </div>
@@ -314,7 +314,7 @@ values (
         </div>
     </div>
     <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" *ngIf="resource.resourceJson.code!=null">
             <label for="Code">Code</label>
             <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
         </div>
@@ -326,12 +326,16 @@ values (
             <label for="Value1Units">Units</label>
             <input id="Value1Units" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.unit}}">
         </div>
-      <div *ngFor="let extension of resource.resourceJson.extension">
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
-          <label for="Episodicity">Is a review</label>
-          <input id="Episodicity" class="form-control" type="text" disabled value="Yes">
+        <div *ngFor="let extension of resource.resourceJson.extension">
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-problem-review'' && extension.valueBoolean">
+            <label for="Episodicity">Is a review</label>
+            <input id="Episodicity" class="form-control" type="text" disabled value="Yes">
+          </div>
+		      <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-external-document-extension''">
+            <label for="DOCID">Document Id</label>
+            <input id="DOCID" class="form-control" type="text" disabled value="{{extension.valueIdentifier.value}}">
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </form>
