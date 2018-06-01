@@ -1,6 +1,7 @@
 package org.endeavourhealth.dataassurance.dal;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.base.Strings;
 import org.endeavourhealth.common.config.ConfigManager;
 import org.endeavourhealth.coreui.framework.ContextShutdownHook;
 import org.endeavourhealth.coreui.framework.StartupConfig;
@@ -196,7 +197,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         try {
             String sql = "select ps.service_id, ps.patient_id, ps.forenames, ps.surname, ps.date_of_birth, li.local_id, li.local_id_system " +
                 "from patient_search ps " +
-                "join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
+                "left outer join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
                 "where ps.nhs_number = ? " +
                 "and ps.service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +")";
 
@@ -220,8 +221,10 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                         lastPatient = patient;
                     }
                     String system = rs.getString("local_id_system");
-                    system = system.substring(system.lastIndexOf('/') + 1);
-                    lastPatient.getLocalIds().put(system, rs.getString("local_id"));
+                    if (!Strings.isNullOrEmpty(system)) {
+                        system = system.substring(system.lastIndexOf('/') + 1);
+                        lastPatient.getLocalIds().put(system, rs.getString("local_id"));
+                    }
                 }
 
                 return result;
@@ -239,7 +242,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         try {
             String sql = "select ps.service_id, ps.patient_id, ps.forenames, ps.surname, ps.date_of_birth, li.local_id, li.local_id_system " +
                 "from patient_search ps " +
-                "join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
+                "left outer join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
                 "where ps.service_id = ? " +
                 "and ps.patient_id = ? ";
 
@@ -254,8 +257,10 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                     if (patient == null)
                         patient = getPatientFromResultSet(rs);
                     String system = rs.getString("local_id_system");
-                    system = system.substring(system.lastIndexOf('/') + 1);
-                    patient.getLocalIds().put(system, rs.getString("local_id"));
+                    if (!Strings.isNullOrEmpty(system)) {
+                        system = system.substring(system.lastIndexOf('/') + 1);
+                        patient.getLocalIds().put(system, rs.getString("local_id"));
+                    }
                 }
             }
         } catch (Exception e) {
