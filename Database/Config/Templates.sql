@@ -350,7 +350,7 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.substance!=null">
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].display}}">
       </div>
@@ -368,7 +368,7 @@ values (
       </div>
     </div>
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.substance!=null">
         <label for="Code">Code</label>
         <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].code}}">
       </div>
