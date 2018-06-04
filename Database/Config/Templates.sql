@@ -358,7 +358,7 @@ values (
         <label for="Date">Effective date</label>
         <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.onset | date:''dd/MM/y''}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.reaction[0].severity!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.reaction!=null">
         <label for="Severity">Severity</label>
         <input id="Severity" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].severity}}">
       </div>
@@ -376,7 +376,7 @@ values (
         <label for="Recorder">Recorded by</label>
         <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.recorder?.display}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.reaction[0].certainty!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.reaction!=null">
         <label for="Certainty">Certainty</label>
         <input id="Certainty" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].certainty}}">
       </div>
