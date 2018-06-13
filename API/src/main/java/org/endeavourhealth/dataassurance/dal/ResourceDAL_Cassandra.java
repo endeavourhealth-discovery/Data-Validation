@@ -3,7 +3,6 @@ package org.endeavourhealth.dataassurance.dal;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.endeavourhealth.common.cache.ObjectMapperPool;
 import org.endeavourhealth.core.database.dal.DalProvider;
-import org.endeavourhealth.core.database.dal.admin.ServiceDalI;
 import org.endeavourhealth.core.database.dal.admin.models.Service;
 import org.endeavourhealth.core.database.dal.ehr.ResourceDalI;
 import org.endeavourhealth.core.database.dal.ehr.models.ResourceWrapper;
@@ -33,6 +32,7 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
         resourceTypes.add(new ResourceType("Encounter", "Encounter"));
         resourceTypes.add(new ResourceType("EpisodeOfCare", "Episode Of Care"));
         resourceTypes.add(new ResourceType("FamilyMemberHistory", "Family Member History"));
+        resourceTypes.add(new ResourceType("Flag", "Flag"));
         resourceTypes.add(new ResourceType("Immunization", "Immunization"));
         resourceTypes.add(new ResourceType("Medication", "Medication"));
         resourceTypes.add(new ResourceType("MedicationOrder", "Medication Order"));

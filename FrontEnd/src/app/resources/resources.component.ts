@@ -222,6 +222,7 @@ export class ResourcesComponent implements OnInit {
       case 'Encounter': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'EpisodeOfCare': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);       // Period.start!?
       case 'FamilyMemberHistory': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Flag': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'Immunization': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'MedicationOrder': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'MedicationStatement': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
@@ -263,6 +264,7 @@ export class ResourcesComponent implements OnInit {
       case 'Encounter': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
       case 'EpisodeOfCare': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
       case 'FamilyMemberHistory': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
+      case 'Flag': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
       case 'Immunization': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
       case 'MedicationOrder': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateWritten);
       case 'MedicationStatement': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateAsserted);
@@ -301,6 +303,8 @@ export class ResourcesComponent implements OnInit {
         return this.getCodeTerm(resource.resourceJson.type);
       case 'FamilyMemberHistory':
         return this.getCodeTerm((resource.resourceJson.condition && resource.resourceJson.condition.length > 0) ? resource.resourceJson.condition[0].code : null);
+      case 'Flag':
+        return this.getCodeTerm(resource.resourceJson.code);
       case 'Immunization':
         return this.getCodeTerm(resource.resourceJson.vaccineCode);
       case 'MedicationOrder':

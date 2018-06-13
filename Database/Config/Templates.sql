@@ -752,3 +752,41 @@ values (
   </div>
 </form>
 </div>');
+
+delete from config where config_id = 'Template-Flag' and app_id = 'data-assurance';
+insert into config (app_id, config_id, config_data)
+values (
+  'data-assurance',
+  'Template-Flag',
+  '<div class="container">
+<form>
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="Start">Start date</label>
+            <input id="Start" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y''}}">
+        </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
+          <label for="RecordedBy">Recorded by</label>
+          <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+        </div>
+        <div class="form-group">
+            <label for="Info">Information</label>
+            <input id="Info" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].text}}">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="Status">Status</label>
+            <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+        </div>
+        <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
+         <div class="form-group" *ngIf="identifier.system==''http://oneadvanced.com/identifier/adastra-case-no''" >
+           <label for="CaseNo">Case No</label>
+           <input id="CaseNo" class="form-control" type="text" disabled value="{{identifier.value}}">
+         </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>');
