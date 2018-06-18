@@ -9,23 +9,25 @@ values (
  <form>
    <div class="row">
      <div class="col-md-6">
-       <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
-         <div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/barts-mrn''" >
-           <label for="MRN">MRN number</label>
-           <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
-         </div>
-         <div class="form-group" *ngIf="identifier.system==''http://fhir.nhs.net/Id/nhs-number''" >
-           <label for="NHS">NHS number</label>
-           <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
-         </div>
-         <div class="form-group" *ngIf="identifier.system.endsWith(''patient-guid'')" >
-           <label for="ID">Local system number</label>
-           <input id="ID" class="form-control" type="text" disabled value="{{identifier.value}}">
-         </div>
-         <div class="form-group" *ngIf="identifier.system.endsWith(''patient-number'')" >
-           <label for="NHS">Local patient number</label>
-           <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
-         </div>
+       <div *ngIf="resource.resourceJson.identifier">
+			    <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
+				    <div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/barts-mrn''" >
+					    <label for="MRN">MRN number</label>
+					    <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
+				    </div>
+				    <div class="form-group" *ngIf="identifier.system==''http://fhir.nhs.net/Id/nhs-number''" >
+					    <label for="NHS">NHS number</label>
+					    <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}} {{identifier.period ? (identifier.period | periodPipe) : ''''}} ">
+				    </div>
+				    <div class="form-group" *ngIf="identifier.system.endsWith(''patient-guid'')" >
+					    <label for="ID">Local system number</label>
+					    <input id="ID" class="form-control" type="text" disabled value="{{identifier.value}}">
+				    </div>
+				    <div class="form-group" *ngIf="identifier.system.endsWith(''patient-number'')" >
+					    <label for="NHS">Local patient number</label>
+					    <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
+				    </div>
+			    </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
          <div *ngFor="let name of getActiveOnly(resource.resourceJson.name)"> 
@@ -318,9 +320,13 @@ values (
             <label for="Code">Code</label>
             <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="resource.resourceJson.performer!=null">
             <label for="Recorder">Recorded by</label>
             <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.performer[0].display}}">
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.performer==null">
+            <label for="Recorder">Recorded by</label>
+            <input id="Recorder" class="form-control" type="text" disabled value="">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
             <label for="Value1Units">Units</label>
@@ -442,9 +448,13 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding!=null">
         <label for="Display">Drug</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].display}}">
+      </div>
+      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding==null">
+        <label for="Display">Drug</label>
+        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.text}}">
       </div>
       <div class="form-group" *ngIf="resource.resourceJson.dosage!=null">
         <label for="Dosage">Dosage</label>
@@ -464,9 +474,13 @@ values (
       </div>
     </div>
     <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding!=null">
             <label for="Code">Code</label>
             <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].code}}">
+        </div>
+        <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding==null">
+            <label for="Code">Code</label>
+            <input id="Code" class="form-control" type="text" disabled value="">
         </div>
         <div *ngFor="let extension of resource.resourceJson.extension">
             <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-quantity-extension''" >
