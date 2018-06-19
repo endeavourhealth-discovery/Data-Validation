@@ -312,7 +312,7 @@ values (
         </div>
         <div class="form-group">
             <label for="Comments">Comments</label>
-            <input id="Comments" class="form-control" type="text" disabled value="{{resource.resourceJson.comments}}">
+            <textarea id="Comments" class="form-control" rows=5 disabled value="{{resource.resourceJson.comments}}"></textarea>
         </div>
     </div>
     <div class="col-md-6">
@@ -780,13 +780,17 @@ values (
             <label for="Start">Start date</label>
             <input id="Start" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y''}}">
         </div>
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
-          <label for="RecordedBy">Recorded by</label>
-          <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+        <div *ngIf="resource.resourceJson.extension">
+			<div *ngFor="let extension of resource.resourceJson.extension">
+				<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
+					<label for="RecordedBy">Recorded by</label>
+					<input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+				</div>
+			</div>
         </div>
         <div class="form-group">
             <label for="Info">Information</label>
-            <input id="Info" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].text}}">
+            <textarea id="Info" class="form-control" rows="5" disabled value="{{resource.resourceJson.code.text}}"></textarea>
         </div>
     </div>
     <div class="col-md-6">
