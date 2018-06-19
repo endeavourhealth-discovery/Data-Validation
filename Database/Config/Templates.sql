@@ -158,14 +158,26 @@ values (
       </div>
        <div *ngFor="let extension of resource.resourceJson.extension">
          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-patient-registration-type-extension''" >
-          <label for="RegType">Registration type</label>
-        <input id="RegType" class="form-control" type="text" disabled value="{{extension.valueCoding.display}}">
+            <label for="RegType">Registration type</label>
+            <input id="RegType" class="form-control" type="text" disabled value="{{extension.valueCoding.display}}">
+         </div>
+         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-episode-priority''" >
+            <label for="Priority">Priority</label>
+            <input id="Priority" class="form-control" type="text" disabled value="{{extension.valueString}}">
+         </div>
+         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-episode-outcome''" >
+            <label for="Outcome">Outcome</label>
+            <input id="Outcome" class="form-control" type="text" disabled value="{{extension.valueString}}">
          </div>
        </div>
       <div *ngFor="let identifier of resource.resourceJson.identifier">
         <div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-episode-id/barts-fin''" >
           <label for="FIN">Financial number</label>
           <input id="FIN" class="form-control" type="text" disabled value="{{identifier.value}}">
+        </div>
+        <div class="form-group" *ngIf="identifier.system==''http://oneadvanced.com/identifier/adastra-case-no''" >
+          <label for="CaseNo">Case No</label>
+          <input id="CaseNo" class="form-control" type="text" disabled value="{{identifier.value}}">
         </div>
       </div>
     </div>
