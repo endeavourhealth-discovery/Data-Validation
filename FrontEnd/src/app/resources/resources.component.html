@@ -64,25 +64,25 @@
                       <loadingIndicator [done]="clinicalResourceList">
                         <div class="scroll-box-400">
                           <table class="table table-sm table-hover" id="resourceTable">
-                        <thead>
-                          <tr>
-                            <th>Recorded date</th>
-                            <th>Effective date</th>
-                            <th>Resource type</th>
-                            <th>Description</th>
-                            <th>Service</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let clinicalResource of clinicalResourceList" (click)="viewResource(clinicalResource)">
-                            <td>{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td>
-                            <td>{{getDate(clinicalResource) | date:'dd-MMM-y'}}</td>
-                            <td>{{getResourceName(clinicalResource)}}</td>
-                            <td>{{getDescription(clinicalResource)}}</td>
-                            <td>{{getServiceName(clinicalResource)}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                            <thead>
+                              <tr class="d-flex">
+                                <th class="col-1">Recorded date</th>
+                                <th class="col-1">Effective date</th>
+                                <th class="col-2">Resource type</th>
+                                <th class="col-5">Description</th>
+                                <th class="col-3">Service</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="d-flex" *ngFor="let clinicalResource of clinicalResourceList" (click)="viewResource(clinicalResource)">
+                                <td class="col-1">{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td>
+                                <td class="col-1">{{getDate(clinicalResource) | date:'dd-MMM-y'}}</td>
+                                <td class="col-2">{{getResourceName(clinicalResource)}}</td>
+                                <td class="col-5">{{getDescription(clinicalResource)}}</td>
+                                <td class="col-3">{{getServiceName(clinicalResource)}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </loadingIndicator>
                     </div>
