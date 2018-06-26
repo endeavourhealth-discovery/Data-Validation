@@ -72,8 +72,8 @@ public class PersonPatientLogic {
         return result;
     }
 
-    public List<Patient> getPatientsForPerson(Set<String> serviceIds, String personId) throws Exception {
-        return dal.getPatientsByNhsNumber(serviceIds, personId);
+    public List<Patient> getPatientsForPerson(Set<String> serviceIds, String nhsNumber) throws Exception {
+        return dal.getPatientsByNhsNumber(serviceIds, nhsNumber);
     }
 
     public Patient getPatient(Set<String> serviceIds, String serviceId, String systemId, String patientId) {
