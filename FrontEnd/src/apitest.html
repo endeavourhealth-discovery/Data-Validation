@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>API Test</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	</head>
+	<body class="bg-light">
+
+		<main role="main">
+			<section class="jumbotron text-center">
+				<div class="container">
+					<h1 class="jumbotron-heading">Discovery API</h1>
+				</div>
+			</section>
+
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header"><h3>1. Authorization</h3></div>
+							<div class="card-body">
+								<small class="card-title">
+									POST <b>&lt;auth host&gt;</b>/auth/realms/endeavour/protocol/openid-connect/token<br>
+									<pre>
+form-data {
+	client_id:  eds-data-checker,
+	username:   <b>&lt;username&gt;</b>,
+	password:   <b>&lt;password&gt;</b>,
+	grant_type: password
+}
+</pre>
+								</small>
+								<hr>
+								<div class="card-text">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon1">Auth host</span>
+												</div>
+												<input id="authhost" type="text" class="form-control" placeholder="https://devauth.endeavourhealth.net" aria-label="Host" aria-describedby="basic-addon1">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon2">Username</span>
+												</div>
+												<input id="user" type="text" class="form-control" placeholder="FredBloggs" aria-label="Username" aria-describedby="basic-addon2">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon3">Password</span>
+												</div>
+												<input id="pass" type="password" class="form-control" placeholder="Pa55w0rd" aria-label="Password" aria-describedby="basic-addon3">
+											</div>
+										</div>
+										<div class="col-md-4"></div>
+										<div class="col-md-1">
+											<div class="input-group mb-3">
+												<button class="btn btn-success" onclick="getAuthToken()">Run</button>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon4">Response</span>
+												</div>
+												<textarea id="authresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon4" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header"><h3>2. Get resource types</h3></div>
+							<div class="card-body">
+								<small class="card-title">
+									GET <b>&lt;api host&gt;</b>/api/fhir/resourceType
+								</small>
+								<hr>
+								<div class="card-text">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon5">API host</span>
+												</div>
+												<input id="apihost" type="text" class="form-control" placeholder="https://deveds.endeavourhealth.net/data-checker/api" aria-label="Host" aria-describedby="basic-addon5">
+											</div>
+										</div>
+										<div class="col-md-1">
+											<div class="input-group mb-3">
+												<button class="btn btn-success" onclick="getResourceTypes()">Run</button>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon6">Response</span>
+												</div>
+												<textarea id="typesresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon6" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header"><h3>3. Get patients</h3></div>
+							<div class="card-body">
+								<small class="card-title">
+									GET <b>&lt;api host&gt;</b>/api/fhir/patients?nhsNumber=<b>&lt;NHS number&gt;</b>
+								</small>
+								<hr>
+								<div class="card-text">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon7">API host</span>
+												</div>
+												<input id="apihost2" type="text" class="form-control" placeholder="https://deveds.endeavourhealth.net/data-checker/api" aria-label="Host" aria-describedby="basic-addon7">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon8">NHS Number</span>
+												</div>
+												<input id="nhsnumber" type="text" class="form-control" placeholder="9451943625" aria-label="Host" aria-describedby="basic-addon8">
+											</div>
+										</div>
+										<div class="col-md-8"></div>
+										<div class="col-md-1">
+											<div class="input-group mb-3">
+												<button class="btn btn-success" onclick="getPatients()">Run</button>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon9">Response</span>
+												</div>
+												<textarea id="patientresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon9" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header"><h3>4. Get resources</h3></div>
+							<div class="card-body">
+								<small class="card-title">
+									GET <b>&lt;api host&gt;</b>/api/fhir/resources
+									<pre>
+body {
+	resources: [<b>&lt;resource&gt;, ...],</b>
+	patients:  <b>&lt;patient bundle&gt;</b>
+}
+</pre>
+								</small>
+								<hr>
+								<div class="card-text">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon10">API host</span>
+												</div>
+												<input id="apihost3" type="text" class="form-control" placeholder="https://deveds.endeavourhealth.net/data-checker/api" aria-label="Host" aria-describedby="basic-addon10">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon11">Resources</span>
+												</div>
+												<input id="resources" type="text" class="form-control" placeholder='"Allergy", "Observation"' aria-label="Host" aria-describedby="basic-addon11">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon12">Patients</span>
+												</div>
+												<textarea id="patients" type="text" class="form-control" placeholder="<Patient bundle JSON>" aria-label="Response" aria-describedby="basic-addon12" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<div class="input-group mb-3">
+												<button class="btn btn-success" onclick="getResources()">Run</button>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon13">Response</span>
+												</div>
+												<textarea id="resourceresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon13" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</main>
+	</body>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	<script type="application/javascript">
+		var token;
+
+		function getAuthToken() {
+			var host = document.getElementById('authhost').value;
+			var user = document.getElementById('user').value;
+			var pass = document.getElementById('pass').value;
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", host + "/auth/realms/endeavour/protocol/openid-connect/token", false);
+			xhttp.withCredentials = true;
+			xhttp.setRequestHeader("Accept", "*/*");
+			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			xhttp.send("client_id=eds-data-checker&username=" + user + "&password=" + pass + "&grant_type=password");
+			try {
+				var response = JSON.parse(xhttp.responseText);
+				token = response.access_token;
+				document.getElementById('authresponse').value = JSON.stringify(response, null, 2);
+			} catch (error) {
+				document.getElementById('authresponse').value = xhttp.responseText;
+			}
+		}
+
+		function getResourceTypes() {
+			var host = document.getElementById('apihost').value;
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", host + "/api/fhir/resourceType", false);
+			xhttp.withCredentials = true;
+			xhttp.setRequestHeader("Authorization", "Bearer " + token);
+			xhttp.send();
+			try {
+				var response = JSON.parse(xhttp.responseText);
+				document.getElementById('typesresponse').value = JSON.stringify(response, null, 2);
+			} catch (error) {
+				document.getElementById('typesresponse').value = xhttp.responseText;
+			}
+		}
+
+		function getPatients() {
+			var host = document.getElementById('apihost2').value;
+			var nhs = document.getElementById('nhsnumber').value;
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", host + "/api/fhir/patients?nhsNumber="+nhs, false);
+			xhttp.withCredentials = true;
+			xhttp.setRequestHeader("Authorization", "Bearer " + token);
+			xhttp.send();
+			try {
+				var response = JSON.parse(xhttp.responseText);
+				document.getElementById('patientresponse').value = JSON.stringify(response, null, 2);
+				document.getElementById('patients').value = JSON.stringify(response, null, 2);
+			} catch (error) {
+				document.getElementById('patientresponse').value = xhttp.responseText;
+			}
+		}
+
+		function getResources() {
+			var host = document.getElementById('apihost3').value;
+			var types = document.getElementById('resources').value;
+			var pats = document.getElementById('patients').value;
+
+			var request = "{ \"resources\": [" + types + "], \"patients\": " + pats + "}";
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", host + "/api/fhir/resources", false);
+			xhttp.withCredentials = true;
+			xhttp.setRequestHeader("Authorization", "Bearer " + token);
+			xhttp.setRequestHeader("Content-Type", "Application/Json");
+			xhttp.send(request);
+			try {
+				var response = JSON.parse(xhttp.responseText);
+				document.getElementById('resourceresponse').value = JSON.stringify(response, null, 2);
+			} catch (error) {
+				document.getElementById('resourceresponse').value = xhttp.responseText;
+			}
+		}
+	</script>
+</html>

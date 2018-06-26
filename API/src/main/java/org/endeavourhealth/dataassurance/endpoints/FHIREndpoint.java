@@ -72,7 +72,7 @@ public class FHIREndpoint {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Get")
-    @Path("/")
+    @Path("/resources")
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
     public Response getForPatient(@Context SecurityContext sc,
                                   @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson
