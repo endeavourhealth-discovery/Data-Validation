@@ -247,6 +247,9 @@ public class ResourceLogic {
             List<Coding> codes = resource.getMedicationCodeableConcept().getCoding();
             if (codes.size() > 0) {
                 medicationStatementDisplay = codes.get(0).getDisplay();
+            } else {
+                //non coded, text only drug name
+                medicationStatementDisplay = resource.getMedicationCodeableConcept().getText();
             }
             // get dosage
             if (resource.getDosage().size() >0) {
@@ -271,6 +274,9 @@ public class ResourceLogic {
             List<Coding> codes = resource.getMedicationCodeableConcept().getCoding();
             if (codes.size() > 0) {
                 medicationOrderDisplay = codes.get(0).getDisplay();
+            } else {
+                //non coded, text only drug name
+                medicationOrderDisplay = resource.getMedicationCodeableConcept().getText();
             }
             // get dosage
             if (resource.getDosageInstruction().size() >0) {

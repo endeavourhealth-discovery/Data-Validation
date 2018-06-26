@@ -524,7 +524,7 @@ values (
       <div class="col-md-6">
         <div class="form-group">
           <label for="Date">Date</label>
-          <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y hh:mm:ss''}}">
+          <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.period?.start | date:''dd/MM/y HH:mm:ss''}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.participant!=null">
           <label for="Practitioner">Practitioner</label>
@@ -538,7 +538,7 @@ values (
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.period !=null">
           <label for="Period">Period</label>
-          <input id="Period" class="form-control" type="text" disabled value="{{resource.resourceJson.period | periodPipe:''dd/MM/y hh:mm:ss''}}">
+          <input id="Period" class="form-control" type="text" disabled value="{{resource.resourceJson.period | periodPipe:''dd/MM/y HH:mm:ss''}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.contained!=null">
           <label for="Linked">Linked resources</label>
