@@ -396,9 +396,9 @@ grant_type = password</td></tr>
 
 		function getAuthToken() {
 			var host = document.getElementById('authhost').value;
-			var client = document.getElementById('client').value;
-			var user = document.getElementById('user').value;
-			var pass = document.getElementById('pass').value;
+			var client = encodeURI(document.getElementById('client').value);
+			var user = encodeURI(document.getElementById('user').value);
+			var pass = encodeURI(document.getElementById('pass').value);
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", host + "/auth/realms/endeavour/protocol/openid-connect/token", false);
 			xhttp.withCredentials = true;
@@ -451,7 +451,7 @@ grant_type = password</td></tr>
 
 		function getPatients() {
 			var host = document.getElementById('apihost2').value;
-			var nhs = document.getElementById('nhsnumber').value;
+			var nhs = encodeURI(document.getElementById('nhsnumber').value);
       var token2 = document.getElementById('token2').value;
       var xhttp = new XMLHttpRequest();
 			xhttp.open("GET", host + "/api/fhir/patients?nhsNumber="+nhs, false);
@@ -515,9 +515,9 @@ grant_type = password</td></tr>
     function getFlag() {
       var api4 = document.getElementById('apihost4').value;
       var token4 = document.getElementById('token4').value;
-      var nhs2 = document.getElementById('nhs2').value;
+      var nhs2 = encodeURI(document.getElementById('nhs2').value);
       var req = document.getElementById('requester').value;
-      var flag = document.getElementById('flag').value;
+      var flag = encodeURI(document.getElementById('flag').value);
 
       var xhttp = new XMLHttpRequest();
       xhttp.open("GET", api4 + "/api/subscriber/flag?code=" + flag + "&subject=" + nhs2, false);
