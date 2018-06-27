@@ -35,7 +35,7 @@
                     <tr class="d-flex"><td class="col-3"><b>Path</b></td>    <td class="col-9"><b>&lt;auth host&gt;</b>/auth/realms/endeavour/protocol/openid-connect/token</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Header</b></td>  <td class="col-9">Content-Type: application/x-www-form-urlencoded</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Body</b></td>    <td class="col-9">
-client_id  = eds-data-checker<br>
+client_id  = <b>&lt;client&gt;</b><br>
 username   = <b>&lt;username&gt;</b><br>
 password   = <b>&lt;password&gt;</b><br>
 grant_type = password</td></tr>
@@ -52,6 +52,14 @@ grant_type = password</td></tr>
                         <input id="authhost" type="text" class="form-control" placeholder="Authorization host" aria-label="Host" aria-describedby="basic-addon1">
                       </div>
 										</div>
+                    <div class="col-md-4">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="client-addon"><i class="fa fa-fw fa-laptop"></i></span>
+                        </div>
+                        <input id="client" type="text" class="form-control" placeholder="Client name" aria-label="Username" aria-describedby="client-addon">
+                      </div>
+                    </div>
 										<div class="col-md-4">
 											<div class="input-group mb-3">
 												<div class="input-group-prepend">
@@ -103,7 +111,7 @@ grant_type = password</td></tr>
                   <table class="table table-sm table-bordered">
                     <tr class="d-flex"><td class="col-3"><b>Method</b></td>  <td class="col-9">GET</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Path</b></td>    <td class="col-9"><b>&lt;api host&gt;</b>/api/fhir/resourceType</tr>
-                    <tr class="d-flex"><td class="col-3"><b>Header</b></td>  <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b></td></tr>
+                    <tr class="d-flex"><td class="col-3"><b>Header</b></td>  <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b><small class="pull-right">(for client eds-data-checker)</small></td></tr>
                   </table>
 								</div>
 								<hr>
@@ -159,7 +167,7 @@ grant_type = password</td></tr>
                   <table class="table table-sm table-bordered">
                     <tr class="d-flex"><td class="col-3"><b>Method</b></td>            <td class="col-9">GET</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Path</b></td>              <td class="col-9"><b>&lt;api host&gt;</b>/api/fhir/patients
-                    <tr class="d-flex"><td class="col-3"><b>Header</b></td>            <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b></td></tr>
+                    <tr class="d-flex"><td class="col-3"><b>Header</b></td>            <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b><small class="pull-right">(for client eds-data-checker)</small></td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Query parameters</b></td>  <td class="col-9">nhsNumber=<b>&lt;NHS number&gt;</b></td></tr>
                   </table>
 								</div>
@@ -224,7 +232,7 @@ grant_type = password</td></tr>
                   <table class="table table-sm table-bordered">
                     <tr class="d-flex"><td class="col-3"><b>Method</b></td>            <td class="col-9">GET</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Path</b></td>              <td class="col-9"><b>&lt;api host&gt;</b>/api/fhir/resources
-                    <tr class="d-flex"><td class="col-3"><b>Headers</b></td>           <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b><br>Content-Type: Application/Json</td></tr>
+                    <tr class="d-flex"><td class="col-3"><b>Headers</b></td>           <td class="col-9">Authorization: Bearer <b>&lt;Token&gt;</b><small class="pull-right">(for client eds-data-checker)</small><br>Content-Type: Application/Json</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Body</b></td>              <td class="col-9">
 {<br>
                       &nbsp;&nbsp;&nbsp;&nbsp;resources: [<b>&lt;resource&gt;, ...],</b><br>
@@ -302,7 +310,7 @@ grant_type = password</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Method</b></td>            <td class="col-9">GET</td></tr>
                     <tr class="d-flex"><td class="col-3"><b>Path</b></td>              <td class="col-9"><b>&lt;api host&gt;</b>/api/subscriber/flag
                     <tr class="d-flex"><td class="col-3"><b>Headers</b></td>           <td class="col-9">
-                      Authorization: Bearer <b>&lt;Token&gt;</b><br>
+                      Authorization: Bearer <b>&lt;Token&gt;</b><small class="pull-right">(for client eds-subscriber)</small><br>
                       OdsCode: <b>&lt;ODS Code&gt;</b>
                     <tr class="d-flex"><td class="col-3"><b>Query parameters</b></td>  <td class="col-9">
                       code=<b>&lt;Flag code&gt;</b><br>
@@ -381,12 +389,14 @@ grant_type = password</td></tr>
 
     function exampleAuthToken() {
       document.getElementById('authhost').value = "https://devauth.endeavourhealth.net";
+      document.getElementById('client').value = "eds-data-checker";
       document.getElementById('user').value = "FredBloggs";
       document.getElementById('pass').value = "Pa55w0rd";
     }
 
 		function getAuthToken() {
 			var host = document.getElementById('authhost').value;
+			var client = document.getElementById('client').value;
 			var user = document.getElementById('user').value;
 			var pass = document.getElementById('pass').value;
 			var xhttp = new XMLHttpRequest();
@@ -395,7 +405,7 @@ grant_type = password</td></tr>
 			xhttp.setRequestHeader("Accept", "*/*");
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			try {
-        xhttp.send("client_id=eds-data-checker&username=" + user + "&password=" + pass + "&grant_type=password");
+        xhttp.send("client_id="+client+"&username=" + user + "&password=" + pass + "&grant_type=password");
         try {
           var response = JSON.parse(xhttp.responseText);
           token = response.access_token;
