@@ -495,7 +495,7 @@ grant_type = password</td></tr>
 		}
 
     function exampleFlag() {
-      document.getElementById('apihost4').value = "https://deveds.endeavourhealth.net";
+      document.getElementById('apihost4').value = "https://deveds.endeavourhealth.net/eds-api";
       document.getElementById('token4').value = token;
       document.getElementById('nhs2').value = "8111146787";
       document.getElementById('requester').value = "111TESTORG";
@@ -509,15 +509,13 @@ grant_type = password</td></tr>
       var req = document.getElementById('requester').value;
       var flag = document.getElementById('flag').value;
 
-      var request = "code=" + flag + "&subject=" + nhs2;
-
       var xhttp = new XMLHttpRequest();
-      xhttp.open("GET", api4 + "/api/subscriber/flag", false);
+      xhttp.open("GET", api4 + "/api/subscriber/flag?code=" + flag + "&subject=" + nhs2, false);
       xhttp.withCredentials = true;
       xhttp.setRequestHeader("Authorization", "Bearer " + token4);
       xhttp.setRequestHeader("OdsCode", req);
       try {
-        xhttp.send(request);
+        xhttp.send();
         try {
           var response = JSON.parse(xhttp.responseText);
           document.getElementById('flagresponse').value = JSON.stringify(response, null, 2);
