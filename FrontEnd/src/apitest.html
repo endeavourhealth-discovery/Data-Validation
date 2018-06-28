@@ -85,7 +85,18 @@ grant_type = password</td></tr>
 												<div class="input-group-prepend">
 													<span class="input-group-text" id="basic-addon4"><i class="fa fa-fw fa-reply"></i></span>
 												</div>
-												<textarea id="authresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon4" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+												<textarea id="authresponse" type="text" class="form-control" placeholder="Example response: -
+{
+  'access_token':      <Access token (used for API calls below)>,
+  'expires_in':        <token expiry time (seconds)>,
+  'refresh_expires':   <refresh expiry time (seconds)>,
+  'refresh_token':     <refresh token>,
+  'token_type':        'bearer',
+  'id_token':          <id_token>,
+  'not-before-policy': <timestamp the access token is valid from>,
+  'session_state':     <session state id>
+}
+" aria-label="Response" aria-describedby="basic-addon4" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
 											</div>
 										</div>
 									</div>
@@ -141,7 +152,13 @@ grant_type = password</td></tr>
 												<div class="input-group-prepend">
 													<span class="input-group-text" id="basic-addon6"><i class="fa fa-fw fa-reply"></i></span>
 												</div>
-												<textarea id="typesresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon6" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+												<textarea id="typesresponse" type="text" class="form-control" placeholder="Example response: -
+[
+  { 'id': 'AllergyIntolerance', 'name': 'Allergy/Intolerance'},
+  { 'id': 'Appointment', 'name': 'Appointment' },
+  ...
+]
+" aria-label="Response" aria-describedby="basic-addon6" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
 											</div>
 										</div>
 									</div>
@@ -206,7 +223,32 @@ grant_type = password</td></tr>
 												<div class="input-group-prepend">
 													<span class="input-group-text" id="basic-addon9"><i class="fa fa-fw fa-reply"></i></span>
 												</div>
-												<textarea id="patientresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon9" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+												<textarea id="patientresponse" type="text" class="form-control" placeholder="Example response: -
+{
+  'resourceType': 'Bundle',
+  'entry': [
+    {
+      'resource': {
+        'resourceType': 'Patient',
+        'id': '<Patient ID>',
+        'identifier': [
+          { 'system': 'patient-number', 'value': '1234' },
+          ...
+        ],
+        'name': [
+          {
+            'text': '<Patient name>'
+          }
+        ],
+        'birthDate': '<Birth date (yyyy-mm-dd)>',
+        'managingOrganization': {
+          'reference': 'Organization/<Organisation ID>'
+        }
+      }
+    }
+  ]
+}
+" aria-label="Response" aria-describedby="basic-addon9" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
 											</div>
 										</div>
 									</div>
@@ -283,7 +325,16 @@ grant_type = password</td></tr>
 												<div class="input-group-prepend">
 													<span class="input-group-text" id="basic-addon13"><i class="fa fa-fw fa-reply"></i></span>
 												</div>
-												<textarea id="resourceresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="basic-addon13" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+												<textarea id="resourceresponse" type="text" class="form-control" placeholder="Example response: -
+{
+  'resourceType': 'Bundle',
+  'entry': [
+    {<FHIR Resource data>},
+    {<FHIR Resource data>},
+    ...
+  ]
+}
+" aria-label="Response" aria-describedby="basic-addon13" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
 											</div>
 										</div>
 									</div>
@@ -369,7 +420,26 @@ grant_type = password</td></tr>
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="flagresponse-addon"><i class="fa fa-fw fa-reply"></i></span>
                         </div>
-                        <textarea id="flagresponse" type="text" class="form-control" placeholder="Response" aria-label="Response" aria-describedby="flagresponse-addon" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
+                        <textarea id="flagresponse" type="text" class="form-control" placeholder="Example response: -
+{
+  'resourceType': 'Parameters',
+  'parameter': [
+    { 'name': 'code', 'valueString': <Flag code> },
+    { 'name': 'subject', 'valueString': <NHS Number> },
+    { 'name': 'return', 'resource': {
+        'resourceType': 'Flag',
+        'status': 'active',
+        'code': {
+          'coding': [
+            { 'code': '289999999105', 'display': 'Potentially frail'}
+          ],
+          'text': 'Potentially frail'
+        }
+      }
+    }
+  ]
+}
+" aria-label="Response" aria-describedby="flagresponse-addon" rows="10" style="font-family: monospace; font-size: 10pt"></textarea>
                       </div>
                     </div>
                   </div>
