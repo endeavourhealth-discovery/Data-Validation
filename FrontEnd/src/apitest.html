@@ -340,14 +340,6 @@ grant_type = password</td></tr>
                     <div class="col-md-4">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text" id="nhs2-addon"><i class="fa fa-fw fa-id-card-o"></i></span>
-                        </div>
-                        <input id="nhs2" type="text" class="form-control" placeholder="NHS Number" aria-label="Host" aria-describedby="nhs2-addon">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
                           <span class="input-group-text" id="requester-addon"><i class="fa fa-fw fa-hospital-o"></i></span>
                         </div>
                         <input id="requester" type="text" class="form-control" placeholder="ODS Code" aria-label="Host" aria-describedby="requester-addon">
@@ -359,6 +351,14 @@ grant_type = password</td></tr>
                           <span class="input-group-text" id="flag-addon"><i class="fa fa-fw fa-flag-o"></i></span>
                         </div>
                         <input id="flag" type="text" class="form-control" placeholder="Flag code" aria-label="Host" aria-describedby="flag-addon">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="nhs2-addon"><i class="fa fa-fw fa-id-card-o"></i></span>
+                        </div>
+                        <input id="nhs2" type="text" class="form-control" placeholder="NHS Number" aria-label="Host" aria-describedby="nhs2-addon">
                       </div>
                     </div>
                   </div>
@@ -396,9 +396,9 @@ grant_type = password</td></tr>
 
 		function getAuthToken() {
 			var host = document.getElementById('authhost').value;
-			var client = encodeURI(document.getElementById('client').value);
-			var user = encodeURI(document.getElementById('user').value);
-			var pass = encodeURI(document.getElementById('pass').value);
+			var client = encodeURIComponent(document.getElementById('client').value);
+			var user = encodeURIComponent(document.getElementById('user').value);
+			var pass = encodeURIComponent(document.getElementById('pass').value);
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", host + "/auth/realms/endeavour/protocol/openid-connect/token", false);
 			xhttp.withCredentials = true;
@@ -451,7 +451,7 @@ grant_type = password</td></tr>
 
 		function getPatients() {
 			var host = document.getElementById('apihost2').value;
-			var nhs = encodeURI(document.getElementById('nhsnumber').value);
+			var nhs = encodeURIComponent(document.getElementById('nhsnumber').value);
       var token2 = document.getElementById('token2').value;
       var xhttp = new XMLHttpRequest();
 			xhttp.open("GET", host + "/api/fhir/patients?nhsNumber="+nhs, false);
@@ -515,9 +515,9 @@ grant_type = password</td></tr>
     function getFlag() {
       var api4 = document.getElementById('apihost4').value;
       var token4 = document.getElementById('token4').value;
-      var nhs2 = encodeURI(document.getElementById('nhs2').value);
+      var nhs2 = encodeURIComponent(document.getElementById('nhs2').value);
       var req = document.getElementById('requester').value;
-      var flag = encodeURI(document.getElementById('flag').value);
+      var flag = encodeURIComponent(document.getElementById('flag').value);
 
       var xhttp = new XMLHttpRequest();
       xhttp.open("GET", api4 + "/api/subscriber/flag?code=" + flag + "&subject=" + nhs2, false);
