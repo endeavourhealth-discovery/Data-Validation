@@ -19,7 +19,11 @@ import java.util.stream.Collectors;
 
 public class ReportLogic {
     private static final Logger LOG = LoggerFactory.getLogger(ReportLogic.class);
-    private static final ReportDAL reportProvider = new ReportDAL_Jdbc();
+    private ReportDAL reportProvider;
+
+    public ReportLogic(String enterpriseDb) {
+        this.reportProvider = new ReportDAL_Jdbc(enterpriseDb);
+    }
 
     public LibraryItem runReport(UUID reportUuid, String reportParamsJson, UUID userUuid) throws Exception {
         LOG.debug("runReport");

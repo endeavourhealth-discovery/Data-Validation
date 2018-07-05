@@ -26,8 +26,13 @@ import java.util.*;
 
 public class ReportDAL_Jdbc implements ReportDAL {
 	private static final Logger LOG = LoggerFactory.getLogger(ReportDAL_Jdbc.class);
-	private static Connection _conn = null;
-	private static boolean _isPseudo = true;
+    private Connection _conn = null;
+    private boolean _isPseudo = true;
+	private String enterpriseDb;
+
+	public ReportDAL_Jdbc(String enterpriseDb) {
+	    this.enterpriseDb = enterpriseDb;
+    }
 
 	@Override
 	public LibraryItem runReport(UUID userUuid, UUID reportUuid, Map<String, String> reportParams) throws Exception {
@@ -347,9 +352,9 @@ public class ReportDAL_Jdbc implements ReportDAL {
 		return ("workspace.rep_" + userUuid.toString().hashCode() + "_" + reportUuid.toString().hashCode()).replace('-','_');
 	}
 
-	private static Connection getConnection() throws SQLException, IOException {
+	private Connection getConnection() throws SQLException, IOException {
 		if (_conn == null) {
-			JsonNode config = ConfigManager.getConfigurationAsJson("enterprise-lite");
+			JsonNode config = ConfigManager.getConfigurationAsJson(this.enterpriseDb);
 			String url = config.get("url").asText();
 			String username = config.get("ui-username").asText();
 			String password = config.get("ui-password").asText();
