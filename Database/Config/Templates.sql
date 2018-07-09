@@ -308,6 +308,10 @@ values (
             <label for="Value">Value</label>
             <input id="Value" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.value}}">
         </div>
+        <div class="form-group" *ngIf="resource.resourceJson.valueString!=null">
+            <label for="ValueString">Value</label>
+            <input id="ValueString" class="form-control" type="text" disabled value="{{resource.resourceJson.valueString}}">
+        </div>
         <div *ngFor="let component of resource.resourceJson.component">
             <div class="form-group">
                 <label for="code">Code</label>
