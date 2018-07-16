@@ -326,6 +326,10 @@ values (
                 <input id="codeValue" class="form-control" type="text" disabled value="{{component.valueQuantity.value}}">
             </div>
         </div>
+        <div class="form-group" *ngIf="resource.resourceJson.referenceRange!=null">
+          <label for="refRange">Range</label>
+          <input id="refRange" class="form-control" type="text" disabled value="{{resource.resourceJson.referenceRange[0].low.value}} - {{resource.resourceJson.referenceRange[0].high.value}}">
+        </div>
         <div class="form-group">
             <label for="Comments">Comments</label>
             <textarea id="Comments" class="form-control" rows=5 disabled value="{{resource.resourceJson.comments}}"></textarea>
