@@ -430,4 +430,19 @@ export class ResourcesComponent implements OnInit {
     patient.tooltip = 'Local ID(s)';
     patient.tooltipKvp = patient.localIds;
   }
+
+  getKeyName(name: string): string {
+    let idx = name.lastIndexOf('/');
+    if (idx > 0)
+      return name.substring(idx+1);
+
+    return name;
+  }
+
+  isEnded(item: any) {
+    if (item.period && item.period.end && item.period.end < Date.now())
+      return true;
+
+    return false;
+  }
 }

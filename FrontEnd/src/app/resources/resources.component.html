@@ -15,7 +15,6 @@
                   <div class="row">
                     <div class="form-group col-md-5">
                       <label class="control-label">Patient</label>
-                      <ng-template #patientTooltip></ng-template>
                       <multiSelectDropdown [data]="patients" [(ngModel)]="patientFilter" name="patientFilter"></multiSelectDropdown>
                     </div>
                     <div class="form-group col-md-5">
@@ -48,7 +47,17 @@
                           <tr *ngFor="let patientResource of patientResourceList" (click)="viewResource(patientResource)" [ngClass]="{'highlight': patientResource === highlight}">
                             <td>{{getDate(patientResource) | date:'dd-MMM-y'}}</td>
                             <td>{{getPatientName(patientResource)}}</td>
-                            <td>{{getLocalIds(patientResource)}}</td>
+                            <td>
+                              <ng-template #patientIdToolTip>
+                                <div style="width: 500px">
+                                  <div class="row text-left" *ngFor="let item of patientResource.resourceJson.identifier" [class.text-muted]="isEnded(item)">
+                                    <div class="col-md-3">{{getKeyName(item.system)}}</div>
+                                    <div class="col-md-9">: {{item.value}}</div>
+                                  </div>
+                                </div>
+                              </ng-template>
+                              <span [ngbTooltip]="patientIdToolTip">{{getLocalIds(patientResource)}}</span>
+                            </td>
                             <td>{{getServiceName(patientResource)}}</td>
                           </tr>
                         </tbody>
