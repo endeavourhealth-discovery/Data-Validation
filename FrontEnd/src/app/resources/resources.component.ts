@@ -440,8 +440,11 @@ export class ResourcesComponent implements OnInit {
   }
 
   isEnded(item: any) {
-    if (item.period && item.period.end && item.period.end < Date.now())
-      return true;
+    if (item.period && item.period.end) {
+      let date = DateHelper.parse(item.period.end);
+      if (date && date.getDate() < Date.now())
+        return true;
+    }
 
     return false;
   }
