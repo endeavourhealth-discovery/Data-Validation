@@ -115,7 +115,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>api</web-resource-name>
+            <web-resource-name>dev_test_api</web-resource-name>
             <url-pattern>/api/fhir/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
