@@ -17,6 +17,7 @@ import org.hl7.fhir.instance.model.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -36,6 +37,7 @@ public class FHIREndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Types")
     @Path("/resourceType")
+    @RolesAllowed({"dev_test_api"})
     @ApiOperation(value = "Returns a list of all resource types")
     public Response getResourceTypes(@Context SecurityContext sc) throws Exception {
         LOG.debug("Get resource types called");
@@ -53,6 +55,7 @@ public class FHIREndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Patients")
     @Path("/patients")
+    @RolesAllowed({"dev_test_api"})
     @ApiOperation(value = "Returns a list of patients base on NHS number")
     public Response getPatients(@Context SecurityContext sc,
                                 @ApiParam(value = "Mandatory NHS number") @QueryParam("nhsNumber") String nhsNumber
@@ -73,6 +76,7 @@ public class FHIREndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Get")
     @Path("/resources")
+    @RolesAllowed({"dev_test_api"})
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
     public Response getForPatient(@Context SecurityContext sc,
                                   @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson
