@@ -366,6 +366,7 @@ public class ResourceLogic {
                 return new ArrayList<>();
         } catch (Exception e) {
             LOG.error("Error getting resource mappings", e);
+            LOG.debug("FieldMapper Details:" + resourceId + "<>" + resourceType + "<>" + field);
             return new ArrayList<>();
         }
     }
