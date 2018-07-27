@@ -53,6 +53,9 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
         List<ResourceWrapper> resources = new ArrayList<>();
 
         try {
+            if (resourceTypes == null || resources.size() == 0)
+                return getPatientResourcesAllTypes(serviceId, systemId, patientId);
+
             for (String resourceType : resourceTypes) {
                 List<ResourceWrapper> resourcesByType = getPatientResourcesByType(serviceId, systemId, patientId, resourceType);
 
@@ -87,11 +90,15 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
                 null,
                 UUID.fromString(patientId),
                 resourceType);
+    }
 
-//        return resourceRepository.getResourcesByPatientAllSystems(
-//            UUID.fromString(serviceId),
-//            UUID.fromString(patientId),
-//            resourceType);
+    private List<ResourceWrapper> getPatientResourcesAllTypes(String serviceId, String systemId, String patientId) throws Exception {
+        ResourceDalI resourceRepository = DalProvider.factoryResourceDal();
+
+        return resourceRepository.getResourcesByPatient(
+            UUID.fromString(serviceId),
+            null,
+            UUID.fromString(patientId));
     }
 
     private static List<UUID> findSystemIds(Service service) throws Exception {
