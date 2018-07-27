@@ -376,15 +376,19 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group" *ngIf="resource.resourceJson.substance!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.substance.coding">
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].display}}">
+      </div>
+      <div class="form-group" *ngIf="!resource.resourceJson.substance.coding">
+        <label for="Display">Display term</label>
+        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.text}}">
       </div>
       <div class="form-group">
         <label for="Date">Effective date</label>
         <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.onset | date:''dd/MM/y''}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.reaction!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.reaction">
         <label for="Severity">Severity</label>
         <input id="Severity" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].severity}}">
       </div>
@@ -394,7 +398,7 @@ values (
       </div>
     </div>
     <div class="col-md-6">
-      <div class="form-group" *ngIf="resource.resourceJson.substance!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.substance.coding">
         <label for="Code">Code</label>
         <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.substance.coding[0].code}}">
       </div>
@@ -402,7 +406,7 @@ values (
         <label for="Recorder">Recorded by</label>
         <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.recorder?.display}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.reaction!=null">
+      <div class="form-group" *ngIf="resource.resourceJson.reaction">
         <label for="Certainty">Certainty</label>
         <input id="Certainty" class="form-control" type="text" disabled value="{{resource.resourceJson.reaction[0].certainty}}">
       </div>
@@ -468,7 +472,7 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-            <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding">
+      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding">
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].display}}">
       </div>
