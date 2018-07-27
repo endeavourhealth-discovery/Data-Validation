@@ -468,12 +468,12 @@ values (
 <form>
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding!=null">
-        <label for="Display">Drug</label>
+            <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding">
+        <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.coding[0].display}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.medicationCodeableConcept.coding==null">
-        <label for="Display">Drug</label>
+      <div class="form-group" *ngIf="!resource.resourceJson.medicationCodeableConcept.coding">
+        <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.medicationCodeableConcept.text}}">
       </div>
       <div class="form-group" *ngIf="resource.resourceJson.dosage!=null">
