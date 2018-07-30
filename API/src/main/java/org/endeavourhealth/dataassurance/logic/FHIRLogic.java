@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class FHIRLogic {
     public List<ResourceType> getResourceTypes() {
@@ -78,5 +79,28 @@ public class FHIRLogic {
             }
         }
         return result;
+    }
+
+
+    public Resource getAdminResource(String serviceId, String reference) {
+        if (reference == null || reference.isEmpty())
+            return null;
+
+        int slashPos = reference.indexOf('/');
+        if (slashPos == -1)
+            throw new IllegalArgumentException("Invalid reference");
+
+        String resourceTypeStr = reference.substring(0, slashPos);
+        org.hl7.fhir.instance.model.ResourceType resourceType = org.hl7.fhir.instance.model.ResourceType.valueOf(resourceTypeStr);
+        String resourceId = reference.substring(slashPos + 1);
+
+        try {
+            UUID.fromString(resourceId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid reference id");
+        }
+
+        ResourceDAL dal = new ResourceDAL_Cassandra();
+        return dal.getResource(resourceType, resourceId, serviceId);
     }
 }

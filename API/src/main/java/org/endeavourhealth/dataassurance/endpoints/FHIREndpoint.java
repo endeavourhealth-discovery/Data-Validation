@@ -14,10 +14,10 @@ import org.endeavourhealth.dataassurance.logic.FHIRLogic;
 import org.endeavourhealth.dataassurance.models.FhirRequest;
 import org.endeavourhealth.dataassurance.models.ResourceType;
 import org.hl7.fhir.instance.model.Bundle;
+import org.hl7.fhir.instance.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -95,6 +95,25 @@ public class FHIREndpoint {
         return Response
             .ok()
             .entity(result)
+            .build();
+    }
+
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Reference")
+    @Path("/reference")
+    @ApiOperation(value = "Returns the admin resource a given service and reference")
+    public Response adminResource(@Context SecurityContext sc,
+                                  @ApiParam(value = "Mandatory ServiceId") @QueryParam("serviceId") String serviceId,
+                                  @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference) throws Exception {
+        LOG.debug("Get reference resource called");
+
+        Resource resource = new FHIRLogic().getAdminResource(serviceId, reference);
+
+        return Response
+            .ok(resource)
             .build();
     }
 }
