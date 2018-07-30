@@ -111,9 +111,10 @@ public class FHIREndpoint {
         LOG.debug("Get reference resource called");
 
         Resource resource = new FHIRLogic().getAdminResource(serviceId, reference);
+        String result = ParserPool.getInstance().composeString("application/json", resource);
 
         return Response
-            .ok(resource)
+            .ok(result)
             .build();
     }
 }
