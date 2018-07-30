@@ -106,11 +106,11 @@ public class FHIREndpoint {
     @Path("/reference")
     @ApiOperation(value = "Returns the admin resource a given service and reference")
     public Response adminResource(@Context SecurityContext sc,
-                                  @ApiParam(value = "Mandatory ServiceId") @QueryParam("serviceId") String serviceId,
                                   @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference) throws Exception {
         LOG.debug("Get reference resource called");
 
-        Resource resource = new FHIRLogic().getAdminResource(serviceId, reference);
+        Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+        Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
         String result = ParserPool.getInstance().composeString("application/json", resource);
 
         return Response

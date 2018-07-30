@@ -82,7 +82,7 @@ public class FHIRLogic {
     }
 
 
-    public Resource getAdminResource(String serviceId, String reference) {
+    public Resource getAdminResource(Set<String> allowedOrgs, String reference) {
         if (reference == null || reference.isEmpty())
             return null;
 
@@ -101,6 +101,14 @@ public class FHIRLogic {
         }
 
         ResourceDAL dal = new ResourceDAL_Cassandra();
-        return dal.getResource(resourceType, resourceId, serviceId);
+
+        Resource resource;
+        for(String serviceId: allowedOrgs) {
+            resource = dal.getResource(resourceType, resourceId, serviceId);
+            if (resource != null)
+                return resource;
+        }
+
+        return null;
     }
 }
