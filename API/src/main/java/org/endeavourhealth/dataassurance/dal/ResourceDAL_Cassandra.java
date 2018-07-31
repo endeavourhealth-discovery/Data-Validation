@@ -53,7 +53,7 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
         List<ResourceWrapper> resources = new ArrayList<>();
 
         try {
-            if (resourceTypes == null || resources.size() == 0)
+            if (resourceTypes == null || resourceTypes.size() == 0)
                 return getPatientResourcesAllTypes(serviceId, systemId, patientId);
 
             for (String resourceType : resourceTypes) {
@@ -74,10 +74,9 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
     public Resource getResource(org.hl7.fhir.instance.model.ResourceType resourceType, String resourceId, String serviceId) {
         ResourceDalI resourceRepository = DalProvider.factoryResourceDal();
         try {
-
             return resourceRepository.getCurrentVersionAsResource(UUID.fromString(serviceId), resourceType, resourceId);
         } catch (Exception e) {
-            LOG.error("Error fetching resource", e);
+            LOG.error("Error fetching resource [" + resourceType.toString() + "|" + resourceId + "|" + serviceId +"]", e);
             return null;
         }
     }

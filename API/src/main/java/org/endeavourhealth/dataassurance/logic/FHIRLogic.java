@@ -104,13 +104,9 @@ public class FHIRLogic {
 
         Resource resource;
         for(String serviceId: allowedOrgs) {
-            try {
-                resource = dal.getResource(resourceType, resourceId, serviceId);
-                if (resource != null)
-                    return resource;
-            } catch (Exception e) {
-                System.out.println("Unable to get resource for serviceId [" + serviceId + "]");
-            }
+            resource = dal.getResource(resourceType, resourceId, serviceId);
+            if (resource != null)
+                return resource;
         }
 
         return null;
