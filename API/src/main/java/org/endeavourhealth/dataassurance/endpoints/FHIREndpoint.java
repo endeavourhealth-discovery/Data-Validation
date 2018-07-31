@@ -111,7 +111,7 @@ public class FHIREndpoint {
 
         Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
         Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
-        String result = ParserPool.getInstance().composeString("application/json", resource);
+        String result = resource == null ? null : ParserPool.getInstance().composeString("application/json", resource);
 
         return Response
             .ok(result)
