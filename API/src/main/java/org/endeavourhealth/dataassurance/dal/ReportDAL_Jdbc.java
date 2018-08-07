@@ -98,7 +98,7 @@ public class ReportDAL_Jdbc implements ReportDAL {
 	}
 
 	private void  createReportTable(Map<String, String> reportParams, String odsCode, LibraryItem report, Connection conn, String tablename) throws Exception {
-		String query = "SELECT "+ reportParams.get("RunDate") +" as run_date, p.id as internal_patient_id\n";
+		String query = "SELECT :RunDate as run_date, p.id as internal_patient_id\n";
 
 		if (!_isPseudo)
 		    query += ", p.nhs_number\n";
