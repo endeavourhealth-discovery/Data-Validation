@@ -27,4 +27,8 @@ export class AppMenuService implements  AbstractMenuProvider {
       {caption: 'Standard reports', state: 'reports', icon: 'fa fa-file-text-o', role: 'data-assurance:reports'},
     ];
   }
+
+  useUserManagerForRoles(): boolean {
+    return false;
+  }
 }

@@ -21,8 +21,10 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "scssStyles.scss",
-        "lessStyles.less"
+        "scssStyles.scss"
+      ],
+      "scripts": [
+        "../node_modules/eds-angular4/assets/javascript/keycloak.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

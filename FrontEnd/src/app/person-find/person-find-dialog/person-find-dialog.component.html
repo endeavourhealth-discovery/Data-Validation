@@ -38,6 +38,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn" (click)="cancel()" name="cancel">Cancel</button>
-  <button type="button" class="btn btn-primary" (click)="ok();" [disabled]="selectedPerson == null" name="Ok">OK</button>
+  <button type="button" class="btn btn-success" (click)="ok();" [disabled]="selectedPerson == null" name="Ok">Select person</button>
+  <button type="button" class="btn btn-danger" (click)="cancel()" name="cancel">Cancel</button>
 </div>
