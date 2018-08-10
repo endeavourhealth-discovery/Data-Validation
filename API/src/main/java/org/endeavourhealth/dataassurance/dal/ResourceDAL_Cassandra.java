@@ -86,7 +86,6 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
 
         return resourceRepository.getResourcesByPatient(
                 UUID.fromString(serviceId),
-                null,
                 UUID.fromString(patientId),
                 resourceType);
     }
@@ -96,7 +95,6 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
 
         return resourceRepository.getResourcesByPatient(
             UUID.fromString(serviceId),
-            null,
             UUID.fromString(patientId));
     }
 

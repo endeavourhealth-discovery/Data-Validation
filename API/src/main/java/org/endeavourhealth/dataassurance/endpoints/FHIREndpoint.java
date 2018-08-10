@@ -9,6 +9,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.endeavourhealth.common.cache.ObjectMapperPool;
 import org.endeavourhealth.common.cache.ParserPool;
+import org.endeavourhealth.common.security.SecurityUtils;
+import org.endeavourhealth.core.database.dal.audit.models.SubscriberApiAudit;
+import org.endeavourhealth.core.database.dal.audit.models.SubscriberApiAuditHelper;
 import org.endeavourhealth.dataassurance.helpers.Security;
 import org.endeavourhealth.dataassurance.logic.FHIRLogic;
 import org.endeavourhealth.dataassurance.models.FhirRequest;
@@ -18,13 +21,12 @@ import org.hl7.fhir.instance.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.*;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Path("/fhir")
 @Metrics(registry = "dataAssuranceMetricRegistry")
@@ -38,15 +40,27 @@ public class FHIREndpoint {
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Types")
     @Path("/resourceType")
     @ApiOperation(value = "Returns a list of all resource types")
-    public Response getResourceTypes(@Context SecurityContext sc) throws Exception {
+    public Response getResourceTypes(@Context HttpServletRequest request,
+                                     @Context SecurityContext sc,
+                                     @Context UriInfo uriInfo) throws Exception {
         LOG.debug("Get resource types called");
 
-        List<ResourceType> result = new FHIRLogic().getResourceTypes();
+        UUID userUuid = SecurityUtils.getCurrentUserId(sc);
+        SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
-        return Response
-            .ok()
-            .entity(result)
-            .build();
+        try {
+            List<ResourceType> result = new FHIRLogic().getResourceTypes();
+
+            Response r = Response
+                    .ok()
+                    .entity(result)
+                    .build();
+            SubscriberApiAuditHelper.updateAudit(audit, r, false);
+            return r;
+
+        } finally {
+            SubscriberApiAuditHelper.save(audit);
+        }
     }
 
     @GET
@@ -55,18 +69,30 @@ public class FHIREndpoint {
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Patients")
     @Path("/patients")
     @ApiOperation(value = "Returns a list of patients base on NHS number")
-    public Response getPatients(@Context SecurityContext sc,
+    public Response getPatients(@Context HttpServletRequest request,
+                                @Context SecurityContext sc,
+                                @Context UriInfo uriInfo,
                                 @ApiParam(value = "Mandatory NHS number") @QueryParam("nhsNumber") String nhsNumber
     ) throws Exception {
         LOG.debug("Get patients called");
 
-        Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc));
-        String result = ParserPool.getInstance().composeString("application/json", patients);
+        UUID userUuid = SecurityUtils.getCurrentUserId(sc);
+        SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
-        return Response
-            .ok()
-            .entity(result)
-            .build();
+        try {
+            Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc));
+            String result = ParserPool.getInstance().composeString("application/json", patients);
+
+            Response r = Response
+                .ok()
+                .entity(result)
+                .build();
+            SubscriberApiAuditHelper.updateAudit(audit, r, false);
+            return r;
+
+        } finally {
+            SubscriberApiAuditHelper.save(audit);
+        }
     }
 
     @POST
@@ -75,27 +101,39 @@ public class FHIREndpoint {
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Get")
     @Path("/resources")
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
-    public Response getForPatient(@Context SecurityContext sc,
+    public Response getForPatient(@Context HttpServletRequest request,
+                                  @Context SecurityContext sc,
+                                  @Context UriInfo uriInfo,
                                   @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson
     ) throws Exception {
         LOG.debug("getForPatient called");
 
-        JsonNode json = ObjectMapperPool.getInstance().readTree(resourceRequestJson);
+        UUID userUuid = SecurityUtils.getCurrentUserId(sc);
+        SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
-        FhirRequest fhirRequest = new FhirRequest()
-            .setPatients((Bundle)ParserPool.getInstance().parse(json.get("patients").toString()))
-            .setResources(ObjectMapperPool.getInstance().readValue(json.get("resources").toString(), new TypeReference<List<String>>(){}));
+        try {
+            JsonNode json = ObjectMapperPool.getInstance().readTree(resourceRequestJson);
 
-        Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+            FhirRequest fhirRequest = new FhirRequest()
+                .setPatients((Bundle)ParserPool.getInstance().parse(json.get("patients").toString()))
+                .setResources(ObjectMapperPool.getInstance().readValue(json.get("resources").toString(), new TypeReference<List<String>>(){}));
 
-        Bundle resources = new FHIRLogic().getPatientResources(allowedOrgs,fhirRequest);
+            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
 
-        String result = ParserPool.getInstance().composeString("application/json", resources);
+            Bundle resources = new FHIRLogic().getPatientResources(allowedOrgs,fhirRequest);
 
-        return Response
-            .ok()
-            .entity(result)
-            .build();
+            String result = ParserPool.getInstance().composeString("application/json", resources);
+
+            Response r = Response
+                .ok()
+                .entity(result)
+                .build();
+            SubscriberApiAuditHelper.updateAudit(audit, r, false);
+            return r;
+
+        } finally {
+            SubscriberApiAuditHelper.save(audit);
+        }
     }
 
 
@@ -105,16 +143,29 @@ public class FHIREndpoint {
     @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Reference")
     @Path("/reference")
     @ApiOperation(value = "Returns the admin resource a given service and reference")
-    public Response adminResource(@Context SecurityContext sc,
+    public Response adminResource(@Context HttpServletRequest request,
+                                  @Context SecurityContext sc,
+                                  @Context UriInfo uriInfo,
                                   @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference) throws Exception {
         LOG.debug("Get reference resource called");
 
-        Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
-        Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
-        String result = resource == null ? null : ParserPool.getInstance().composeString("application/json", resource);
+        UUID userUuid = SecurityUtils.getCurrentUserId(sc);
+        SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
-        return Response
-            .ok(result)
-            .build();
+        try {
+
+            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+            Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
+            String result = resource == null ? null : ParserPool.getInstance().composeString("application/json", resource);
+
+            Response r = Response
+                .ok(result)
+                .build();
+            SubscriberApiAuditHelper.updateAudit(audit, r, false);
+            return r;
+
+        } finally {
+            SubscriberApiAuditHelper.save(audit);
+        }
     }
 }

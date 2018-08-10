@@ -6,6 +6,7 @@ import org.endeavourhealth.core.database.dal.ehr.models.ResourceWrapper;
 import org.endeavourhealth.core.database.dal.publisherTransform.SourceFileMappingDalI;
 import org.endeavourhealth.core.database.dal.publisherTransform.models.ResourceFieldMapping;
 import org.endeavourhealth.core.database.dal.publisherTransform.models.ResourceFieldMappingAudit;
+import org.endeavourhealth.core.database.dal.publisherTransform.models.SourceFileRecord;
 import org.hl7.fhir.instance.model.ResourceType;
 
 import java.util.ArrayList;
@@ -44,14 +45,31 @@ public class Mock_FileMappingDAL implements SourceFileMappingDalI {
     }
 
     @Override
-    public long auditFileRow(UUID uuid, String[] strings, int i, int i1) throws Exception {
-        return 0;
+    public SourceFileRecord findSourceFileRecordRow(UUID uuid, long l) throws Exception {
+        return null;
     }
 
     @Override
-    public void saveResourceMappings(UUID uuid, ResourceWrapper resourceWrapper, ResourceFieldMappingAudit resourceFieldMappingAudit) throws Exception {
+    public void auditFileRow(UUID uuid, SourceFileRecord sourceFileRecord) throws Exception {
 
     }
+
+    @Override
+    public void auditFileRows(UUID uuid, List<SourceFileRecord> list) throws Exception {
+
+    }
+
+    @Override
+    public void saveResourceMappings(ResourceWrapper resourceWrapper, ResourceFieldMappingAudit resourceFieldMappingAudit) throws Exception {
+
+    }
+
+    @Override
+    public void saveResourceMappings(Map<ResourceWrapper, ResourceFieldMappingAudit> map) throws Exception {
+
+    }
+
+
 
     @Override
     public List<ResourceFieldMapping> findFieldMappings(UUID uuid, ResourceType resourceType, UUID uuid1) throws Exception {
