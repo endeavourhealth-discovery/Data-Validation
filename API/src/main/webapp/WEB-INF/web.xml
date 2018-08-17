@@ -109,7 +109,7 @@
             <url-pattern>/api/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>eds_user</role-name>
+            <role-name>data-assurance:api</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -131,7 +131,7 @@
 
     <!-- all roles in the system MUST be specified here -->
     <security-role>
-        <role-name>eds_user</role-name>
+        <role-name>data-assurance:api</role-name>
     </security-role>
     <security-role>
         <role-name>dev_test_api</role-name>
