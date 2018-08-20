@@ -18,7 +18,7 @@
         <swagger.version>1.5.13</swagger.version>
 
         <eds-api.version>1.12-SNAPSHOT</eds-api.version>
-        <eds-core.version>1.274-SNAPSHOT</eds-core.version>
+        <eds-core.version>1.277-SNAPSHOT</eds-core.version>
 
         <aspectj.version>1.8.9</aspectj.version>
         <aspectj-metrics.version>1.2.0</aspectj-metrics.version>

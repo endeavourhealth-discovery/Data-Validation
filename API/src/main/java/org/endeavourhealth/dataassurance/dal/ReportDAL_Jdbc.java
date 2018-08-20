@@ -21,7 +21,6 @@ import javax.xml.datatype.DatatypeFactory;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ReportDAL_Jdbc implements ReportDAL {
@@ -60,6 +59,8 @@ public class ReportDAL_Jdbc implements ReportDAL {
 
 			// Clear old results
 			String tablename = getTableName(userUuid, reportUuid);
+			tablename = tablename.replace("'", "''");   //escape check to ensure SI not possible
+
 			dropReportTable(conn, tablename);
 
 			// Build query
@@ -247,8 +248,10 @@ public class ReportDAL_Jdbc implements ReportDAL {
 
 	private List<List<String>> getResults(UUID userUuid, UUID reportUuid, String fields) throws Exception {
 		String tablename = getTableName(userUuid, reportUuid);
+		tablename = tablename.replace("'", "''");   //escape check to ensure SI not possible
 
 		Connection conn = getConnection();
+		fields = fields.replace("'", "''");   //escape check to ensure SI not possible
 		PreparedStatement statement = conn.prepareStatement("SELECT "+fields+" FROM " + tablename);
 
 		return SqlUtils.getStatementResultsAsCSV(statement);
