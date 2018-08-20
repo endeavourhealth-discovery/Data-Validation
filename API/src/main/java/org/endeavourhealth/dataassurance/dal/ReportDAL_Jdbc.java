@@ -114,11 +114,16 @@ public class ReportDAL_Jdbc implements ReportDAL {
 
 		query += " WHERE eoc.date_registered < :RunDate \nAND (eoc.date_registered_end IS NULL OR eoc.date_registered_end >= :RunDate) \n";
 		query += " AND (p.date_of_death IS NULL OR p.date_of_death >= COALESCE(:DateOfDeath, p.date_of_death))\n";
-		query += " AND org.ods_code = '" + odsCode + "' \n";
+		// query += " AND org.ods_code = '" + odsCode + "' \n";
+		query += " AND org.ods_code = :OdsCode \n";
 		if (report.getCountReport().getQuery() != null)
 			query += report.getCountReport().getQuery();
 
 		query = "CREATE TABLE " + tablename + " AS \n" + query;
+
+		//add the Ods code to the parameter list
+		reportParams.put("OdsCode", odsCode);
+
 		PreparedStatement statement = null;
 		try {
 			statement = setParameters(conn, reportParams, query);
@@ -202,6 +207,7 @@ public class ReportDAL_Jdbc implements ReportDAL {
 						statement.setInt(index++, Integer.parseInt(value));
 					break;
 				case "OriginalCode":
+				case "OdsCode":
 					if (value == null)
 						statement.setNull(index++, Types.VARCHAR);
 					else
