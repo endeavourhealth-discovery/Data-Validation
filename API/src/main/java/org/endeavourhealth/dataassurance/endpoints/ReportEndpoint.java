@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.endpoints;
 
+import com.google.common.base.Strings;
 import org.endeavourhealth.common.security.SecurityUtils;
 import org.endeavourhealth.core.database.dal.DalProvider;
 import org.endeavourhealth.core.database.dal.audit.UserAuditDalI;
@@ -169,7 +170,13 @@ public final class ReportEndpoint extends AbstractEndpoint {
     private String getEnterpriseDb(SecurityContext sc) {
         try {
             KeycloakPrincipal kp = (KeycloakPrincipal) sc.getUserPrincipal();
-            return (String) kp.getKeycloakSecurityContext().getToken().getOtherClaims().get("enterprise-db");
+            String entDb = (String) kp.getKeycloakSecurityContext().getToken().getOtherClaims().get("enterprise-db");
+            if (!Strings.isNullOrEmpty(entDb)) {
+                return entDb;
+            } else {
+                LOG.error("Failed to get enterprise DB for user, using default.");
+                return "enterprise-lite";
+            }
         } catch (Exception e) {
             LOG.error("Failed to get enterprise DB for user", e);
             return "enterprise-lite";
