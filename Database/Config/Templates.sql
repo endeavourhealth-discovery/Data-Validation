@@ -644,6 +644,10 @@ values (
         <label for="Lot">Lot number</label>
         <input id="Lot" class="form-control" type="text" disabled value="{{resource.resourceJson.lotNumber}}">
       </div>
+      <div class="form-group">
+         <label for="Dosage">Dosage</label>
+         <input id="Dosage" class="form-control" type="text" disabled value="{{resource.resourceJson.doseQuantity?.value}} {{resource.resourceJson.doseQuantity?.unit}}">
+       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
