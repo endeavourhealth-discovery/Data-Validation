@@ -840,3 +840,41 @@ values (
   </div>
 </form>
 </div>');
+
+delete from config where config_id = 'Template-Appointment' and app_id = 'data-assurance';
+insert into config (app_id, config_id, config_data)
+values (
+  'data-assurance',
+  'Template-Appointment',
+  '<div class="container">
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Status">Status</label>
+          <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+        </div>
+        <div class="form-group">
+          <label for="StartDate">Start Date</label>
+          <input id="StartDate" class="form-control" type="text" disabled value="{{resource.resourceJson.start | date:''dd/MM/y HH:mm:ss''}}">
+        </div>
+        <div class="form-group">
+          <label for="EndDate">End Date</label>
+          <input id="EndDate" class="form-control" type="text" disabled value="{{resource.resourceJson.end | date:''dd/MM/y HH:mm:ss''}}">
+        </div>
+        <div class="form-group">
+          <label for="Duration">Duration</label>
+          <input id="Duration" class="form-control" type="text" disabled value="{{resource.resourceJson.minutesDuration}} mins">
+        </div>
+      </div>
+      <div class="col-md-6">
+       <div *ngFor="let participant of resource.resourceJson.participant">
+         <div class="form-group" *ngIf="participant.actor.reference.startsWith(''Practitioner'')" >
+           <label for="Practitioner">Practitioner</label>
+           <input id="Practitioner" class="form-control" type="text" disabled value="{{participant.actor.display}}">
+         </div>
+       </div>
+      </div>
+    </div>
+  </form>
+</div>');
