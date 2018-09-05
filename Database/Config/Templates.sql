@@ -758,6 +758,10 @@ values (
         <label for="Recipient">Recipient</label>
         <input id="Recipient" class="form-control" type="text" disabled value="{{resource.resourceJson.recipient[0].display}}">
       </div>
+      <div class="form-group">
+        <label for="Status">Status</label>
+        <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+      </div>		
     </div>
   </div>
 </form>
