@@ -216,6 +216,7 @@ export class ResourcesComponent implements OnInit {
     switch (resource.resourceJson.resourceType) {
       case 'Condition': return resource.recordedDate = DateHelper.parse(resource.resourceJson.dateRecorded);
       case 'AllergyIntolerance': return resource.recordedDate = DateHelper.parse(resource.resourceJson.recordedDate);
+      case 'Appointment': return resource.recordedDate = DateHelper.parse(resource.resourceJson.start);	  
       case 'DiagnosticOrder': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'DiagnosticReport': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'ProcedureRequest': return resource.recordedDate = DateHelper.parse(resource.resourceJson.orderedOn);
@@ -257,6 +258,7 @@ export class ResourcesComponent implements OnInit {
     switch (resource.resourceJson.resourceType) {
       case 'Patient': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.birthDate);
       case 'AllergyIntolerance': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onset);
+      case 'Appointment': return resource.recordedDate = DateHelper.parse(resource.resourceJson.end);	  	  
       case 'Condition': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onsetDateTime);
       case 'DiagnosticOrder': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.event ? resource.resourceJson.event.dateTime : null);
       case 'DiagnosticReport': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
