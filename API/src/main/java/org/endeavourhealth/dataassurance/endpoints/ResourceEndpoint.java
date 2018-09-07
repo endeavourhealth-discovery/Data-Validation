@@ -80,7 +80,7 @@ public class ResourceEndpoint {
         LOG.debug("Get Reference Called");
 
         String referenceDescription = new ResourceLogic().getReferenceDescription(serviceId, reference);
-
+         LOG.debug("Reference:" + referenceDescription + "for ref:" + reference + " service:" + serviceId);
         return Response
             .ok(referenceDescription)
             .build();
@@ -100,7 +100,10 @@ public class ResourceEndpoint {
         LOG.debug("Get Field Mappings Called");
 
         List<ResourceFieldMapping> fieldMappings = new ResourceLogic().getResourceMappings(serviceId, resourceType, resourceId);
-
+        LOG.debug("Service:" + serviceId + ". ResType:" + resourceType + ".ResId:" + resourceId );
+        for (ResourceFieldMapping rfm : fieldMappings) {
+            LOG.debug(rfm.getResourceField() + ":" +rfm.getValue());
+        }
         return Response
             .ok(fieldMappings)
             .build();
@@ -119,6 +122,7 @@ public class ResourceEndpoint {
                                          @ApiParam(value = "Mandatory Field") @QueryParam("field") String field
     ) {
         LOG.debug("Get Field Mapping For Field Called");
+        LOG.debug("Field:" + field + ".ResId:" + resourceId + ".ResType:" + resourceType) ;
 
         List<ResourceFieldMapping> fieldMapping = new ResourceLogic().getResourceMappingsForField(serviceId, resourceType, resourceId, field);
 
