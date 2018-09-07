@@ -270,22 +270,29 @@ public class ResourceLogic {
 
     private String getMedicationOrderDisplay(MedicationOrder resource) {
         String medicationOrderDisplay = "";
+        String text = "";
         try {
             // the basic display term
             List<Coding> codes = resource.getMedicationCodeableConcept().getCoding();
             LOG.debug("Codes:" + codes.size());
             if (codes.size() > 0) {
-                medicationOrderDisplay = codes.get(0).getDisplay();
+                text = codes.get(0).getDisplay();
+                if (!Strings.isNullOrEmpty(text)) {
+                    medicationOrderDisplay = text;
+                }
             } else {
                 //non coded, text only drug name
-                medicationOrderDisplay = resource.getMedicationCodeableConcept().getText();
+                text = resource.getMedicationCodeableConcept().getText();
+                if (!Strings.isNullOrEmpty(text)) {
+                    medicationOrderDisplay = text;
+                }
             }
             // get dosage
-            LOG.debug("Getting dosage");
             if (resource.getDosageInstruction().size() >0) {
-                LOG.debug("Dosage > 0");
-                medicationOrderDisplay = medicationOrderDisplay.concat(" " + resource.getDosageInstruction().get(0).getText());
-                LOG.debug("Display " + medicationOrderDisplay);
+                text = resource.getDosageInstruction().get(0).getText();
+                if (!Strings.isNullOrEmpty(text)) {
+                    medicationOrderDisplay = medicationOrderDisplay.concat(" " + text);
+                }
             }
             // additional comments/notes
             String comments = resource.getNote();
