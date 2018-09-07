@@ -289,7 +289,7 @@ public class ResourceLogic {
             }
         }
         catch (Exception e) {
-            medicationOrderDisplay = "Error resolving MedicationOrder reference";
+            medicationOrderDisplay = "Error resolving MedicationOrder reference" + e.getMessage();
         }
         return medicationOrderDisplay;
     }
