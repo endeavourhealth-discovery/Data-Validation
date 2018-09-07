@@ -88,6 +88,7 @@ public class ResourceLogic {
         }
 
         Resource resource = dal.getResource(resourceType, resourceId, serviceId);
+        LOG.debug("DAL fields:resType:" + resourceType + " ResId:" + resourceId + " sId:" + serviceId);
         if (resource == null)
             return "Not found";
 
@@ -272,6 +273,7 @@ public class ResourceLogic {
         try {
             // the basic display term
             List<Coding> codes = resource.getMedicationCodeableConcept().getCoding();
+            LOG.debug("Codes:" + codes.size());
             if (codes.size() > 0) {
                 medicationOrderDisplay = codes.get(0).getDisplay();
             } else {
@@ -279,8 +281,11 @@ public class ResourceLogic {
                 medicationOrderDisplay = resource.getMedicationCodeableConcept().getText();
             }
             // get dosage
+            LOG.debug("Getting dosage");
             if (resource.getDosageInstruction().size() >0) {
+                LOG.debug("Dosage > 0");
                 medicationOrderDisplay = medicationOrderDisplay.concat(" " + resource.getDosageInstruction().get(0).getText());
+                LOG.debug("Display " + medicationOrderDisplay);
             }
             // additional comments/notes
             String comments = resource.getNote();
