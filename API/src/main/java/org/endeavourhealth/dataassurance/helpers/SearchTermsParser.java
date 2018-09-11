@@ -205,7 +205,7 @@ public class SearchTermsParser {
         return sb.toString();
     }
 
-    public static String testParsing() {
+    public static void testParsing() {
         try {
 
             List<String> tests = new ArrayList<>();
