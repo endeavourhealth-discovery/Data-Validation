@@ -636,9 +636,9 @@ values (
         <label for="Display">Display term</label>
         <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccineCode.coding[0].display}}">
       </div>
-      <div class="form-group" *ngIf="resource.resourceJson.explanation?.reason">
-        <label for="Reason">Reason</label>
-        <input id="Reason" class="form-control" type="text" disabled value="{{resource.resourceJson.explanation.reason[0].text}}">
+      <div class="form-group">
+        <label for="Date">Effective date</label>
+        <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.date | date:''dd/MM/y''}}">
       </div>
       <div class="form-group">
         <label for="Route">Route</label>
@@ -652,6 +652,10 @@ values (
          <label for="Dosage">Dosage</label>
          <input id="Dosage" class="form-control" type="text" disabled value="{{resource.resourceJson.doseQuantity?.value}} {{resource.resourceJson.doseQuantity?.unit}}">
        </div>
+	  <div class="form-group" *ngIf="resource.resourceJson.note!=null">
+         <label for="Note">Note</label>
+         <input id="Note" class="form-control" type="text" disabled value="{{resource.resourceJson.note[0].text}}">
+      </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
@@ -669,6 +673,10 @@ values (
       <div class="form-group">
         <label for="Status">Status</label>
         <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+      </div>
+      <div class="form-group" *ngIf="resource.resourceJson.explanation?.reason">
+        <label for="Reason">Reason</label>
+        <input id="Reason" class="form-control" type="text" disabled value="{{resource.resourceJson.explanation.reason[0].text}}">
       </div>
     </div>
   </div>
