@@ -24,7 +24,8 @@
         "scssStyles.scss"
       ],
       "scripts": [
-        "../node_modules/eds-angular4/assets/javascript/keycloak.js"
+        "../node_modules/eds-angular4/assets/javascript/keycloak.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

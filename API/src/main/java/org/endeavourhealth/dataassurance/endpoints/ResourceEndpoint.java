@@ -51,14 +51,15 @@ public class ResourceEndpoint {
     @Path("/")
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
     public Response getForPatient(@Context SecurityContext sc,
-                                  @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson
+                                  @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson,
+                                  @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("getForPatient called");
 
         ResourceRequest resourceRequest = ObjectMapperPool.getInstance().readValue(resourceRequestJson, ResourceRequest.class);
 
         List<PatientResource> resources = new ResourceLogic().getPatientResources(
-            new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc),
+            new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId),
             resourceRequest.getPatients(),
             resourceRequest.getResourceTypes());
 

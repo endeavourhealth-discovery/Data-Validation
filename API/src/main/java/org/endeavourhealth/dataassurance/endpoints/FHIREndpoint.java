@@ -72,7 +72,8 @@ public class FHIREndpoint {
     public Response getPatients(@Context HttpServletRequest request,
                                 @Context SecurityContext sc,
                                 @Context UriInfo uriInfo,
-                                @ApiParam(value = "Mandatory NHS number") @QueryParam("nhsNumber") String nhsNumber
+                                @ApiParam(value = "Mandatory NHS number") @QueryParam("nhsNumber") String nhsNumber,
+                                @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("Get patients called");
 
@@ -80,7 +81,7 @@ public class FHIREndpoint {
         SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
         try {
-            Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc));
+            Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId));
             String result = ParserPool.getInstance().composeString("application/json", patients);
 
             Response r = Response
@@ -104,7 +105,8 @@ public class FHIREndpoint {
     public Response getForPatient(@Context HttpServletRequest request,
                                   @Context SecurityContext sc,
                                   @Context UriInfo uriInfo,
-                                  @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson
+                                  @ApiParam(value = "Mandatory Resource Request") String resourceRequestJson,
+                                  @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("getForPatient called");
 
@@ -118,7 +120,7 @@ public class FHIREndpoint {
                 .setPatients((Bundle)ParserPool.getInstance().parse(json.get("patients").toString()))
                 .setResources(ObjectMapperPool.getInstance().readValue(json.get("resources").toString(), new TypeReference<List<String>>(){}));
 
-            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
 
             Bundle resources = new FHIRLogic().getPatientResources(allowedOrgs,fhirRequest);
 
@@ -146,7 +148,8 @@ public class FHIREndpoint {
     public Response adminResource(@Context HttpServletRequest request,
                                   @Context SecurityContext sc,
                                   @Context UriInfo uriInfo,
-                                  @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference) throws Exception {
+                                  @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference,
+                                  @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId) throws Exception {
         LOG.debug("Get reference resource called");
 
         UUID userUuid = SecurityUtils.getCurrentUserId(sc);
@@ -154,7 +157,7 @@ public class FHIREndpoint {
 
         try {
 
-            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
             Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
             String result = resource == null ? null : ParserPool.getInstance().composeString("application/json", resource);
 

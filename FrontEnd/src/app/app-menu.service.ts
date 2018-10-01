@@ -23,12 +23,12 @@ export class AppMenuService implements  AbstractMenuProvider {
   }
   getMenuOptions(): MenuOption[] {
     return [
-      {caption: 'Resources', state: 'resources', icon: 'fa fa-archive', role: 'data-assurance:resources'},
-      {caption: 'Standard reports', state: 'reports', icon: 'fa fa-file-text-o', role: 'data-assurance:reports'},
+      {caption: 'Resources', state: 'resources', icon: 'fa fa-archive', role: 'Resources'},
+      {caption: 'Standard reports', state: 'reports', icon: 'fa fa-file-text-o', role: 'Reports'},
     ];
   }
 
   useUserManagerForRoles(): boolean {
-    return false;
+    return true;
   }
 }

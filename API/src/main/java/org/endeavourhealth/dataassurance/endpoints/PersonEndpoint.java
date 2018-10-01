@@ -30,10 +30,11 @@ public class PersonEndpoint {
     @Timed(absolute = true, name="DataAssurance.PersonEndpoint.Get")
     @ApiOperation(value = "Returns a list of matching persons")
     public Response get(@Context SecurityContext sc,
-                        @ApiParam(value = "Mandatory Search terms") @QueryParam("searchTerms") String searchTerms
+                        @ApiParam(value = "Mandatory Search terms") @QueryParam("searchTerms") String searchTerms,
+                        @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("Get Person Called");
-        Set<String> orgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc);
+        Set<String> orgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
 
         LOG.debug("Searching [" + searchTerms + "] in orgs [" + String.join(",", orgs)+ "]");
 
@@ -52,11 +53,12 @@ public class PersonEndpoint {
     @Path("/patients")
     @ApiOperation(value = "Returns a list patients for a given person")
     public Response getPatients(@Context SecurityContext sc,
-                        @ApiParam(value = "Mandatory Person Id") @QueryParam("personId") String personId
+                        @ApiParam(value = "Mandatory Person Id") @QueryParam("personId") String personId,
+                                @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("GetPatients Called");
 
-        List<Patient> patients = new PersonPatientLogic().getPatientsForPerson(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc), personId);
+        List<Patient> patients = new PersonPatientLogic().getPatientsForPerson(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId), personId);
 
         return Response
             .ok()
@@ -74,11 +76,12 @@ public class PersonEndpoint {
     public Response getPatients(@Context SecurityContext sc,
                                 @ApiParam(value = "Mandatory Service Id") @QueryParam("serviceId") String serviceId,
                                 @ApiParam(value = "Mandatory System Id") @QueryParam("systemId") String systemId,
-                                @ApiParam(value = "Mandatory Patient Id") @QueryParam("patientId") String patientId
+                                @ApiParam(value = "Mandatory Patient Id") @QueryParam("patientId") String patientId,
+                                @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("GetPatient Called");
 
-        Patient patient = new PersonPatientLogic().getPatient(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc), serviceId, systemId, patientId);
+        Patient patient = new PersonPatientLogic().getPatient(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId), serviceId, systemId, patientId);
 
         return Response
             .ok()

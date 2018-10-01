@@ -10,8 +10,8 @@
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search term" aria-describedby="searchTerm" name="searchData"
                  [(ngModel)]="searchTerms" (keyup)="$event.keyCode == 13 ? search() : null" autofocus>
-          <span class="input-group-addon" (click)="search()" style="cursor: pointer" id="searchButton">
-						<i class="fa fa-search" id="searchTerm" aria-hidden="true"></i>
+          <span class="input-group-append" (click)="search()" style="cursor: pointer" id="searchButton">
+						<i class="fa fa-search input-group-text" id="searchTerm" aria-hidden="true"></i>
 					</span>
         </div>
       </div>

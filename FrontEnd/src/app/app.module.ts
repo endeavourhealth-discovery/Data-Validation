@@ -7,7 +7,7 @@ import {AppMenuService} from './app-menu.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeycloakService} from 'eds-angular4/dist/keycloak/keycloak.service';
 import {keycloakHttpFactory} from 'eds-angular4/dist/keycloak/keycloak.http';
-import {AbstractMenuProvider, LayoutModule, LoggerModule} from 'eds-angular4';
+import {AbstractMenuProvider, LayoutModule, LoggerModule, UserManagerNotificationService} from 'eds-angular4';
 import {ResourcesModule} from './resources/resources.module';
 import {LayoutComponent} from 'eds-angular4/dist/layout/layout.component';
 import {PersonFindModule} from './person-find/person-find.module';
@@ -37,7 +37,7 @@ import {CuiControlsModule} from 'eds-angular4/dist/cuicontrols/cuicontrols.modul
   ],
   providers: [
     KeycloakService,
-    { provide: Http, useFactory: keycloakHttpFactory, deps: [XHRBackend, RequestOptions, KeycloakService] },
+    { provide: Http, useFactory: keycloakHttpFactory, deps: [XHRBackend, RequestOptions, KeycloakService, AbstractMenuProvider, UserManagerNotificationService] },
     { provide: AbstractMenuProvider, useClass : AppMenuService }
   ],
   entryComponents: [LayoutComponent],
