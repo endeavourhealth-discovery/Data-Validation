@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Person find</h4>
+  <h4 class="modal-title">Select person</h4>
   <button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
 </div>
 <div class="modal-body">
@@ -10,23 +10,23 @@
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search term" aria-describedby="searchTerm" name="searchData"
                  [(ngModel)]="searchTerms" (keyup)="$event.keyCode == 13 ? search() : null" autofocus>
-          <span class="input-group-append" (click)="search()" style="cursor: pointer" id="searchButton">
+          <div class="input-group-append" (click)="search()" style="cursor: pointer" id="searchButton">
 						<i class="fa fa-search input-group-text" id="searchTerm" aria-hidden="true"></i>
-					</span>
+					</div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="form-group col-md-12">
         <loadingIndicator [done]="matches" [text]="''">
-          <label class="control-label">Search results</label> <small class="text-muted"></small>
+          <label class="control-label">Search results</label>
           <div class="scroll-box-300 form-control">
             <table class="table table-striped table-hover table-sm" *ngIf="matches && matches.length > 0" id="resultTable">
               <thead>
                 <th class="w-75">Name</th><th class="w-25">NHS number</th>
               </thead>
               <tbody>
-                <tr *ngFor="let match of matches" (click)="selectPerson(match, false)" (dblclick)="selectPerson(match, true)" [ngClass]="{'table-active': match === selectedPerson}">
+                <tr *ngFor="let match of matches" (click)="selectPerson(match, false)" (dblclick)="selectPerson(match, true)" [ngClass]="{'selection': match === selectedPerson}">
                   <td>{{match.name}}</td><td>{{match.nhsNumber}}</td>
                 </tr>
               </tbody>

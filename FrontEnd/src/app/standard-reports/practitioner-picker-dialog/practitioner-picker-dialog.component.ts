@@ -1,7 +1,6 @@
 import {Input, Component} from '@angular/core';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Practitioner} from '../../models/Practitioner';
-import {SecurityService} from 'eds-angular4';
 import {StandardReportsService} from '../standard-reports.service';
 
 @Component({
@@ -14,7 +13,7 @@ export class PractitionerPickerDialogComponent {
   @Input() organisationUuid;
 
   searchData: string;
-  searchResults: Practitioner[];
+  searchResults: Practitioner[] = [];
 
   public static open(modalService: NgbModal, organisationUuid: string) {
     const modalRef = modalService.open(PractitionerPickerDialogComponent, { backdrop: 'static' });

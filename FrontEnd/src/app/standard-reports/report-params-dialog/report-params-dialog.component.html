@@ -7,18 +7,18 @@
 
     <div class="row">
       <div class="form-group col-md-3">
-        <label class="control-label">Run date<span class="text-danger">*</span></label>
+        <label class="control-label required-field">Run date</label>
         <cui-date-picker [(ngModel)]="runDate" name="runDate"></cui-date-picker>
       </div>
       <div class="form-group col-md-3">
-        <label class="control-label">Deceased patients<span class="text-danger">*</span></label>
+        <label class="control-label required-field">Deceased patients</label>
         <select class="form-control" [(ngModel)]="includeDeceased" name="Deceased">
           <option [ngValue]="true">Include</option>
           <option [ngValue]="false">Exclude</option>
         </select>
       </div>
       <div class="form-group col-md-3">
-        <label class="control-label">Organisation<span class="text-danger">*</span></label>
+        <label class="control-label required-field">Organisation</label>
         <select class="form-control" [(ngModel)]="organisation" name="Organisation">
           <option *ngFor="let item of userOrganisations" value="{{item.id}}">{{item.name}}</option>
         </select>
@@ -71,8 +71,8 @@
         <label class="control-label">SNOMED code</label>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="All" [ngModel]="snomedCode?.term" name="SnomedCode" readonly>
-          <button type="button" class="btn btn-default input-group-append" (click)="selectSnomed()"><span class="fa fa-search input-group-text"></span></button>
-          <button type="button" class="btn btn-default input-group-append" (click)="clearSnomed()"><span class="fa fa-times input-group-text"></span></button>
+          <div class="input-group-append" (click)="selectSnomed()"><span class="fa fa-search input-group-text"></span></div>
+          <div class="input-group-append" (click)="clearSnomed()"><span class="fa fa-times input-group-text"></span></div>
         </div>
       </div>
       <div class="form-group col-md-6" [hidden]="hide(originalCode)">
@@ -97,8 +97,8 @@
         <label class="control-label">Referral service type</label>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="All" [ngModel]="referralSnomedCode?.term" name="ReferralSnomedCode" readonly>
-            <button type="button" class="btn btn-default input-group-append" (click)="selectReferralSnomed()"><span class="fa fa-search input-group-text"></span></button>
-            <button type="button" class="btn btn-default input-group-append" (click)="clearReferralSnomed()"><span class="fa fa-times input-group-text"></span></button>
+            <span class="input-group-append" (click)="selectReferralSnomed()"><span class="fa fa-search input-group-text"></span></span>
+            <span class="input-group-append" (click)="clearReferralSnomed()"><span class="fa fa-times input-group-text"></span></span>
         </div>
       </div>
       <div class="form-group col-md-6" [hidden]="hide(referralOriginalCode)">
@@ -129,8 +129,8 @@
         <label class="control-label">Practitioner</label>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="All" [ngModel]="practitioner?.name" name="Practitioner" readonly>
-          <button type="button" class="btn btn-default input-group-append" (click)="selectPractitioner()"><span class="fa fa-search input-group-text"></span></button>
-          <button type="button" class="btn btn-default input-group-append" (click)="clearPractitioner()"><span class="fa fa-times input-group-text"></span></button>
+          <span class="input-group-append" (click)="selectPractitioner()"><span class="fa fa-search input-group-text"></span></span>
+          <span class="input-group-append" (click)="clearPractitioner()"><span class="fa fa-times input-group-text"></span></span>
         </div>
       </div>
     </div>
@@ -164,13 +164,13 @@
 
     <div class="row">
       <div class="col-md-12">
-        <small><span class="text-danger">*</span> Required field</small>
+        <i class="required-field-note"></i>
       </div>
     </div>
   </form>
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn bnt-default" (click)="cancel()">Cancel</button>
-  <button type="button" class="btn btn-primary" *ngIf="!editMode" (click)="ok()" [disabled]="!runDate || !organisation">OK</button>
+  <button type="button" class="btn btn-success" *ngIf="!editMode" (click)="ok()" [disabled]="!runDate || !organisation">Run report</button>
+  <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
 </div>

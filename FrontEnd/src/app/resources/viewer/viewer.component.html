@@ -15,13 +15,13 @@
       <ng-template ngbTabContent>
         <div class="scroll-box-500">
           <app-raw-view [resource]="resource" [node]="resource.resourceJson" (onShowMap)="showMap($event)"></app-raw-view>
-          <div *ngIf="mapDetail" style="position: fixed; top: 140px; right: 55px;">
+          <div *ngIf="mapDetail" style="position: fixed; top: 140px; right: 65px;">
             <app-map-detail [mapDetail]="mapDetail"></app-map-detail>
           </div>
         </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Data Map">
+    <ngb-tab title="Data map">
       <ng-template ngbTabContent>
         <div class="scroll-box-500">
           <app-map-view [resource]="resource"></app-map-view>

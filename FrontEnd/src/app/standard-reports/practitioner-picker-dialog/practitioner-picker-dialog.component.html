@@ -1,13 +1,12 @@
 <div class="modal-header">
-  <h4 class="modal-title">Find practitioner</h4>
+  <h4 class="modal-title">Select practitioner</h4>
   <button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
 </div>
 <div class="modal-body"> <!-- (keydown)="keydown($event)"> -->
-
-  <div class="container-fluid">
-
-    <form id="patient-find-search-criteria">
-      <div class="form-group">
+  <form endUserRole="form" class="container-fluid">
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label>Search criteria</label>
         <div class="input-group">
           <input type="text" class="form-control" [(ngModel)]="searchData" autofocus placeholder="Search term" name="searchTerms" (keyup)="$event.keyCode == 13 && search()">
           <span class="input-group-append" (click)="search()" style="cursor: pointer" id="searchButton">
@@ -15,27 +14,33 @@
 					</span>
         </div>
       </div>
-    </form>
+    </div>
 
-    <div class="scroll-box-350">
-      <div class="table-selectable" *ngIf="searchResults">
-        <table class="table table-hover table-sm table-striped">
-          <thead>
-            <th>Name</th>
-          </thead>
-          <tbody>
-            <tr *ngIf="!(searchResults.length > 0)"><td colspan="3"><i>(no practitioners found)</i></td></tr>
-            <tr *ngFor="let practitioner of searchResults" (click)="selectPractitioner(practitioner, false)" (dblclick)="selectPractitioner(practitioner, true)" [ngClass]="{'selected': selectedPractitioner == practitioner}">
-              <td>{{practitioner.name}}</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label class="control-label">Search results</label>
+        <loadingIndicator [done]="searchResults" [text]="''">
+          <div class="scroll-box-300 form-control">
+            <div class="table-selectable" *ngIf="searchResults && searchResults.length > 0">
+              <table class="table table-hover table-sm table-striped">
+                <thead>
+                  <th>Name</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let practitioner of searchResults" (click)="selectPractitioner(practitioner, false)" (dblclick)="selectPractitioner(practitioner, true)" [ngClass]="{'selection': selectedPractitioner == practitioner}">
+                    <td>{{practitioner.name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </loadingIndicator>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn bnt-default" (click)="cancel()">Cancel</button>
-  <button type="button" class="btn btn-primary" (click)="ok()" [disabled]="selectedPractitioner == null">OK</button>
+  <button type="button" class="btn btn-success" (click)="ok()" [disabled]="selectedPractitioner == null">Select practitioner</button>
+  <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
 </div>

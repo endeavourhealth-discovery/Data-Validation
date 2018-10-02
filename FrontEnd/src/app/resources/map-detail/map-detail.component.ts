@@ -29,4 +29,8 @@ export class MapDetailComponent {
 
     return fullPath;
   }
+
+  hide() {
+    this.mapDetail = null;
+  }
 }

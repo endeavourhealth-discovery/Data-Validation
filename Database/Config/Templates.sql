@@ -5,7 +5,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Patient',
-  '<div class="container">
+  '<div class="container-fluid">
  <form>
    <div class="row">
      <div class="col-md-6">
@@ -148,7 +148,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-EpisodeOfCare',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -208,7 +208,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Condition',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -260,7 +260,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Procedure',
-  '<div class="container">
+  '<div class="container-fluid">
  <form>
    <div class="row">
      <div class="col-md-6">
@@ -296,7 +296,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Observation',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -376,7 +376,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-AllergyIntolerance',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -424,7 +424,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-MedicationOrder',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -472,7 +472,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-MedicationStatement',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -534,7 +534,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Encounter',
-  '<div class="container">
+  '<div class="container-fluid">
   <form>
     <div class="row">
       <div class="col-md-6">
@@ -628,7 +628,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Immunization',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -688,7 +688,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-FamilyMemberHistory',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -726,7 +726,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-ReferralRequest',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -784,7 +784,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-ProcedureRequest',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -816,7 +816,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Flag',
-  '<div class="container">
+  '<div class="container-fluid">
 <form>
   <div class="row">
     <div class="col-md-6">
@@ -858,7 +858,7 @@ insert into config (app_id, config_id, config_data)
 values (
   'data-assurance',
   'Template-Appointment',
-  '<div class="container">
+  '<div class="container-fluid">
   <form>
     <div class="row">
       <div class="col-md-6">

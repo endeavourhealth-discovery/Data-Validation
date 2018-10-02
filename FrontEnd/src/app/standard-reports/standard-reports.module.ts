@@ -11,12 +11,14 @@ import {LibraryModule} from 'eds-angular4/dist/library';
 import {CodingModule} from 'eds-angular4/dist/coding';
 import {ModuleStateService} from 'eds-angular4/dist/common';
 import {CuiControlsModule} from 'eds-angular4/dist/cuicontrols/cuicontrols.module';
+import {ControlsModule} from 'eds-angular4/dist/controls';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     NgbModule,
+    ControlsModule,
     CuiControlsModule,
 
     FolderModule,
