@@ -311,6 +311,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
             props.setProperty("user", user);
             props.setProperty("password", pass);
             props.setProperty("autoReconnect", "true");
+            props.setProperty("testOnBorrow", "true");
+            props.setProperty("validationQuery", "select 1");
 
             return DriverManager.getConnection(url, props);
         } catch (Exception e) {
