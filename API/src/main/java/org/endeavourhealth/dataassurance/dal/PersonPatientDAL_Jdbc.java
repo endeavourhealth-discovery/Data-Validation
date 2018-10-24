@@ -288,7 +288,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
 
     private Connection getConnection() {
         try {
-            return (_connection != null  && !_connection.isClosed()) ? _connection : (_connection = createConnection());
+            return (_connection != null  && !_connection.isClosed() && _connection.isValid(5)) ? _connection : (_connection = createConnection());
         } catch (SQLException e) {
             e.printStackTrace();
         }
