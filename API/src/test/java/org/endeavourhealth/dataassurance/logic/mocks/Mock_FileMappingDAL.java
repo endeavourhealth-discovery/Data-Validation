@@ -25,51 +25,9 @@ public class Mock_FileMappingDAL implements SourceFileMappingDalI {
     public Exception exception;
 
     @Override
-    public int findOrCreateFileTypeId(UUID uuid, String s, List<String> list) throws Exception {
-        return 0;
-    }
-
-    @Override
-    public Integer findFileAudit(UUID uuid, UUID uuid1, UUID uuid2, int i, String s) throws Exception {
-        return null;
-    }
-
-    @Override
-    public int auditFile(UUID uuid, UUID uuid1, UUID uuid2, int i, String s) throws Exception {
-        return 0;
-    }
-
-    @Override
-    public Long findRecordAuditIdForRow(UUID uuid, int i, int i1) throws Exception {
-        return null;
-    }
-
-    @Override
-    public SourceFileRecord findSourceFileRecordRow(UUID uuid, long l) throws Exception {
-        return null;
-    }
-
-    @Override
-    public void auditFileRow(UUID uuid, SourceFileRecord sourceFileRecord) throws Exception {
-
-    }
-
-    @Override
-    public void auditFileRows(UUID uuid, List<SourceFileRecord> list) throws Exception {
-
-    }
-
-    @Override
-    public void saveResourceMappings(ResourceWrapper resourceWrapper, ResourceFieldMappingAudit resourceFieldMappingAudit) throws Exception {
-
-    }
-
-    @Override
     public void saveResourceMappings(Map<ResourceWrapper, ResourceFieldMappingAudit> map) throws Exception {
 
     }
-
-
 
     @Override
     public List<ResourceFieldMapping> findFieldMappings(UUID uuid, ResourceType resourceType, UUID uuid1) throws Exception {
@@ -92,4 +50,5 @@ public class Mock_FileMappingDAL implements SourceFileMappingDalI {
 
         return fieldMappings;
     }
+
 }
