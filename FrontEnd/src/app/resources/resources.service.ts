@@ -10,7 +10,7 @@ import {ResourceFieldMapping} from '../models/ResourceFieldMapping';
 @Injectable()
 export class ResourcesService {
 
-  private resourceSortField: string = 'Effective';
+  private resourceSortField: string = 'Recorded';
 
   constructor(private http: Http) { }
 
