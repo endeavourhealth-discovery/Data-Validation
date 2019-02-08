@@ -208,6 +208,11 @@ export class ResourcesComponent implements OnInit {
       );
   }
 
+  sortBy(field: string) {
+    this.resourceService.setResourceSortField(field);
+    this.clinicalResourceList = this.sortResources(this.clinicalResourceList);
+  }
+
   /** RECORDED DATE FUNCTIONS **/
   private getRecordedDate(resource: ServicePatientResource): Date {
     if (resource.recordedDate)
@@ -251,7 +256,7 @@ export class ResourcesComponent implements OnInit {
   }
 
   /** EFFECTIVE DATE FUNCTIONS **/
-  private getDate(resource: ServicePatientResource): Date {
+  private getEffectiveDate(resource: ServicePatientResource): Date {
     if (resource.effectiveDate)
       return resource.effectiveDate;
 
@@ -395,17 +400,42 @@ export class ResourcesComponent implements OnInit {
       return array;
     }
     const pivot = Math.ceil(len / 2);
-    return this.mergeResources(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)));
+    return this.resourceService.getResourceSortField() === 'Effective'
+      ? this.mergeResourcesByEffective(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)))
+      : this.mergeResourcesByRecorded(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)));
   }
 
-  private mergeResources(left, right) {
+  private mergeResourcesByRecorded(left, right) {
     let result = [];
     while ((left.length > 0) && (right.length > 0)) {
       const leftRecorded = this.dateValue(this.getRecordedDate(left[0]));
       const rightRecorded = this.dateValue(this.getRecordedDate(right[0]));
 
       if (leftRecorded == rightRecorded) {
-        if (this.getDate(left[0]) > this.getDate(right[0])) {
+        if (this.getEffectiveDate(left[0]) > this.getEffectiveDate(right[0])) {
+          result.push(left.shift());
+        } else {
+          result.push(right.shift());
+        }
+      } else if (leftRecorded > rightRecorded) {
+        result.push(left.shift());
+      } else {
+        result.push(right.shift());
+      }
+    }
+
+    result = result.concat(left, right);
+    return result;
+  }
+
+  private mergeResourcesByEffective(left, right) {
+    let result = [];
+    while ((left.length > 0) && (right.length > 0)) {
+      const leftRecorded = this.dateValue(this.getEffectiveDate(left[0]));
+      const rightRecorded = this.dateValue(this.getEffectiveDate(right[0]));
+
+      if (leftRecorded == rightRecorded) {
+        if (this.getRecordedDate(left[0]) > this.getRecordedDate(right[0])) {
           result.push(left.shift());
         } else {
           result.push(right.shift());

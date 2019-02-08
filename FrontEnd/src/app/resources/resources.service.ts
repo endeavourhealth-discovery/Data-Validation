@@ -10,7 +10,17 @@ import {ResourceFieldMapping} from '../models/ResourceFieldMapping';
 @Injectable()
 export class ResourcesService {
 
+  private resourceSortField: string = 'Recorded';
+
   constructor(private http: Http) { }
+
+  public getResourceSortField() : string {
+    return this.resourceSortField;
+  }
+
+  public setResourceSortField(field: string) {
+    this.resourceSortField = field;
+  }
 
   public getConfig(): Observable<any> {
     return this.http.get('api/config', {withCredentials: true})
