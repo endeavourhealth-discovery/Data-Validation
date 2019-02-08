@@ -890,3 +890,79 @@ values (
     </div>
   </form>
 </div>');
+
+delete from config where config_id = 'Template-DiagnosticReport' and app_id = 'data-assurance';
+insert into config (app_id, config_id, config_data)
+values (
+  'data-assurance',
+  'Template-DiagnosticReport',
+  '<div class="container-fluid">
+<form>
+  <div class="row">
+    <div class="col-md-6">
+		<div class="form-group">
+			<label for="Display">Display term</label>
+			<input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
+		</div>
+		<div class="form-group">
+			<label for="Date">Effective date</label>
+			<input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.effectiveDateTime | date:''dd/MM/y''}}">
+		</div>
+        <div *ngIf="resource.resourceJson.extension">
+			<div *ngFor="let extension of resource.resourceJson.extension">
+				<div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-diagnostic-report-filed-by-extension''">
+					<label for="FiledBy">Filed by</label>
+					<input id="FiledBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+				</div>
+			</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+			<label for="Code">Code</label>
+			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
+		</div>
+        <div class="form-group">
+			<label for="Status">Status</label>
+			<input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+      </div>
+    </div>
+  </div>
+</form>
+</div>');
+
+delete from config where config_id = 'Template-DiagnosticOrder' and app_id = 'data-assurance';
+insert into config (app_id, config_id, config_data)
+values (
+  'data-assurance',
+  'Template-DiagnosticOrder',
+  '<div class="container-fluid">
+<form>
+  <div class="row">
+    <div class="col-md-6">
+		<div class="form-group">
+			<label for="Display">Display term</label>
+			<input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.item[0].code.coding[0].display}}">
+		</div>
+		<div class="form-group">
+			<label for="Date">Effective date</label>
+			<input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.event[0].dateTime | date:''dd/MM/y''}}">
+		</div>
+		<div class="form-group">
+			<label for="Ordered">Ordered by</label>
+			<input id="OrderedBy" class="form-control" type="text" disabled value="{{resource.resourceJson.orderer.display}}">
+		</div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+			<label for="Code">Code</label>
+			<input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.item[0].code.coding[0].code}}">
+		</div>
+        <div class="form-group">
+			<label for="Status">Status</label>
+			<input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.event[0].status}}">
+      </div>
+    </div>
+  </div>
+</form>
+</div>');
