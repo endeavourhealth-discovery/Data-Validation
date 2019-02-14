@@ -634,7 +634,7 @@ values (
     <div class="col-md-6">
       <div class="form-group">
         <label for="Display">Display term</label>
-        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccineCode.coding[0].display}}">
+        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccineCode?.coding[0].display}}">
       </div>
       <div class="form-group">
         <label for="Date">Effective date</label>
@@ -652,15 +652,19 @@ values (
          <label for="Dosage">Dosage</label>
          <input id="Dosage" class="form-control" type="text" disabled value="{{resource.resourceJson.doseQuantity?.value}} {{resource.resourceJson.doseQuantity?.unit}}">
        </div>
-	  <div class="form-group" *ngIf="resource.resourceJson.note!=null">
+	    <div class="form-group" *ngIf="resource.resourceJson.note!=null">
          <label for="Note">Note</label>
          <input id="Note" class="form-control" type="text" disabled value="{{resource.resourceJson.note[0].text}}">
+      </div>
+	    <div class="form-group" *ngIf="resource.resourceJson.vaccinationProtocol!=null">
+         <label for="Protocol">Protocol</label>
+         <input id="Protocol" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccinationProtocol[0].series}} {{resource.resourceJson.vaccinationProtocol[0].doseSequence}} {{resource.resourceJson.vaccinationProtocol[0].description}}">
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label for="Code">Code</label>
-        <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccineCode.coding[0].code}}">
+        <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.vaccineCode?.coding[0].code}}">
       </div>
       <div class="form-group">
         <label for="Performer">Performer</label>
