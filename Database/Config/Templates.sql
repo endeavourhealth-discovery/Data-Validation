@@ -214,7 +214,7 @@ values (
     <div class="col-md-6">
       <div class="form-group">
         <label for="Display">Display term</label>
-        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].display}}">
+        <input id="Display" class="form-control" type="text" disabled value="{{resource.resourceJson.code?.coding[0].display}}">
       </div>
       <div class="form-group">
         <label for="Date">Effective date</label>
@@ -240,7 +240,7 @@ values (
     <div class="col-md-6">
       <div class="form-group">
         <label for="Code">Code</label>
-        <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code.coding[0].code}}">
+        <input id="Code" class="form-control" type="text" disabled value="{{resource.resourceJson.code?.coding[0].code}}">
       </div>
       <div class="form-group" *ngIf="resource.resourceJson.category">
         <label for="Category">Category</label>
