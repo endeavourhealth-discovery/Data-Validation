@@ -272,10 +272,32 @@ values (
          <label for="Performer">Performed by</label>
          <input id="Performer" class="form-control" type="text" disabled value="{{resource.resourceJson.performer[0].actor.display}}">
        </div>
+       <div class="form-group" *ngIf="resource.resourceJson.performer==null">
+         <label for="Performer">Performed by</label>
+         <input id="Performer" class="form-control" type="text" disabled value="">
+       </div>
        <div class="form-group" *ngIf="resource.resourceJson.notes!=null">
          <label for="Notes">Notes</label>
          <input id="Notes" class="form-control" type="text" disabled value="{{resource.resourceJson.notes[0].text}}">
        </div>
+       <div class="form-group" *ngIf="resource.resourceJson.notes==null">
+         <label for="Notes">Notes</label>
+         <input id="Notes" class="form-control" type="text" disabled value="">
+       </div>
+       <div *ngFor="let extension of resource.resourceJson.extension">
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-is-primary-extension'' && extension.valueBoolean">
+          <label for="IsPrimary">Is primary</label>
+          <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
+        </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
+          <label for="RecordedBy">Recorded by</label>
+          <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+        </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-date-extension''">
+          <label for="RecordedDate">Recorded date</label>
+          <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime | date:''dd/MM/y''}}">
+        </div>
+      </div>
      </div>
      <div class="col-md-6">
        <div class="form-group">
@@ -286,10 +308,15 @@ values (
          <label for="Date">Date</label>
          <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.performedDateTime | date:''dd/MM/y''}}">
        </div>
+       <div class="form-group">
+         <label for="Status">Status</label>
+         <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
+       </div>
      </div>
    </div>
  </form>
  </div>');
+
 
 delete from config where config_id = 'Template-Observation' and app_id = 'data-assurance';
 insert into config (app_id, config_id, config_data)
@@ -749,7 +776,7 @@ values (
         </div>
         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-date-extension''">
           <label for="RecordedDate">Recorded date</label>
-          <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime}}">
+          <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime | date:''dd/MM/y''}}">
         </div>
       </div>
       <div class="form-group" *ngIf="resource.resourceJson.serviceRequested">
