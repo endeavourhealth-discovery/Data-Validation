@@ -37,6 +37,18 @@
         </dependency>
         <!-- End Postgres -->
 
+      <!-- JAX-RS -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <!-- End JAX-RS -->
 
         <!-- Jersey -->
         <dependency>
