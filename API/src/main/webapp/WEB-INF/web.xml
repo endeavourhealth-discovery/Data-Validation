@@ -32,6 +32,7 @@
     <servlet-mapping>
         <servlet-name>Data Assurance API</servlet-name>
         <url-pattern>/api/*</url-pattern>
+        <url-pattern>/machine-api/*</url-pattern>
     </servlet-mapping>
 
     <!-- ===== PUBLIC ENDPOINTS SERVLET ===== -->
@@ -99,6 +100,7 @@
         <web-resource-collection>
             <web-resource-name>api</web-resource-name>
             <url-pattern>/api/swagger.json</url-pattern>
+            <url-pattern>/api-machine/swagger.json</url-pattern>
         </web-resource-collection>
     </security-constraint>
 
@@ -107,6 +109,7 @@
         <web-resource-collection>
             <web-resource-name>api</web-resource-name>
             <url-pattern>/api/*</url-pattern>
+            <url-pattern>/machine-api/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>data-assurance:api</role-name>
@@ -117,6 +120,7 @@
         <web-resource-collection>
             <web-resource-name>dev_test_api</web-resource-name>
             <url-pattern>/api/fhir/*</url-pattern>
+            <url-pattern>/machine-api/fhir/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>dev_test_api</role-name>
