@@ -835,7 +835,7 @@ values (
         </div>
         <div class="form-group">
             <label for="RequestDate">Requested date</label>
-            <input id="RequestDate" class="form-control" type="text" disabled value="{{resource.resourceJson.orderedOn}}">
+            <input id="RequestDate" class="form-control" type="text" disabled value="{{resource.resourceJson.orderedOn | date:''dd/MM/y''}}">
         </div>
     </div>
   </div>
