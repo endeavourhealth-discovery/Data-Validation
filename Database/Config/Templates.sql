@@ -733,7 +733,7 @@ values (
         </div>
         <div class="form-group" >
             <label for="Text">Comments</label>
-            <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.condition[0].note?.text}}">
+            <input id="Text" class="form-control" type="text" disabled value="{{resource.resourceJson.note?.text}}">
         </div>
     </div>
     <div class="col-md-6">
