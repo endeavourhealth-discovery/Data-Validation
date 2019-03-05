@@ -289,6 +289,10 @@ values (
           <label for="IsPrimary">Is primary</label>
           <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
         </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension''">
+          <label for="Sequence">Sequence number</label>
+          <input id="Sequence" class="form-control" type="text" disabled value="{{extension.valueInteger}}">
+        </div>
         <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
           <label for="RecordedBy">Recorded by</label>
           <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
