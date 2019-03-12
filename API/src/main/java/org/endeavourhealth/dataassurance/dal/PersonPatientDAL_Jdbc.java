@@ -3,6 +3,7 @@ package org.endeavourhealth.dataassurance.dal;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
 import org.endeavourhealth.common.config.ConfigManager;
+import org.endeavourhealth.common.fhir.FhirIdentifierUri;
 import org.endeavourhealth.coreui.framework.ContextShutdownHook;
 import org.endeavourhealth.coreui.framework.StartupConfig;
 import org.endeavourhealth.dataassurance.helpers.CUIFormatter;
@@ -29,17 +30,48 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         Connection conn = getConnection();
         try {
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt " +
-                "from patient_search " +
-                "where nhs_number = ? " +
-                "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
-                "group by nhs_number, forenames, surname";
+                    "from patient_search " +
+                    "where nhs_number = ? " +
+                    "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                    "group by nhs_number, forenames, surname";
 
-            return searchPeople(serviceIds, nhsNumber, conn, sql);
+            List<Person> ret = searchPeople(serviceIds, nhsNumber, conn, sql);
+
+            //DAB-29 - search on past NHS numbers too
+            ret.addAll(searchByPastNhsNumber(conn, serviceIds, nhsNumber));
+
+            return ret;
 
         } catch (Exception e) {
             LOG.error("Error searching by NHS number  [" + nhsNumber + "]", e);
             return null;
         }
+    }
+
+    /**
+     * searches for patients by past NHS number. Any matches have that past NHS number shown in brackets after their name
+     */
+    private List<Person> searchByPastNhsNumber(Connection conn, Set<String> serviceIds, String nhsNumber) throws Exception {
+
+        String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt, p.service_id, p.patient_id " +
+                "from patient_search p " +
+                "inner join patient_search_local_identifier l on p.service_id = l.service_id and p.patient_id = l.patient_id " +
+                "where l.local_id = ? " +
+                "and l.local_id_system = '" + FhirIdentifierUri.IDENTIFIER_SYSTEM_NHSNUMBER + "' " +
+                "and l.service_id IN ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                "group by nhs_number, forenames, surname, p.service_id, p.patient_id";
+
+        List<Person> ret = searchPeople(serviceIds, nhsNumber, conn, sql);
+
+        //append the past NHS number after the name so it's shown in the results. Not ideal, as it really should
+        //be shown in the NHS number column, but at least it'll be shown somewhere
+        for (Person person: ret) {
+            String s = person.getName();
+            s += " (" + nhsNumber + ")";
+            person.setName(s);
+        }
+
+        return ret;
     }
 
     @Override
