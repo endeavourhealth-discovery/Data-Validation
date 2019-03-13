@@ -105,6 +105,16 @@ values (
            <label for="relationshipType">Relationship Type</label>
            <input id="relationshipType" class="form-control" type="text" disabled value="{{relationship.text}}">
          </div>
+         <div *ngIf="contact.period">
+           <div class="form-group">
+              <label for="ContactStartDate">Contact Start Date</label>
+              <input id="ContactStartDate" class="form-control" type="text" disabled value="{{contact.period.start}}">
+           </div>
+           <div class="form-group">
+              <label for="ContactEndDate">Contact End Date</label>
+              <input id="ContactEndDate" class="form-control" type="text" disabled value="{{contact.period.end}}">
+           </div>
+         </div>
          <div *ngIf="contact.name">
            <div class="form-group">
              <label for="ContactTitle">Contact Title</label>
