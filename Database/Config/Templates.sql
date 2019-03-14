@@ -108,11 +108,11 @@ values (
          <div *ngIf="contact.period">
            <div class="form-group">
               <label for="ContactStartDate">Contact Start Date</label>
-              <input id="ContactStartDate" class="form-control" type="text" disabled value="{{contact.period.start}}">
+              <input id="ContactStartDate" class="form-control" type="text" disabled value="{{contact.period.start | date:''dd/MM/y''}}">
            </div>
            <div class="form-group">
               <label for="ContactEndDate">Contact End Date</label>
-              <input id="ContactEndDate" class="form-control" type="text" disabled value="{{contact.period.end}}">
+              <input id="ContactEndDate" class="form-control" type="text" disabled value="{{contact.period.end | date:''dd/MM/y''}}">
            </div>
          </div>
          <div *ngIf="contact.name">
@@ -121,11 +121,11 @@ values (
              <input id="ContactTitle" class="form-control" type="text" disabled value="{{contact.name.prefix}}">
            </div>
            <div class="form-group">
-             <label for="ContactGiven">Contact Given name</label>
+             <label for="ContactGiven">Contact Given Name</label>
              <input id="ContactGiven" class="form-control" type="text" disabled value="{{contact.name.given}}">
            </div>
            <div class="form-group">
-             <label for="ContactFamily">Contact Family name</label>
+             <label for="ContactFamily">Contact Family Name</label>
              <input id="ContactFamily" class="form-control" type="text" disabled value="{{contact.name.family}}">
            </div>
          </div>
