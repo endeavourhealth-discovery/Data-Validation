@@ -351,8 +351,11 @@ public class ResourceLogic {
         try {
             return fileMappingDal.findFieldMappings(UUID.fromString(serviceId), org.hl7.fhir.instance.model.ResourceType.valueOf(resourceType), UUID.fromString(resourceId));
         } catch (Exception e) {
-            LOG.error("Error getting resource mappings", e);
-            return new ArrayList<>();
+            //changed try/catch to let any exception be thrown up. The catch was suppressing the error, so it wasn't
+            //apparent that this was failing
+            throw new RuntimeException("Error getting resource mappings for " + resourceType + " " + resourceId, e);
+            /*LOG.error("Error getting resource mappings", e);
+            return new ArrayList<>();*/
         }
     }
 
