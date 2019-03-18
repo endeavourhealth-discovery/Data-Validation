@@ -205,6 +205,7 @@ export class ResourcesComponent implements OnInit {
           // vm.clinicalResourceList = vm.SortResources(result);
           let dateSortedResources = vm.sortResources(result);
           vm.clinicalResourceList = vm.sortResourcesParentChildAndSequenceNumber(dateSortedResources);
+          vm.logger.info("Clinical Resource List: ", this.clinicalResourceList)
         },
         (error) => vm.logger.error(error)
       );
@@ -283,6 +284,9 @@ export class ResourcesComponent implements OnInit {
     if (!extension)
       return null;
 
+    const vm = this;
+    vm.logger.info("Sequence Number: ", extension.valueInteger)
+
     return extension.valueInteger;
   }
 
@@ -296,6 +300,9 @@ export class ResourcesComponent implements OnInit {
 
     if (!extension)
       return null;
+
+    const vm = this;
+    vm.logger.info("Parent Resource: ", extension.valueReference.reference);
 
     return extension.valueReference.reference;
   }
@@ -451,6 +458,7 @@ export class ResourcesComponent implements OnInit {
   }
 
   private sortResourcesParentChildAndSequenceNumber(array){
+    const vm = this;
     const len = array.length;
     if (len < 2) {
       return array;
@@ -475,15 +483,18 @@ export class ResourcesComponent implements OnInit {
       }
     }
 
+    vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
+    vm.logger.info("Child Resources Only: ", childResourcesOnly);
+
     // Sort child resources array by sequence number.
 
-    const k = this;
-
     childResourcesOnly.sort(function(a, b){
-        return k.getSequenceNumberExtension(a) - k.getSequenceNumberExtension(b);
+        return vm.getSequenceNumberExtension(a) - vm.getSequenceNumberExtension(b);
         // return a.id - b.id;
       }
     );
+
+    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
 
     let returnArray = [];
 
@@ -516,6 +527,8 @@ export class ResourcesComponent implements OnInit {
       childItem = childResourcesOnly[i];
       returnArray.push(childItem);
     }
+
+    vm.logger.info("Return Array: ", returnArray);
 
     return returnArray;
   }
