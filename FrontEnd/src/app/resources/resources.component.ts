@@ -205,7 +205,7 @@ export class ResourcesComponent implements OnInit {
           // vm.clinicalResourceList = vm.SortResources(result);
           let dateSortedResources = vm.sortResources(result);
           vm.clinicalResourceList = vm.sortResourcesParentChildAndSequenceNumber(dateSortedResources);
-          vm.logger.info("Clinical Resource List: ", this.clinicalResourceList)
+          vm.logger.info("Clinical Resource List: ", this.clinicalResourceList);
         },
         (error) => vm.logger.error(error)
       );
@@ -285,7 +285,7 @@ export class ResourcesComponent implements OnInit {
       return null;
 
     const vm = this;
-    vm.logger.info("Sequence Number: ", extension.valueInteger)
+    vm.logger.info("Sequence Number: ", extension.valueInteger);
 
     return extension.valueInteger;
   }
@@ -473,12 +473,16 @@ export class ResourcesComponent implements OnInit {
     {
       let item;
       item = array[i];
-      if (this.getParentResourceExtension(item) != null)
+      vm.logger.info("Resource", item);
+      vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
+      if (vm.getParentResourceExtension(item) != null)
       {
+        vm.logger.info("Child Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
         childResourcesOnly.push(item);
       }
       else
       {
+        vm.logger.info("Parent Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
         parentResourcesOnly.push(item);
       }
     }
@@ -510,7 +514,7 @@ export class ResourcesComponent implements OnInit {
       {
         let childItem;
         childItem = childResourcesOnly[j];
-        if (this.getParentResourceExtension(childItem) == parentItem.resourceJson.id)
+        if (vm.getParentResourceExtension(childItem) == parentItem.resourceJson.id)
         {
           returnArray.push(childItem);
         }
