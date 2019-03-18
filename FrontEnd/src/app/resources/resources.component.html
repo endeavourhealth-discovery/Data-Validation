@@ -89,12 +89,12 @@
                             </thead>
                             <tbody>
                               <tr class="d-flex" *ngFor="let clinicalResource of clinicalResourceList" (click)="viewResource(clinicalResource)">
-                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td></strong>
-                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getEffectiveDate(clinicalResource) | date:'dd-MMM-y'}}</td></strong>
-                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getSequenceNumberExtension(clinicalResource)}}</td></strong>
+                                <td class="col-1">{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td>
+                                <td class="col-1">{{getEffectiveDate(clinicalResource) | date:'dd-MMM-y'}}</td>
+                                <td class="col-1">{{getSequenceNumberExtension(clinicalResource)}}</td>
                                 <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-2">{{getResourceName(clinicalResource)}}</td></strong>
-                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-4">{{getDescription(clinicalResource)}}</td></strong>
-                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-3">{{getServiceName(clinicalResource)}}</td></strong>
+                                <td class="col-4">{{getDescription(clinicalResource)}}</td>
+                                <td class="col-3"><strong *ngIf="getIsPrimaryExtension(clinicalResource)">{{getServiceName(clinicalResource)}}</strong></td>
                               </tr>
                             </tbody>
                           </table>
