@@ -81,18 +81,20 @@
                               <tr class="d-flex">
                                 <th class="col-1"><a href="#" (click)="sortBy('Recorded')">Recorded date</a><i class="fa fa-fw fa-chevron-down" *ngIf="resourceService.getResourceSortField()==='Recorded'"></i></th>
                                 <th class="col-1"><a href="#" (click)="sortBy('Effective')">Effective date</a> <i class="fa fa-fw fa-chevron-down" *ngIf="resourceService.getResourceSortField()==='Effective'"></i></th>
+                                <th class="col-1">Sequence number</th>
                                 <th class="col-2">Resource type</th>
-                                <th class="col-5">Description</th>
+                                <th class="col-4">Description</th>
                                 <th class="col-3">Service</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr class="d-flex" *ngFor="let clinicalResource of clinicalResourceList" (click)="viewResource(clinicalResource)">
-                                <td class="col-1">{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td>
-                                <td class="col-1">{{getEffectiveDate(clinicalResource) | date:'dd-MMM-y'}}</td>
-                                <td class="col-2">{{getResourceName(clinicalResource)}}</td>
-                                <td class="col-5">{{getDescription(clinicalResource)}}</td>
-                                <td class="col-3">{{getServiceName(clinicalResource)}}</td>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getRecordedDate(clinicalResource) | date:'dd-MMM-y'}}</td></strong>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getEffectiveDate(clinicalResource) | date:'dd-MMM-y'}}</td></strong>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-1">{{getSequenceNumberExtension(clinicalResource)}}</td></strong>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-2">{{getResourceName(clinicalResource)}}</td></strong>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-4">{{getDescription(clinicalResource)}}</td></strong>
+                                <strong *ngIf="getIsPrimaryExtension(clinicalResource)"><td class="col-3">{{getServiceName(clinicalResource)}}</td></strong>
                               </tr>
                             </tbody>
                           </table>

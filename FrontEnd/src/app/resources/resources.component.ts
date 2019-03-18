@@ -202,7 +202,9 @@ export class ResourcesComponent implements OnInit {
     vm.resourceService.getResources(this.patientFilter, this.resourceFilter)
       .subscribe(
         (result) => {
-          vm.clinicalResourceList = vm.sortResources(result);
+          // vm.clinicalResourceList = vm.SortResources(result);
+          let dateSortedResources = vm.sortResources(result);
+          vm.clinicalResourceList = vm.sortResourcesParentChildAndSequenceNumber(dateSortedResources);
         },
         (error) => vm.logger.error(error)
       );
@@ -241,6 +243,7 @@ export class ResourcesComponent implements OnInit {
     }
   }
 
+  /** GET RESOURCE EXTENSION FUNCTIONS **/
   private getRecordedDateExtension(resource: any): Date {
     const RECORDED_DATE = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-date-extension';
 
@@ -253,6 +256,48 @@ export class ResourcesComponent implements OnInit {
       return DateHelper.NOT_KNOWN;
 
     return DateHelper.parse(extension.valueDateTime);
+  }
+
+  private getIsPrimaryExtension(resource: any): boolean {
+    const IS_PRIMARY = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-is-primary-extension';
+
+    if (!resource || !resource.extension)
+      return false;
+
+    const extension = resource.extension.find((e)=> e.url === IS_PRIMARY);
+
+    if (!extension)
+      return false;
+
+    return extension.valueBoolean;
+  }
+
+  private getSequenceNumberExtension(resource: any): number {
+    const SEQUENCE_NUMBER = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension';
+
+    if (!resource || !resource.extension)
+      return null;
+
+    const extension = resource.extension.find((e)=> e.url === SEQUENCE_NUMBER);
+
+    if (!extension)
+      return null;
+
+    return extension.valueInteger;
+  }
+
+  private getParentResourceExtension(resource: any): string {
+    const PARENT_RESOURCE = 'http://endeavourhealth.org/fhir/StructureDefinition/parent-resource';
+
+    if (!resource || !resource.extension)
+      return null;
+
+    const extension = resource.extension.find((e)=> e.url === PARENT_RESOURCE);
+
+    if (!extension)
+      return null;
+
+    return extension.valueReference.reference;
   }
 
   /** EFFECTIVE DATE FUNCTIONS **/
@@ -403,6 +448,76 @@ export class ResourcesComponent implements OnInit {
     return this.resourceService.getResourceSortField() === 'Effective'
       ? this.mergeResourcesByEffective(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)))
       : this.mergeResourcesByRecorded(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)));
+  }
+
+  private sortResourcesParentChildAndSequenceNumber(array){
+    const len = array.length;
+    if (len < 2) {
+      return array;
+    }
+
+    let parentResourcesOnly = [];
+    let childResourcesOnly = [];
+
+    // Split the (already date sorted) method argument array into parent and child resources.
+    // Resources are added to the parent array by default, if that resource doesn't have the parent/child extensions.
+    for (let i = 0; i < array.length; i++)
+    {
+      let item;
+      item = array[i];
+      if (this.getParentResourceExtension(item) != null)
+      {
+        childResourcesOnly.push(item);
+      }
+      else
+      {
+        parentResourcesOnly.push(item);
+      }
+    }
+
+    // Sort child resources array by sequence number.
+
+    const k = this;
+
+    childResourcesOnly.sort(function(a, b){
+        return k.getSequenceNumberExtension(a) - k.getSequenceNumberExtension(b);
+        // return a.id - b.id;
+      }
+    );
+
+    let returnArray = [];
+
+    // Iterate through the parent resources array to add them all to the return array, and,
+    // for each parent resource, iterate through the child resources array (already sorted
+    // by sequence number) to add any of its children to the return array one after another.
+    for (let i = 0; i < parentResourcesOnly.length; i++)
+    {
+      let parentItem;
+      parentItem = parentResourcesOnly[i];
+      returnArray.push(parentItem);
+      for (let j = 0; j < childResourcesOnly.length; j++)
+      {
+        let childItem;
+        childItem = childResourcesOnly[j];
+        if (this.getParentResourceExtension(childItem) == parentItem.resourceJson.id)
+        {
+          returnArray.push(childItem);
+        }
+      }
+    }
+
+    // 18/03/2019: Temporary iteration through child resource array to add them all to the
+    // return array and test their display, while their parent resource id issue is being fixed
+    // and the conditional part of the above inner loop does not work for matching child and parent ids
+
+    for (let i = 0; i < childResourcesOnly.length; i++)
+    {
+      let childItem;
+      childItem = childResourcesOnly[i];
+      returnArray.push(childItem);
+    }
+
+    return returnArray;
   }
 
   private mergeResourcesByRecorded(left, right) {
