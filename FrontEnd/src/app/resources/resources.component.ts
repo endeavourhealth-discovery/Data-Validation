@@ -9,7 +9,7 @@ import {Patient} from '../models/Patient';
 import {LoggerService} from 'eds-angular4';
 import {ViewerComponent} from './viewer/viewer.component';
 import {ServicePatientResource} from '../models/Resource';
-import { DateHelper} from '../helpers/date.helper';
+import {DateHelper} from '../helpers/date.helper';
 import {ResourceId} from '../models/ResourceId';
 
 @Component({
@@ -84,11 +84,11 @@ export class ResourcesComponent implements OnInit {
 
     vm.person = person;
     if (this.person.nhsNumber && this.person.nhsNumber !== '')
-    vm.resourceService.getPatients(person.nhsNumber)
-      .subscribe(
-        (result) => vm.processPatients(result),
-        (error) => vm.logger.error(error)
-      );
+      vm.resourceService.getPatients(person.nhsNumber)
+        .subscribe(
+          (result) => vm.processPatients(result),
+          (error) => vm.logger.error(error)
+        );
     else
       vm.resourceService.getPatient(person.patientId.serviceId, person.patientId.systemId, this.person.patientId.patientId)
         .subscribe(
@@ -134,7 +134,10 @@ export class ResourcesComponent implements OnInit {
     vm.resourceService.getServiceName(service.id)
       .subscribe(
         (result) => vm.processServiceName(service, result),
-        (error) => { vm.logger.log(error); service.name = 'Error!'; }
+        (error) => {
+          vm.logger.log(error);
+          service.name = 'Error!';
+        }
       );
   }
 
@@ -222,25 +225,44 @@ export class ResourcesComponent implements OnInit {
       return resource.recordedDate;
 
     switch (resource.resourceJson.resourceType) {
-      case 'Condition': return resource.recordedDate = DateHelper.parse(resource.resourceJson.dateRecorded);
-      case 'AllergyIntolerance': return resource.recordedDate = DateHelper.parse(resource.resourceJson.recordedDate);
-      case 'Appointment': return resource.recordedDate = DateHelper.parse(resource.resourceJson.start);	  
-      case 'DiagnosticOrder': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'DiagnosticReport': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'ProcedureRequest': return resource.recordedDate = DateHelper.parse(resource.resourceJson.orderedOn);
-      case 'Encounter': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'EpisodeOfCare': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);       // Period.start!?
-      case 'FamilyMemberHistory': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Flag': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Immunization': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'MedicationOrder': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'MedicationStatement': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Medication': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Observation': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Procedure': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'ReferralRequest': return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      case 'Specimen':  return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
-      default: return resource.recordedDate = DateHelper.NOT_KNOWN;
+      case 'Condition':
+        return resource.recordedDate = DateHelper.parse(resource.resourceJson.dateRecorded);
+      case 'AllergyIntolerance':
+        return resource.recordedDate = DateHelper.parse(resource.resourceJson.recordedDate);
+      case 'Appointment':
+        return resource.recordedDate = DateHelper.parse(resource.resourceJson.start);
+      case 'DiagnosticOrder':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'DiagnosticReport':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'ProcedureRequest':
+        return resource.recordedDate = DateHelper.parse(resource.resourceJson.orderedOn);
+      case 'Encounter':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'EpisodeOfCare':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);       // Period.start!?
+      case 'FamilyMemberHistory':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Flag':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Immunization':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'MedicationOrder':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'MedicationStatement':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Medication':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Observation':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Procedure':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'ReferralRequest':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      case 'Specimen':
+        return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
+      default:
+        return resource.recordedDate = DateHelper.NOT_KNOWN;
     }
   }
 
@@ -265,7 +287,7 @@ export class ResourcesComponent implements OnInit {
     if (!resource || !resource.resourceJson.extension)
       return false;
 
-    const extension = resource.resourceJson.extension.find((e)=> e.url === IS_PRIMARY);
+    const extension = resource.resourceJson.extension.find((e) => e.url === IS_PRIMARY);
 
     if (!extension)
       return false;
@@ -279,7 +301,7 @@ export class ResourcesComponent implements OnInit {
     if (!resource || !resource.resourceJson.extension)
       return null;
 
-    const extension = resource.resourceJson.extension.find((e)=> e.url === SEQUENCE_NUMBER);
+    const extension = resource.resourceJson.extension.find((e) => e.url === SEQUENCE_NUMBER);
 
     if (!extension)
       return null;
@@ -293,7 +315,7 @@ export class ResourcesComponent implements OnInit {
     if (!resource || !resource.resourceJson.extension)
       return null;
 
-    const extension = resource.resourceJson.extension.find((e)=> e.url === PARENT_RESOURCE);
+    const extension = resource.resourceJson.extension.find((e) => e.url === PARENT_RESOURCE);
 
     if (!extension)
       return null;
@@ -307,26 +329,46 @@ export class ResourcesComponent implements OnInit {
       return resource.effectiveDate;
 
     switch (resource.resourceJson.resourceType) {
-      case 'Patient': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.birthDate);
-      case 'AllergyIntolerance': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onset);
-      case 'Appointment': return resource.recordedDate = DateHelper.parse(resource.resourceJson.end);	  	  
-      case 'Condition': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onsetDateTime);
-      case 'DiagnosticOrder': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.event ? resource.resourceJson.event.dateTime : null);
-      case 'DiagnosticReport': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
-      case 'ProcedureRequest': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.scheduledDateTime);
-      case 'Encounter': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
-      case 'EpisodeOfCare': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
-      case 'FamilyMemberHistory': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
-      case 'Flag': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
-      case 'Immunization': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
-      case 'MedicationOrder': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateWritten);
-      case 'MedicationStatement': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateAsserted);
-      case 'Medication': return resource.effectiveDate = DateHelper.NOT_KNOWN;
-      case 'Observation': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
-      case 'Procedure': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.performedDateTime);
-      case 'ReferralRequest': return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
-      case 'Specimen':  return resource.effectiveDate = DateHelper.parse(resource.resourceJson.collection ? resource.resourceJson.collection.collectedDateTime : null);
-      default: return resource.effectiveDate = DateHelper.NOT_KNOWN;
+      case 'Patient':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.birthDate);
+      case 'AllergyIntolerance':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onset);
+      case 'Appointment':
+        return resource.recordedDate = DateHelper.parse(resource.resourceJson.end);
+      case 'Condition':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onsetDateTime);
+      case 'DiagnosticOrder':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.event ? resource.resourceJson.event.dateTime : null);
+      case 'DiagnosticReport':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
+      case 'ProcedureRequest':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.scheduledDateTime);
+      case 'Encounter':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
+      case 'EpisodeOfCare':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
+      case 'FamilyMemberHistory':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
+      case 'Flag':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.period ? resource.resourceJson.period.start : null);
+      case 'Immunization':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
+      case 'MedicationOrder':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateWritten);
+      case 'MedicationStatement':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.dateAsserted);
+      case 'Medication':
+        return resource.effectiveDate = DateHelper.NOT_KNOWN;
+      case 'Observation':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
+      case 'Procedure':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.performedDateTime);
+      case 'ReferralRequest':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
+      case 'Specimen':
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.collection ? resource.resourceJson.collection.collectedDateTime : null);
+      default:
+        return resource.effectiveDate = DateHelper.NOT_KNOWN;
     }
   }
 
@@ -338,7 +380,7 @@ export class ResourcesComponent implements OnInit {
     return resource.description = this.generateDescription(resource);
   }
 
-  private generateDescription(resource: ServicePatientResource) : string {
+  private generateDescription(resource: ServicePatientResource): string {
     switch (resource.resourceJson.resourceType) {
       case 'AllergyIntolerance':
         return this.getCodeTerm(resource.resourceJson.substance);
@@ -374,7 +416,8 @@ export class ResourcesComponent implements OnInit {
         return this.getCodeTerm((resource.resourceJson.serviceRequested && resource.resourceJson.serviceRequested.length > 0) ? resource.resourceJson.serviceRequested[0] : null);
       case 'Specimen':
         return this.getCodeTerm(resource.resourceJson.type);
-      default: return null;
+      default:
+        return null;
     }
   }
 
@@ -399,7 +442,7 @@ export class ResourcesComponent implements OnInit {
     let description = '';
 
     if (resource.resourceJson.extension) {
-      for(let extension of resource.resourceJson.extension) {
+      for (let extension of resource.resourceJson.extension) {
         if (extension.url === 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-medication-authorisation-type-extension')
           description = '(' + extension.valueCoding.display + ') ';
       }
@@ -451,84 +494,6 @@ export class ResourcesComponent implements OnInit {
       : this.mergeResourcesByRecorded(this.sortResources(array.slice(0, pivot)), this.sortResources(array.slice(pivot)));
   }
 
-  private sortResourcesParentChildAndSequenceNumber(array){
-    const vm = this;
-    const len = array.length;
-    if (len < 2) {
-      return array;
-    }
-
-    let parentResourcesOnly = [];
-    let childResourcesOnly = [];
-
-    // Split the (already date sorted) method argument array into parent and child resources.
-    // Resources are added to the parent array by default, if that resource doesn't have the parent/child extensions.
-    for (let i = 0; i < array.length; i++)
-    {
-      let item;
-      item = array[i];
-      vm.logger.info("Resource: ", item);
-      vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
-      if (vm.getParentResourceExtension(item) != null)
-      {
-        vm.logger.info("Child Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
-        childResourcesOnly.push(item);
-      }
-      else
-      {
-        vm.logger.info("Parent Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
-        parentResourcesOnly.push(item);
-      }
-    }
-
-    vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
-    vm.logger.info("Child Resources Only: ", childResourcesOnly);
-
-    /* // Sort child resources array by sequence number.
-    childResourcesOnly.sort(function(a, b){
-        return vm.getSequenceNumberExtension(a) - vm.getSequenceNumberExtension(b);
-        // return a.id - b.id;
-      }
-    );
-
-    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly); */
-
-    let returnArray = [];
-
-    // Iterate through the parent resources array to add them all to the return array, and,
-    // for each parent resource, iterate through the child resources array (already sorted
-    // by sequence number) to add any of its children to the return array one after another.
-    for (let i = 0; i < parentResourcesOnly.length; i++)
-    {
-      let parentItem;
-      parentItem = parentResourcesOnly[i];
-      returnArray.push(parentItem);
-      for (let j = 0; j < childResourcesOnly.length; j++)
-      {
-        let childItem;
-        childItem = childResourcesOnly[j];
-        if (vm.getParentResourceExtension(childItem) == parentItem.resourceJson.id)
-        {
-          returnArray.push(childItem);
-        }
-      }
-    }
-
-    // 18/03/2019: Temporary iteration through child resource array to add them all to the
-    // return array and test their display, while their parent resource id issue is being fixed
-    // and the conditional part of the above inner loop does not work for matching child and parent ids
-    for (let i = 0; i < childResourcesOnly.length; i++)
-    {
-      let childItem;
-      childItem = childResourcesOnly[i];
-      returnArray.push(childItem);
-    }
-
-    vm.logger.info("Return Array: ", returnArray);
-
-    return returnArray;
-  }
-
   private mergeResourcesByRecorded(left, right) {
     let result = [];
     while ((left.length > 0) && (right.length > 0)) {
@@ -575,7 +540,101 @@ export class ResourcesComponent implements OnInit {
     return result;
   }
 
-  private dateValue(date: Date) : number {
+  private sortResourcesParentChildAndSequenceNumber(array) {
+    const vm = this;
+    const len = array.length;
+    if (len < 2) {
+      return array;
+    }
+
+    let parentResourcesOnly = [];
+    let childResourcesOnlyUnsortedBySequence = [];
+
+    // Split the (already date sorted) method argument array into parent and child resources.
+    // Resources are added to the parent array by default, if that resource doesn't have the parent/child extensions.
+    for (let i = 0; i < array.length; i++) {
+      let item;
+      item = array[i];
+      vm.logger.info("Resource: ", item);
+      vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
+      if (vm.getParentResourceExtension(item) != null) {
+        vm.logger.info("Child Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
+        childResourcesOnlyUnsortedBySequence.push(item);
+      } else {
+        vm.logger.info("Parent Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
+        parentResourcesOnly.push(item);
+      }
+    }
+
+    vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
+    vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnlyUnsortedBySequence);
+
+    let childResourcesOnly = [];
+
+    childResourcesOnly = vm.sortChildResourcesBySequenceNumber(childResourcesOnlyUnsortedBySequence);
+
+    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
+
+    let returnArray = [];
+
+    // Iterate through the parent resources array to add them all to the return array, and,
+    // for each parent resource, iterate through the child resources array (already sorted
+    // by sequence number) to add any of its children to the return array one after another.
+    for (let i = 0; i < parentResourcesOnly.length; i++) {
+      let parentItem;
+      parentItem = parentResourcesOnly[i];
+      returnArray.push(parentItem);
+      for (let j = 0; j < childResourcesOnly.length; j++) {
+        let childItem;
+        childItem = childResourcesOnly[j];
+        if (vm.getParentResourceExtension(childItem) == parentItem.resourceJson.resourceType
+          + "/" + parentItem.resourceJson.id) {
+          returnArray.push(childItem);
+        }
+      }
+    }
+
+    // 18/03/2019: Temporary iteration through child resource array to add them all to the
+    // return array and test their display, while their parent resource id issue is being fixed
+    // and the conditional part of the above inner loop does not work for matching child and parent ids
+    for (let i = 0; i < childResourcesOnly.length; i++) {
+      let childItem;
+      childItem = childResourcesOnly[i];
+      returnArray.push(childItem);
+    }
+
+    vm.logger.info("Return Array: ", returnArray);
+
+    return returnArray;
+  }
+
+  private sortChildResourcesBySequenceNumber(array) {
+    const len = array.length;
+    if (len < 2) {
+      return array;
+    }
+    const pivot = Math.ceil(len / 2);
+
+    let leftSortArray = array.slice(0, pivot);
+    let rightSortArray = array.slice(pivot);
+    let result = [];
+
+    while ((leftSortArray.length > 0) && (rightSortArray.length > 0)) {
+      const leftSequenceNumber = this.getSequenceNumberExtension(leftSortArray[0]);
+      const rightSequenceNumber = this.getSequenceNumberExtension(rightSortArray[0]);
+
+      if (leftSequenceNumber > rightSequenceNumber) {
+        result.push(leftSortArray.shift());
+      } else {
+        result.push(rightSortArray.shift());
+      }
+    }
+
+    result = result.concat(leftSortArray, rightSortArray);
+    return result;
+  }
+
+  private dateValue(date: Date): number {
     if (date == null)
       return -1;
 
@@ -590,7 +649,7 @@ export class ResourcesComponent implements OnInit {
   getKeyName(name: string): string {
     let idx = name.lastIndexOf('/');
     if (idx > 0)
-      return name.substring(idx+1);
+      return name.substring(idx + 1);
 
     return name;
   }
