@@ -284,9 +284,6 @@ export class ResourcesComponent implements OnInit {
     if (!extension)
       return null;
 
-    const vm = this;
-    vm.logger.info("Sequence Number: ", extension.valueInteger);
-
     return extension.valueInteger;
   }
 
@@ -300,9 +297,6 @@ export class ResourcesComponent implements OnInit {
 
     if (!extension)
       return null;
-
-    const vm = this;
-    vm.logger.info("Parent Resource: ", extension.valueReference.reference);
 
     return extension.valueReference.reference;
   }
@@ -490,14 +484,14 @@ export class ResourcesComponent implements OnInit {
     vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
     vm.logger.info("Child Resources Only: ", childResourcesOnly);
 
-    // Sort child resources array by sequence number.
+    /* // Sort child resources array by sequence number.
     childResourcesOnly.sort(function(a, b){
         return vm.getSequenceNumberExtension(a) - vm.getSequenceNumberExtension(b);
         // return a.id - b.id;
       }
     );
 
-    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
+    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly); */
 
     let returnArray = [];
 
