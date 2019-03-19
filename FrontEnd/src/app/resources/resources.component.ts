@@ -613,24 +613,24 @@ export class ResourcesComponent implements OnInit {
     if (len < 2) {
       return array;
     }
-    const pivot = Math.ceil(len / 2);
 
-    let leftSortArray = array.slice(0, pivot);
-    let rightSortArray = array.slice(pivot);
-    let result = [];
+    let left = [];
+    let right = [];
+    let length = array.length;
+    const pivot = this.getSequenceNumberExtension(array.pop());
 
-    while ((leftSortArray.length > 0) && (rightSortArray.length > 0)) {
-      const leftSequenceNumber = this.getSequenceNumberExtension(leftSortArray[0]);
-      const rightSequenceNumber = this.getSequenceNumberExtension(rightSortArray[0]);
-
-      if (leftSequenceNumber > rightSequenceNumber) {
-        result.push(leftSortArray.shift());
+    for (let i = 0; i < length; i++)
+    {
+      if (this.getSequenceNumberExtension(array[i]) <= pivot){
+        left.push(array[i]);
       } else {
-        result.push(rightSortArray.shift());
+        right.push(array[i]);
       }
     }
 
-    result = result.concat(leftSortArray, rightSortArray);
+    let result = [];
+    result = result.concat(this.sortChildResourcesBySequenceNumber(left),
+      pivot, this.sortChildResourcesBySequenceNumber(right));
     return result;
   }
 
