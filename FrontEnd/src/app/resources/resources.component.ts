@@ -262,10 +262,10 @@ export class ResourcesComponent implements OnInit {
   private getIsPrimaryExtension(resource: any): boolean {
     const IS_PRIMARY = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-is-primary-extension';
 
-    if (!resource || !resource.extension)
+    if (!resource || !resource.resourceJson.extension)
       return false;
 
-    const extension = resource.extension.find((e)=> e.url === IS_PRIMARY);
+    const extension = resource.resourceJson.extension.find((e)=> e.url === IS_PRIMARY);
 
     if (!extension)
       return false;
@@ -276,10 +276,10 @@ export class ResourcesComponent implements OnInit {
   private getSequenceNumberExtension(resource: any): number {
     const SEQUENCE_NUMBER = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension';
 
-    if (!resource || !resource.extension)
+    if (!resource || !resource.resourceJson.extension)
       return null;
 
-    const extension = resource.extension.find((e)=> e.url === SEQUENCE_NUMBER);
+    const extension = resource.resourceJson.extension.find((e)=> e.url === SEQUENCE_NUMBER);
 
     if (!extension)
       return null;
@@ -293,10 +293,10 @@ export class ResourcesComponent implements OnInit {
   private getParentResourceExtension(resource: any): string {
     const PARENT_RESOURCE = 'http://endeavourhealth.org/fhir/StructureDefinition/parent-resource';
 
-    if (!resource || !resource.extension)
+    if (!resource || !resource.resourceJson.extension)
       return null;
 
-    const extension = resource.extension.find((e)=> e.url === PARENT_RESOURCE);
+    const extension = resource.resourceJson.extension.find((e)=> e.url === PARENT_RESOURCE);
 
     if (!extension)
       return null;
@@ -473,7 +473,7 @@ export class ResourcesComponent implements OnInit {
     {
       let item;
       item = array[i];
-      vm.logger.info("Resource", item);
+      vm.logger.info("Resource: ", item);
       vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
       if (vm.getParentResourceExtension(item) != null)
       {
@@ -491,7 +491,6 @@ export class ResourcesComponent implements OnInit {
     vm.logger.info("Child Resources Only: ", childResourcesOnly);
 
     // Sort child resources array by sequence number.
-
     childResourcesOnly.sort(function(a, b){
         return vm.getSequenceNumberExtension(a) - vm.getSequenceNumberExtension(b);
         // return a.id - b.id;
@@ -524,7 +523,6 @@ export class ResourcesComponent implements OnInit {
     // 18/03/2019: Temporary iteration through child resource array to add them all to the
     // return array and test their display, while their parent resource id issue is being fixed
     // and the conditional part of the above inner loop does not work for matching child and parent ids
-
     for (let i = 0; i < childResourcesOnly.length; i++)
     {
       let childItem;
