@@ -618,6 +618,7 @@ export class ResourcesComponent implements OnInit {
     let right = [];
     let length = array.length;
     const pivot = this.getSequenceNumberExtension(array.pop());
+    const pivotItem = array.pop();
 
     for (let i = 0; i < length; i++)
     {
@@ -630,7 +631,7 @@ export class ResourcesComponent implements OnInit {
 
     let result = [];
     result = result.concat(this.sortChildResourcesBySequenceNumber(left),
-      pivot, this.sortChildResourcesBySequenceNumber(right));
+      pivotItem, this.sortChildResourcesBySequenceNumber(right));
     return result;
   }
 
