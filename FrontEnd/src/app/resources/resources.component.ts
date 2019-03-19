@@ -555,21 +555,15 @@ export class ResourcesComponent implements OnInit {
     for (let i = 0; i < array.length; i++) {
       let item;
       item = array[i];
-      vm.logger.info("Resource: ", item);
-      vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
       if (vm.getParentResourceExtension(item) != null) {
-        vm.logger.info("Child Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
         childResourcesOnly.push(item);
       } else {
-        vm.logger.info("Parent Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
         parentResourcesOnly.push(item);
       }
     }
 
     vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
     vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnly);
-
-    // let childResourcesOnly = [];
 
     childResourcesOnly.sort(function (a, b) {
       let sequenceNumberA = vm.getSequenceNumberExtension(a);
@@ -578,8 +572,6 @@ export class ResourcesComponent implements OnInit {
       if (sequenceNumberA > sequenceNumberB) return 1;
       return 0;
     });
-
-    // childResourcesOnly = vm.sortChildResourcesBySequenceNumber(childResourcesOnlyUnsortedBySequence);
 
     vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
 
@@ -615,33 +607,6 @@ export class ResourcesComponent implements OnInit {
 
     return returnArray;
   }
-
-  /*private sortChildResourcesBySequenceNumber(array) {
-    const len = array.length;
-    if (len < 2) {
-      return array;
-    }
-
-    let left = [];
-    let right = [];
-    let length = array.length;
-    const pivot = this.getSequenceNumberExtension(array.pop());
-    const pivotItem = array.pop();
-
-    for (let i = 0; i < length; i++)
-    {
-      if (this.getSequenceNumberExtension(array[i]) <= pivot){
-        left.push(array[i]);
-      } else {
-        right.push(array[i]);
-      }
-    }
-
-    let result = [];
-    result = result.concat(this.sortChildResourcesBySequenceNumber(left),
-      pivotItem, this.sortChildResourcesBySequenceNumber(right));
-    return result;
-  }*/
 
   private dateValue(date: Date): number {
     if (date == null)
