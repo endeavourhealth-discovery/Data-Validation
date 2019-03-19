@@ -548,7 +548,7 @@ export class ResourcesComponent implements OnInit {
     }
 
     let parentResourcesOnly = [];
-    let childResourcesOnlyUnsortedBySequence = [];
+    let childResourcesOnly = [];
 
     // Split the (already date sorted) method argument array into parent and child resources.
     // Resources are added to the parent array by default, if that resource doesn't have the parent/child extensions.
@@ -559,7 +559,7 @@ export class ResourcesComponent implements OnInit {
       vm.logger.info("Parent Resource: ", vm.getParentResourceExtension(item));
       if (vm.getParentResourceExtension(item) != null) {
         vm.logger.info("Child Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
-        childResourcesOnlyUnsortedBySequence.push(item);
+        childResourcesOnly.push(item);
       } else {
         vm.logger.info("Parent Resource Sequence Number: ", vm.getSequenceNumberExtension(item));
         parentResourcesOnly.push(item);
@@ -567,11 +567,19 @@ export class ResourcesComponent implements OnInit {
     }
 
     vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
-    vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnlyUnsortedBySequence);
+    vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnly);
 
-    let childResourcesOnly = [];
+    // let childResourcesOnly = [];
 
-    childResourcesOnly = vm.sortChildResourcesBySequenceNumber(childResourcesOnlyUnsortedBySequence);
+    childResourcesOnly.sort(function (a, b) {
+      let sequenceNumberA = vm.getSequenceNumberExtension(a);
+      let sequenceNumberB = vm.getSequenceNumberExtension(b);
+      if (sequenceNumberA < sequenceNumberB) return -1;
+      if (sequenceNumberA > sequenceNumberB) return 1;
+      return 0;
+    });
+
+    // childResourcesOnly = vm.sortChildResourcesBySequenceNumber(childResourcesOnlyUnsortedBySequence);
 
     vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
 
@@ -608,7 +616,7 @@ export class ResourcesComponent implements OnInit {
     return returnArray;
   }
 
-  private sortChildResourcesBySequenceNumber(array) {
+  /*private sortChildResourcesBySequenceNumber(array) {
     const len = array.length;
     if (len < 2) {
       return array;
@@ -633,7 +641,7 @@ export class ResourcesComponent implements OnInit {
     result = result.concat(this.sortChildResourcesBySequenceNumber(left),
       pivotItem, this.sortChildResourcesBySequenceNumber(right));
     return result;
-  }
+  }*/
 
   private dateValue(date: Date): number {
     if (date == null)
