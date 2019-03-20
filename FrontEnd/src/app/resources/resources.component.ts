@@ -216,7 +216,8 @@ export class ResourcesComponent implements OnInit {
 
   sortBy(field: string) {
     this.resourceService.setResourceSortField(field);
-    this.clinicalResourceList = this.sortResources(this.clinicalResourceList);
+    let dateSortedResources = this.sortResources(this.clinicalResourceList);
+    this.clinicalResourceList = this.sortResourcesParentChildAndSequenceNumber(dateSortedResources);
   }
 
   /** RECORDED DATE FUNCTIONS **/
@@ -608,6 +609,32 @@ export class ResourcesComponent implements OnInit {
     vm.logger.info("Return Array: ", returnArray);
 
     return returnArray;
+  }
+
+  private getParentResourceDescription(parentResourceExtension: string): string {
+    const vm = this;
+    for (let i = 0; vm.clinicalResourceList.length; i++) {
+      let item;
+      item = vm.clinicalResourceList[i];
+      if (parentResourceExtension == item.resourceJson.resourceType
+        + "/" + item.resourceJson.id) {
+        return vm.getDescription(item);
+      }
+    }
+    return null;
+  }
+
+  private getParentResourceDate(parentResourceExtension: string): Date {
+    const vm = this;
+    for (let i = 0; vm.clinicalResourceList.length; i++) {
+      let item;
+      item = vm.clinicalResourceList[i];
+      if (parentResourceExtension == item.resourceJson.resourceType
+        + "/" + item.resourceJson.id) {
+        return vm.getEffectiveDate(item);
+      }
+    }
+    return null;
   }
 
   private dateValue(date: Date): number {
