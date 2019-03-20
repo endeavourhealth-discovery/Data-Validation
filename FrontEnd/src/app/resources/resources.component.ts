@@ -547,11 +547,13 @@ export class ResourcesComponent implements OnInit {
       return array;
     }
 
+    vm.logger.info("Start Array: ", array);
+
     let parentResourcesOnly = [];
     let childResourcesOnly = [];
 
     // Split the (already date sorted) method argument array into parent and child resources.
-    // Resources are added to the parent array by default, if that resource doesn't have the parent/child extensions.
+    // Resources are added to the parent array by default, if that resource doesn't have the parent resource extension.
     for (let i = 0; i < array.length; i++) {
       let item;
       item = array[i];
@@ -578,7 +580,7 @@ export class ResourcesComponent implements OnInit {
     let returnArray = [];
 
     // Iterate through the parent resources array to add them all to the return array, and,
-    // for each parent resource, iterate through the child resources array (already sorted
+    // for each parent resource, then iterate through the child resources array (already sorted
     // by sequence number) to add any of its children to the return array one after another.
     for (let i = 0; i < parentResourcesOnly.length; i++) {
       let parentItem;
@@ -594,14 +596,14 @@ export class ResourcesComponent implements OnInit {
       }
     }
 
-    // 18/03/2019: Temporary iteration through child resource array to add them all to the
+    /* // 18/03/2019: Temporary iteration through child resource array to add them all to the
     // return array and test their display, while their parent resource id issue is being fixed
     // and the conditional part of the above inner loop does not work for matching child and parent ids
     for (let i = 0; i < childResourcesOnly.length; i++) {
       let childItem;
       childItem = childResourcesOnly[i];
       returnArray.push(childItem);
-    }
+    } */
 
     vm.logger.info("Return Array: ", returnArray);
 

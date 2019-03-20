@@ -93,7 +93,8 @@
                                 <td class="col-1">{{getEffectiveDate(clinicalResource) | date:'dd-MMM-y'}}</td>
                                 <td class="col-1">{{getSequenceNumberExtension(clinicalResource)}}</td>
                                 <td class="col-2">{{getResourceName(clinicalResource)}}</td>
-                                <td class="col-4">{{getDescription(clinicalResource)}}</td>
+                                <td class="col-4" *ngIf="getParentResourceExtension(clinicalResource) == null">{{getDescription(clinicalResource)}}</td>
+                                <td class="col-4" *ngIf="getParentResourceExtension(clinicalResource) != null">Child {{getResourceName(clinicalResource)}}: {{getDescription(clinicalResource)}}</td>
                                 <td class="col-3">{{getServiceName(clinicalResource)}}</td>
                               </tr>
                             </tbody>
