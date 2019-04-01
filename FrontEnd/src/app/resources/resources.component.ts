@@ -208,7 +208,7 @@ export class ResourcesComponent implements OnInit {
           // vm.clinicalResourceList = vm.SortResources(result);
           let dateSortedResources = vm.sortResources(result);
           vm.clinicalResourceList = vm.sortResourcesParentChildAndSequenceNumber(dateSortedResources);
-          vm.logger.info("Clinical Resource List: ", this.clinicalResourceList);
+          // vm.logger.info("Clinical Resource List: ", this.clinicalResourceList);
         },
         (error) => vm.logger.error(error)
       );
@@ -548,7 +548,7 @@ export class ResourcesComponent implements OnInit {
       return array;
     }
 
-    vm.logger.info("Start Array: ", array);
+    // vm.logger.info("Start Array: ", array);
 
     let parentResourcesOnly = [];
     let childResourcesOnly = [];
@@ -565,8 +565,8 @@ export class ResourcesComponent implements OnInit {
       }
     }
 
-    vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
-    vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnly);
+    // vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
+    // vm.logger.info("Child Resources Only Unsorted: ", childResourcesOnly);
 
     childResourcesOnly.sort(function (a, b) {
       let sequenceNumberA = vm.getSequenceNumberExtension(a);
@@ -576,7 +576,7 @@ export class ResourcesComponent implements OnInit {
       return 0;
     });
 
-    vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
+    // vm.logger.info("Child Resources Only Sorted: ", childResourcesOnly);
 
     let returnArray = [];
 
@@ -606,7 +606,7 @@ export class ResourcesComponent implements OnInit {
       returnArray.push(childItem);
     } */
 
-    vm.logger.info("Return Array: ", returnArray);
+    // vm.logger.info("Return Array: ", returnArray);
 
     return returnArray;
   }

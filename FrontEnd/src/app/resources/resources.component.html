@@ -114,7 +114,8 @@
                                   *ngIf="getParentResourceExtension(clinicalResource) == null">{{getDescription(clinicalResource)}}</td>
                               <td class="col-4" *ngIf="getParentResourceExtension(clinicalResource) != null">
                                 <i class="fa fa-level-up" data-toggle="tooltip"
-                                   title="Primary {{getResourceName(clinicalResource)}}: {{getParentResourceDate(getParentResourceExtension(clinicalResource)) | date:'dd-MMM-y'}}: {{getParentResourceDescription(getParentResourceExtension(clinicalResource))}}"></i>  {{getDescription(clinicalResource)}}
+                                   title="Primary {{getResourceName(clinicalResource)}}: {{getParentResourceDate(getParentResourceExtension(clinicalResource)) | date:'dd-MMM-y'}}: {{getParentResourceDescription(getParentResourceExtension(clinicalResource))}}"></i>
+                                  {{getDescription(clinicalResource)}}
                               </td>
                               <td class="col-3">{{getServiceName(clinicalResource)}}</td>
                             </tr>
