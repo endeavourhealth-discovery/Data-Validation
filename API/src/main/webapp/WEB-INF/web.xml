@@ -124,6 +124,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>dev_test_api</role-name>
+            <role-name>data-assurance:fhir_api</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -139,6 +140,9 @@
     </security-role>
     <security-role>
         <role-name>dev_test_api</role-name>
+    </security-role>
+    <security-role>
+        <role-name>data-assurance:fhir_api</role-name>
     </security-role>
 
     <session-config>
