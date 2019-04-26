@@ -32,7 +32,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt " +
                     "from patient_search " +
                     "where nhs_number = ? " +
-                    "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                    "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") " +
+                    "and dt_deleted is null " +
                     "group by nhs_number, forenames, surname";
 
             List<Person> ret = searchPeople(serviceIds, nhsNumber, conn, sql);
@@ -58,7 +59,9 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                 "inner join patient_search_local_identifier l on p.service_id = l.service_id and p.patient_id = l.patient_id " +
                 "where l.local_id = ? " +
                 "and l.local_id_system = '" + FhirIdentifierUri.IDENTIFIER_SYSTEM_NHSNUMBER + "' " +
-                "and l.service_id IN ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                "and l.service_id IN ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") " +
+                "and p.dt_deleted is null " +
+                "and l.dt_deleted is null " +
                 "group by nhs_number, forenames, surname, p.service_id, p.patient_id";
 
         List<Person> ret = searchPeople(serviceIds, nhsNumber, conn, sql);
@@ -82,7 +85,9 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                 "from patient_search p " +
                 "inner join patient_search_local_identifier l on p.service_id = l.service_id and p.patient_id = l.patient_id " +
                 "where l.local_id = ? " +
-                "and l.service_id IN ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                "and l.service_id IN ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") " +
+                "and p.dt_deleted is null " +
+                "and l.dt_deleted is null " +
                 "group by nhs_number, forenames, surname, p.service_id, p.patient_id";
 
             return searchPeople(serviceIds, emisNumber, conn, sql);
@@ -101,6 +106,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                 "from patient_search " +
                 "where date_of_birth = ? " +
                 "and service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") "+
+                "and dt_deleted is null " +
                 "group by nhs_number, forenames, surname, service_id, patient_id";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -134,7 +140,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                 sql = "select distinct nhs_number, forenames, surname, count(*) as cnt, service_id, patient_id " +
                     "from patient_search " +
                     "where (lower(surname) LIKE ? or lower(forenames) LIKE ?) " +
-                    "and service_id in (" + String.join(",", Collections.nCopies(serviceIds.size(), "?")) + ") "+
+                    "and service_id in (" + String.join(",", Collections.nCopies(serviceIds.size(), "?")) + ") " +
+                    "and dt_deleted is null " +
                     "group by nhs_number, forenames, surname, service_id, patient_id";
             } else {
                 name1 = (names.get(0)).replace(",", "") + "%";
@@ -146,6 +153,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                         " or (lower(surname) LIKE ? and lower(forenames) LIKE ?)" +
                     ") " +
                     "and service_id in (" + String.join(",", Collections.nCopies(serviceIds.size(), "?")) + ") "+
+                    "and dt_deleted is null " +
                     "group by nhs_number, forenames, surname, service_id, patient_id";
             }
 
@@ -229,9 +237,10 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         try {
             String sql = "select ps.service_id, ps.patient_id, ps.forenames, ps.surname, ps.date_of_birth, li.local_id, li.local_id_system " +
                 "from patient_search ps " +
-                "left outer join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
+                "left outer join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id and li.dt_deleted is null " +
                 "where ps.nhs_number = ? " +
-                "and ps.service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +")";
+                "and ps.service_id in ("+String.join(",", Collections.nCopies(serviceIds.size(), "?")) +") " +
+                "and ps.dt_deleted is null";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 int i = 1;
@@ -276,7 +285,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
                 "from patient_search ps " +
                 "left outer join patient_search_local_identifier li on li.service_id = ps.service_id and li.patient_id = ps.patient_id " +
                 "where ps.service_id = ? " +
-                "and ps.patient_id = ? ";
+                "and ps.patient_id = ?";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 int i = 1;
