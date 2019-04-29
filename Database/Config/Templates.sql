@@ -295,7 +295,7 @@ values (
          <input id="Notes" class="form-control" type="text" disabled value="">
        </div>
        <div *ngFor="let extension of resource.resourceJson.extension">
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-is-primary-extension'' && extension.valueBoolean">
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/is-primary-extension'' && extension.valueBoolean">
           <label for="IsPrimary">Is primary</label>
           <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
         </div>

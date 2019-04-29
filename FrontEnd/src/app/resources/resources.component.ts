@@ -283,7 +283,7 @@ export class ResourcesComponent implements OnInit {
   }
 
   private getIsPrimaryExtension(resource: any): boolean {
-    const IS_PRIMARY = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-is-primary-extension';
+    const IS_PRIMARY = 'http://endeavourhealth.org/fhir/StructureDefinition/is-primary-extension';
 
     if (!resource || !resource.resourceJson.extension)
       return false;
