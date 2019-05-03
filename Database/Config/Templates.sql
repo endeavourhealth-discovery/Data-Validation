@@ -311,6 +311,10 @@ values (
           <label for="RecordedDate">Recorded date</label>
           <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime | date:''dd/MM/y''}}">
         </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-speciality-group-extension''">
+          <label for="SpecialtyGroup">Specialty Group</label>
+          <input id="SpecialtyGroup" class="form-control" type="text" disabled value="{{extension.valueString}}">
+        </div>
       </div>
      </div>
      <div class="col-md-6">
