@@ -286,6 +286,16 @@ values (
          <label for="Performer">Performed by</label>
          <input id="Performer" class="form-control" type="text" disabled value="">
        </div>
+       <div class="form-group" *ngIf="resource.resourceJson.performedPeriod!=null">
+         <label for="PerformedAtStart">Procedure start</label>
+         <input id="PerformedAt" class="form-control" type="text" disabled value="{{resource.resourceJson.performedPeriod.start| date:''dd/MM/y HH:mm:ss''}}">
+         <label for="PerformedAtEnd">Procedure end</label>
+         <input id="PerformedAt" class="form-control" type="text" disabled value="{{resource.resourceJson.performedPeriod.end}}">
+       </div>
+       <div class="form-group" *ngIf="resource.resourceJson.performedPeriod==null">
+         <label for="Performer">Performed at</label>
+         <input id="Performer" class="form-control" type="text" disabled value="">
+       </div>
        <div class="form-group" *ngIf="resource.resourceJson.notes!=null">
          <label for="Notes">Notes</label>
          <input id="Notes" class="form-control" type="text" disabled value="{{resource.resourceJson.notes[0].text}}">

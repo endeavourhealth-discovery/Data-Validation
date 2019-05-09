@@ -363,7 +363,7 @@ export class ResourcesComponent implements OnInit {
       case 'Observation':
         return resource.effectiveDate = DateHelper.parse(resource.resourceJson.effectiveDateTime);
       case 'Procedure':
-        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.performedDateTime);
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.performedPeriod ? resource.resourceJson.performedPeriod.start, resource.resourceJson.performedDateTime);
       case 'ReferralRequest':
         return resource.effectiveDate = DateHelper.parse(resource.resourceJson.date);
       case 'Specimen':
