@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ResourcesService} from './resources.service';
-import {PersonFindDialogComponent} from '../person-find/person-find-dialog/person-find-dialog.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Service} from '../models/Service';
-import {Person} from '../models/Person';
-import {ResourceType} from '../models/ResourceType';
-import {Patient} from '../models/Patient';
-import {LoggerService} from 'eds-angular4';
-import {ViewerComponent} from './viewer/viewer.component';
-import {ServicePatientResource} from '../models/Resource';
-import {DateHelper} from '../helpers/date.helper';
-import {ResourceId} from '../models/ResourceId';
+import { Component, OnInit } from '@angular/core';
+import { ResourcesService } from './resources.service';
+import { PersonFindDialogComponent } from '../person-find/person-find-dialog/person-find-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Service } from '../models/Service';
+import { Person } from '../models/Person';
+import { ResourceType } from '../models/ResourceType';
+import { Patient } from '../models/Patient';
+import { LoggerService } from 'eds-angular4';
+import { ViewerComponent } from './viewer/viewer.component';
+import { ServicePatientResource } from '../models/Resource';
+import { DateHelper } from '../helpers/date.helper';
+import { ResourceId } from '../models/ResourceId';
 
 @Component({
   selector: 'app-resources-component',
@@ -36,8 +36,8 @@ export class ResourcesComponent implements OnInit {
   protected lastHighlight: ServicePatientResource;
 
   constructor(protected logger: LoggerService,
-              protected modal: NgbModal,
-              protected resourceService: ResourcesService) {
+    protected modal: NgbModal,
+    protected resourceService: ResourcesService) {
     this.getResourceTypes();
   }
 
@@ -69,9 +69,9 @@ export class ResourcesComponent implements OnInit {
   public findPerson() {
     PersonFindDialogComponent.open(this.modal)
       .result.then(
-      (result) => this.loadPerson(result),
-      (error) => this.logger.error(error)
-    );
+        (result) => this.loadPerson(result),
+        (error) => this.logger.error(error)
+      );
   }
 
   /** INITIAL DATA LOAD **/
@@ -456,16 +456,20 @@ export class ResourcesComponent implements OnInit {
   /** BASIC LOOKUPS **/
   private getPatientName(resource: ServicePatientResource): string {
     if (resource.resourceJson.name && resource.resourceJson.name.length > 0) {
-      const name = resource.resourceJson.name[0];
+      for (const name of resource.resourceJson.name) {
+        if (name.use === 'official') {
+          /*  const name = resource.resourceJson.name[0];*/
 
-      if (name.text && name.text !== '')
-        return name.text;
+          if (name.text && name.text !== '')
+            return name.text;
 
-      const surnames = (name.family == null) ? '' : name.family.join(' ') + ', ';
-      const forenames = (name.given == null) ? '' : name.given.join(' ');
-      const title = (name.title == null) ? '' : '(' + name.title.join(' ') + ')';
+          const surnames = (name.family == null) ? '' : name.family.join(' ') + ', ';
+          const forenames = (name.given == null) ? '' : name.given.join(' ');
+          const title = (name.title == null) ? '' : '(' + name.title.join(' ') + ')';
 
-      return surnames + forenames + title;
+          return surnames + forenames + title;
+        }
+      }
     }
 
     return 'Not known';

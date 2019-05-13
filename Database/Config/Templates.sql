@@ -290,7 +290,7 @@ values (
          <label for="PerformedAtStart">Procedure start</label>
          <input id="PerformedAt" class="form-control" type="text" disabled value="{{resource.resourceJson.performedPeriod.start| date:''dd/MM/y HH:mm:ss''}}">
          <label for="PerformedAtEnd">Procedure end</label>
-         <input id="PerformedAt" class="form-control" type="text" disabled value="{{resource.resourceJson.performedPeriod.end}}">
+         <input id="PerformedAt" class="form-control" type="text" disabled value="{{resource.resourceJson.performedPeriod.end| date:''dd/MM/y HH:mm:ss''}}">
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.performedPeriod==null">
          <label for="Performer">Performed at</label>
