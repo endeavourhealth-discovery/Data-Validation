@@ -458,7 +458,7 @@ export class ResourcesComponent implements OnInit {
     if (resource.resourceJson.name && resource.resourceJson.name.length > 0) {
       for (const name of resource.resourceJson.name) {
         if (name.use === 'official') {
-          /*  const name = resource.resourceJson.name[0];*/
+          /*  const name = resource.resourceJson.name[0];      */
 
           if (name.text && name.text !== '')
             return name.text;
