@@ -324,9 +324,6 @@ export class ResourcesComponent implements OnInit {
     if (!extension)
       return null;
 
-    const vm = this;
-    vm.logger.info("Parent resource extension: ",extension.valueReference.reference);
-
     return extension.valueReference.reference;
   }
 
@@ -603,9 +600,6 @@ export class ResourcesComponent implements OnInit {
         if (vm.getParentResourceExtension(childItem) == parentItem.resourceJson.resourceType
           + "/" + parentItem.resourceJson.id) {
           returnArray.push(childItem);
-          break;
-        } else {
-            vm.logger.warning("ChildItem with no parent resource match:", childItem)
         }
       }
     }
@@ -619,7 +613,7 @@ export class ResourcesComponent implements OnInit {
       returnArray.push(childItem);
     } */
 
-    vm.logger.info("Return Array count: ", returnArray.length);
+    //vm.logger.info("Return Array count: ", returnArray.length);
 
     return returnArray;
   }
