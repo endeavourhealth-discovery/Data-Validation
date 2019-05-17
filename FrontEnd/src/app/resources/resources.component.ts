@@ -613,6 +613,20 @@ export class ResourcesComponent implements OnInit {
       returnArray.push(childItem);
     } */
 
+    //check for ophaned child resources, i.e. they must have a parent link?
+    let debugParent = false;
+    for (let i = 0; i < childResourcesOnly.length; i++) {
+      let childItem;
+      childItem = childResourcesOnly[i];
+      if (!returnArray.includes(childItem)) {
+        vm.logger.info("ChildItem missing from returnArray: ", childItem);
+        debugParent = true;
+      }
+    }
+    if (debugParent) {
+      vm.logger.info("Parent Resources Only: ", parentResourcesOnly);
+    }
+
     //vm.logger.info("Return Array count: ", returnArray.length);
 
     return returnArray;
