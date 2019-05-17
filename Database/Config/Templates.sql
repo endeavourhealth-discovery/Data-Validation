@@ -325,6 +325,10 @@ values (
           <label for="SpecialtyGroup">Specialty Group</label>
           <input id="SpecialtyGroup" class="form-control" type="text" disabled value="{{extension.valueString}}">
         </div>
+        <div class="form-group" *ngIf="resource.resourceJson.location!=null">
+          <label for="Location">Location</label>
+          <input id="Location" class="form-control" type="text" disabled value="{{resource.resourceJson.location.display}}">
+        </div>
       </div>
      </div>
      <div class="col-md-6">
