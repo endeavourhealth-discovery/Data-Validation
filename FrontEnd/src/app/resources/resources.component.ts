@@ -613,7 +613,15 @@ export class ResourcesComponent implements OnInit {
       returnArray.push(childItem);
     } */
 
-    //vm.logger.info("Return Array count: ", returnArray.length);
+    for (let i = 0; i < childResourcesOnly.length; i++) {
+      let childItem;
+      childItem = childResourcesOnly[i];
+      if (!returnArray.includes(childItem)) {
+        returnArray.push(childItem);
+      }
+    }
+
+    // vm.logger.info("Return Array count: ", returnArray.length);
 
     return returnArray;
   }
