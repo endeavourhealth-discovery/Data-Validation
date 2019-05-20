@@ -305,31 +305,31 @@ values (
          <input id="Notes" class="form-control" type="text" disabled value="">
        </div>
        <div *ngFor="let extension of resource.resourceJson.extension">
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/is-primary-extension'' && extension.valueBoolean">
-          <label for="IsPrimary">Is primary</label>
-          <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
-        </div>
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension''">
-          <label for="Sequence">Sequence number</label>
-          <input id="Sequence" class="form-control" type="text" disabled value="{{extension.valueInteger}}">
-        </div>
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
-          <label for="RecordedBy">Recorded by</label>
-          <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
-        </div>
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-date-extension''">
-          <label for="RecordedDate">Recorded date</label>
-          <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime | date:''dd/MM/y''}}">
-        </div>
-        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-speciality-group-extension''">
-          <label for="SpecialtyGroup">Specialty Group</label>
-          <input id="SpecialtyGroup" class="form-control" type="text" disabled value="{{extension.valueString}}">
-        </div>
-        <div class="form-group" *ngIf="resource.resourceJson.location!=null">
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/is-primary-extension'' && extension.valueBoolean">
+            <label for="IsPrimary">Is primary</label>
+            <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
+          </div>
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension''">
+            <label for="Sequence">Sequence number</label>
+            <input id="Sequence" class="form-control" type="text" disabled value="{{extension.valueInteger}}">
+          </div>
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-by-extension''">
+            <label for="RecordedBy">Recorded by</label>
+            <input id="RecordedBy" class="form-control" type="text" disabled value="{{extension.valueReference.display}}">
+          </div>
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-recorded-date-extension''">
+            <label for="RecordedDate">Recorded date</label>
+            <input id="RecordedDate" class="form-control" type="text" disabled value="{{extension.valueDateTime | date:''dd/MM/y''}}">
+          </div>
+          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-speciality-group-extension''">
+            <label for="SpecialtyGroup">Specialty Group</label>
+            <input id="SpecialtyGroup" class="form-control" type="text" disabled value="{{extension.valueString}}">
+          </div>
+       </div>
+       <div class="form-group" *ngIf="resource.resourceJson.location!=null">
           <label for="Location">Location</label>
           <input id="Location" class="form-control" type="text" disabled value="{{resource.resourceJson.location.display}}">
-        </div>
-      </div>
+       </div>
      </div>
      <div class="col-md-6">
        <div class="form-group">
