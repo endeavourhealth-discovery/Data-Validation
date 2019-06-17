@@ -300,12 +300,13 @@ export class ResourcesComponent implements OnInit {
   }
 
   private getSequenceNumberExtension(resource: any): number {
-    const SEQUENCE_NUMBER = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension';
+    const SEQUENCE_NUMBER_PROC = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-procedure-sequence-number-extension';
+    const SEQUENCE_NUMBER_COND = 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-condition-sequence-number-extension';
 
-    if (!resource || !resource.resourceJson.extension)
+    if (!resource || !resource.resourceJson || !resource.resourceJson.extension)
       return null;
 
-    const extension = resource.resourceJson.extension.find((e) => e.url === SEQUENCE_NUMBER);
+    const extension = resource.resourceJson.extension.find((e) => e.url === SEQUENCE_NUMBER_PROC || e.url === SEQUENCE_NUMBER_COND);
 
     if (!extension)
       return null;

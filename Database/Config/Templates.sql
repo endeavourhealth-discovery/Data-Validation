@@ -245,6 +245,14 @@ values (
           <label for="Episodicity">Is a review</label>
           <input id="Episodicity" class="form-control" type="text" disabled value="Yes">
         </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/is-primary-extension'' && extension.valueBoolean">
+          <label for="IsPrimary">Is primary</label>
+          <input id="IsPrimary" class="form-control" type="text" disabled value="Yes">
+        </div>
+        <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-condition-sequence-number-extension''">
+          <label for="Sequence">Sequence number</label>
+          <input id="Sequence" class="form-control" type="text" disabled value="{{extension.valueInteger}}">
+        </div>
       </div>
     </div>
     <div class="col-md-6">
