@@ -629,7 +629,7 @@ export class ResourcesComponent implements OnInit {
 
   private getParentResourceDescription(parentResourceExtension: string): string {
     const vm = this;
-    for (let i = 0; vm.clinicalResourceList.length; i++) {
+    for (let i = 0; i < vm.clinicalResourceList.length; i++) {
       let item;
       item = vm.clinicalResourceList[i];
       if (parentResourceExtension == item.resourceJson.resourceType
@@ -642,10 +642,9 @@ export class ResourcesComponent implements OnInit {
 
   private getParentResourceDate(parentResourceExtension: string): Date {
     const vm = this;
-    for (let i = 0; vm.clinicalResourceList.length; i++) {
+    for (let i = 0; i < vm.clinicalResourceList.length; i++) {
       let item;
       item = vm.clinicalResourceList[i];
-      console.log(item);
       if (parentResourceExtension == item.resourceJson.resourceType
         + "/" + item.resourceJson.id) {
         return vm.getEffectiveDate(item);
