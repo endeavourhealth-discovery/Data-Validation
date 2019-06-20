@@ -645,6 +645,7 @@ export class ResourcesComponent implements OnInit {
     for (let i = 0; vm.clinicalResourceList.length; i++) {
       let item;
       item = vm.clinicalResourceList[i];
+      console.log(item);
       if (parentResourceExtension == item.resourceJson.resourceType
         + "/" + item.resourceJson.id) {
         return vm.getEffectiveDate(item);
