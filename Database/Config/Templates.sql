@@ -377,7 +377,7 @@ values (
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.valueQuantity!=null">
             <label for="Value">Value</label>
-            <input id="Value" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.value}}">
+            <input id="Value" class="form-control" type="text" disabled value="{{resource.resourceJson.valueQuantity.comparator? resource.resourceJson.valueQuantity.comparator : ''''}}{{resource.resourceJson.valueQuantity.value}}">
         </div>
         <div class="form-group" *ngIf="resource.resourceJson.valueString!=null">
             <label for="ValueString">Value</label>
