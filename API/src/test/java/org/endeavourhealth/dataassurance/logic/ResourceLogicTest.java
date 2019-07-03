@@ -6,6 +6,7 @@ import org.endeavourhealth.dataassurance.logic.mocks.Mock_ResourceDAL;
 import org.endeavourhealth.dataassurance.models.PatientResource;
 import org.endeavourhealth.dataassurance.models.ResourceId;
 import org.hl7.fhir.instance.model.*;
+import org.hl7.fhir.instance.terminologies.ITerminologyServices;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -433,4 +434,35 @@ public class ResourceLogicTest {
         Assert.assertNotNull(mapping);
         Assert.assertEquals(0, mapping.size());
     }
+    @Test
+    public void getReferenceDescriptionQuestionnaireResponse() {
+        resourceDAL.resource = new QuestionnaireResponse();
+        QuestionnaireResponse qr = new QuestionnaireResponse();
+
+
+        QuestionnaireResponse.GroupComponent comp = new QuestionnaireResponse.GroupComponent();
+        comp.setTitle("Title1");
+
+        QuestionnaireResponse.QuestionComponent qc = new QuestionnaireResponse.QuestionComponent();
+        QuestionnaireResponse.QuestionAnswerComponent qac = new QuestionnaireResponse.QuestionAnswerComponent();
+ //       qac.setValue(BooleanType.class);
+//        qc.addAnswer()
+//
+//        comp.addQuestion();
+//
+//
+//
+//
+//
+//                .addServiceRequested(
+//                        new CodeableConcept()
+//                                .addCoding(
+//                                        new Coding().setDisplay("Mock Service Coding")
+//                                )
+//                );
+
+        String actual = resourceLogic.getReferenceDescription(UUID.randomUUID().toString(), "ReferralRequest/" + UUID.randomUUID().toString());
+        Assert.assertEquals("Mock Service Coding", actual);
+    }
+
 }

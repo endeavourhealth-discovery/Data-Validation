@@ -40,6 +40,7 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
         resourceTypes.add(new ResourceType("Observation", "Observation"));
         resourceTypes.add(new ResourceType("Procedure", "Procedure"));
         resourceTypes.add(new ResourceType("ProcedureRequest", "Procedure Request"));
+        resourceTypes.add(new ResourceType("QuestionnaireResponse", "Questionnaire Response"));
         resourceTypes.add(new ResourceType("ReferralRequest", "Referral Request"));
         resourceTypes.add(new ResourceType("Schedule", "Schedule"));
         resourceTypes.add(new ResourceType("Slot", "Slot"));

@@ -111,6 +111,18 @@ public class ResourceLogic {
         return "Unknown type";
     }
 
+    private List<QuestionnaireResponse.GroupComponent> getQuestionnaireResponse(QuestionnaireResponse resource) {
+        if (resource.getGroup().hasGroup()) {
+//            for (QuestionnaireResponse.GroupComponent groupComponent : resource.getGroup().getGroup()) {
+//            }
+            return resource.getGroup().getGroup();
+        } else {
+            List<QuestionnaireResponse.GroupComponent> ret  = new ArrayList<>();
+            ret.add(resource.getGroup());
+            return ret;
+        }
+    }
+
     private String getProcedureRequest(ProcedureRequest resource) {
         if (resource.getCode().hasText() && resource.hasStatus()) {
             String status = resource.getStatus().getDisplay();

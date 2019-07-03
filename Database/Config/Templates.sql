@@ -231,7 +231,7 @@ values (
         <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.onsetDateTime | date:''dd/MM/y''}}">
       </div>
       <div class="form-group">
-        <label for="Recorder">Recorded by</label>
+        <label for="Recorder">Clinician</label>
         <input id="Recorder" class="form-control" type="text" disabled value="{{resource.resourceJson.asserter?.display}}">
       </div>
       <div *ngFor="let profile of resource.resourceJson.meta.profile">
@@ -1037,3 +1037,19 @@ values (
   </div>
 </form>
 </div>');
+# Work in progress
+ delete from config where config_id = 'Template-DiagnosticOrder' and app_id = 'data-assurance';
+ insert into config (app_id, config_id, config_data)
+ values (
+   'data-assurance',
+   'Template-QuestionnaireResponse',
+   '<div class="container-fluid">
+ <form>
+ <div *ngFor="let author of resource.resourceJson.group.title">
+         <div class="form-group"  >
+           <label for="QuestionResp">Questionnaire</label>
+           <input id="QuestionResp" class="form-control" type="text" disabled value="{{group.title}}">
+         </div>
+       </div>
+ </form>
+ </div'>);

@@ -417,6 +417,9 @@ export class ResourcesComponent implements OnInit {
         return this.getCodeTerm(resource.resourceJson.code, resource.resourceJson.comments);
       case 'Procedure':
         return this.getCodeTerm(resource.resourceJson.code);
+      case 'QuestionnaireResponse':
+        //TODO Placeholder until I decide what goe here.
+        return this.getCodeTerm(resource.resourceJson.authored)
       case 'ReferralRequest':
         return this.getCodeTerm((resource.resourceJson.serviceRequested && resource.resourceJson.serviceRequested.length > 0) ? resource.resourceJson.serviceRequested[0] : null);
       case 'Specimen':
