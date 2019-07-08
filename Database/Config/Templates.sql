@@ -1049,16 +1049,19 @@ values (
              <div class="col-md-6">
                 <div class="form-group">
                   <label for="Author">Author</label>
-                  <input id="Author" class="form-control" type="text" disabled value="{{resource.resourceJson.author.display}}">
+                  <input id="Author" class="form-control" type="text" disabled value="{{resource.resourceJson.author?.display}}">
                 </div>
-                <div class="form-group">
-                  <label for="CaseNo">Case No</label>
-                  <input id="CaseNo" class="form-control" type="text" disabled value="{{resource.resourceJson.identifier.value}}">
-                </div>
-                <div *ngFor="let author of resource.resourceJson.group.title">
+                  <div class="form-group">
+                    <label for="CaseNo">Case No</label>
+                    <input id="CaseNo" class="form-control" type="text" disabled value="{{resource.resourceJson.identifier.value}}">
+                  </div>
+            <div *ngFor="let group of resource.resourceJson.group.group">
                   <div class="form-group"  >
-                    <label for="QuestionResp">Questionnaire</label>
-                    <input id="QuestionResp" class="form-control" type="text" disabled value="{{group.title}}">
+                    <label for="QuestionGroup">{{group.title}}</label>
+              <div *ngFor="let question of group.question">
+                <label for="Question">{{question.text}}</label>
+                <input id="Answer" class="form-control" type="text" disabled value="{{question.answer[0].valueString}}">
+                      </div>
                   </div>
                 </div>
              </div>
