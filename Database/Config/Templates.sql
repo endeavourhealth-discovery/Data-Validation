@@ -1037,19 +1037,37 @@ values (
   </div>
 </form>
 </div>');
-# Work in progress
- delete from config where config_id = 'Template-DiagnosticOrder' and app_id = 'data-assurance';
- insert into config (app_id, config_id, config_data)
- values (
-   'data-assurance',
-   'Template-QuestionnaireResponse',
-   '<div class="container-fluid">
- <form>
- <div *ngFor="let author of resource.resourceJson.group.title">
-         <div class="form-group"  >
-           <label for="QuestionResp">Questionnaire</label>
-           <input id="QuestionResp" class="form-control" type="text" disabled value="{{group.title}}">
-         </div>
-       </div>
- </form>
- </div'>);
+
+delete from config where config_id = 'Template-QuestionnaireResponse' and app_id = 'data-assurance';
+insert into config (app_id, config_id, config_data)
+values (
+         'data-assurance',
+         'Template-QuestionnaireResponse',
+         '<div class="container-fluid">
+       <form>
+           <div class="row">
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Author">Author</label>
+                  <input id="Author" class="form-control" type="text" disabled value="{{resource.resourceJson.author.display}}">
+                </div>
+                <div class="form-group">
+                  <label for="CaseNo">Case No</label>
+                  <input id="CaseNo" class="form-control" type="text" disabled value="{{resource.resourceJson.identifier.value}}">
+                </div>
+                <div *ngFor="let author of resource.resourceJson.group.title">
+                  <div class="form-group"  >
+                    <label for="QuestionResp">Questionnaire</label>
+                    <input id="QuestionResp" class="form-control" type="text" disabled value="{{group.title}}">
+                  </div>
+                </div>
+             </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Date">Date</label>
+                  <input id="Date" class="form-control" type="text" disabled value="{{resource.resourceJson.authored | date:''dd/MM/y''}}">
+                </div>
+             </div>
+           </div>
+       </form>
+       </div>');
