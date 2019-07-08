@@ -1041,9 +1041,9 @@ values (
 delete from config where config_id = 'Template-QuestionnaireResponse' and app_id = 'data-assurance';
 insert into config (app_id, config_id, config_data)
 values (
-         'data-assurance',
-         'Template-QuestionnaireResponse',
-         '<div class="container-fluid">
+    'data-assurance',
+    'Template-QuestionnaireResponse',
+    '<div class="container-fluid">
        <form>
            <div class="row">
              <div class="col-md-6">
@@ -1051,17 +1051,17 @@ values (
                   <label for="Author">Author</label>
                   <input id="Author" class="form-control" type="text" disabled value="{{resource.resourceJson.author?.display}}">
                 </div>
-                  <div class="form-group">
-                    <label for="CaseNo">Case No</label>
-                    <input id="CaseNo" class="form-control" type="text" disabled value="{{resource.resourceJson.identifier.value}}">
-                  </div>
-            <div *ngFor="let group of resource.resourceJson.group.group">
+                <div class="form-group">
+                  <label for="CaseNo">Case No</label>
+                  <input id="CaseNo" class="form-control" type="text" disabled value="{{resource.resourceJson.identifier.value}}">
+                </div>
+                <div *ngFor="let group of resource.resourceJson.group.group">
                   <div class="form-group"  >
-                    <label for="QuestionGroup">{{group.title}}</label>
-              <div *ngFor="let question of group.question">
-                <label for="Question">{{question.text}}</label>
-                <input id="Answer" class="form-control" type="text" disabled value="{{question.answer[0].valueString}}">
-                      </div>
+                    <label for="QuestionGroup"><u>{{group.title}}</u></label>
+                    <div class="form-group" *ngFor="let question of group.question">
+                      <label for="Question">{{question.text}}</label>
+                        <input id="Answer" class="form-control" type="text" disabled value="{{question.answer[0].valueString}}">
+                    </div>
                   </div>
                 </div>
              </div>
@@ -1073,4 +1073,4 @@ values (
              </div>
            </div>
        </form>
-       </div>');
+    </div>');
