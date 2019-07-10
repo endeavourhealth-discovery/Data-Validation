@@ -193,6 +193,10 @@ values (
           <label for="CaseNo">Case No</label>
           <input id="CaseNo" class="form-control" type="text" disabled value="{{identifier.value}}">
         </div>
+        <div class="form-group" *ngIf="identifier.system==''''http://oneadvanced.com/identifier/adastra-case-tag''''" >
+          <label for="CaseTag">Case Tag</label>
+          <input id="CaseTag" class="form-control" type="text" disabled value="{{identifier.value}}">
+        </div>
       </div>
     </div>
     <div class="col-md-6">
