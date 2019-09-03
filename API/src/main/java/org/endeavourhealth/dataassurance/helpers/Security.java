@@ -55,12 +55,12 @@ public class Security {
         }
 
         UUID serviceUuid = null;
-        LOG.trace("Getting service UUID for ID [" + keyCloakOrgId + "]");
+        //LOG.trace("Getting service UUID for ID [" + keyCloakOrgId + "]");
 
         try {
             //if it's a UUID, then just use it as is
             serviceUuid = UUID.fromString(keyCloakOrgId);
-            LOG.trace("Is UUID, so OK");
+            //LOG.trace("Is UUID, so OK");
 
         } catch (Exception ex) {
 
@@ -78,7 +78,7 @@ public class Security {
                     throw new RuntimeException("Failed to find service for ODS code " + keyCloakOrgId, ex2);
                 }
             }
-            LOG.trace("Is ODS code, and found UUID " + serviceUuid);
+            //LOG.trace("Is ODS code, and found UUID " + serviceUuid);
         }
 
         return serviceUuid;
