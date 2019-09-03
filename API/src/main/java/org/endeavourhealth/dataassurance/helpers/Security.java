@@ -7,12 +7,15 @@ import org.endeavourhealth.core.database.dal.admin.ServiceDalI;
 import org.endeavourhealth.core.database.dal.admin.models.Service;
 import org.endeavourhealth.coreui.endpoints.UserManagerEndpoint;
 import org.keycloak.representations.AccessToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.SecurityContext;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Security {
+    private static final Logger LOG = LoggerFactory.getLogger(Security.class);
 
     private static Map<String, UUID> hmOdsCodeToUuidMap = new ConcurrentHashMap<>();
 
@@ -52,10 +55,12 @@ public class Security {
         }
 
         UUID serviceUuid = null;
+        LOG.trace("Getting service UUID for ID [" + keyCloakOrgId + "]");
 
         try {
             //if it's a UUID, then just use it as is
             serviceUuid = UUID.fromString(keyCloakOrgId);
+            LOG.trace("Is UUID, so OK");
 
         } catch (Exception ex) {
 
@@ -73,6 +78,7 @@ public class Security {
                     throw new RuntimeException("Failed to find service for ODS code " + keyCloakOrgId, ex2);
                 }
             }
+            LOG.trace("Is ODS code, and found UUID " + serviceUuid);
         }
 
         return serviceUuid;
