@@ -89,6 +89,5 @@ public class Security {
         List<String> orgUuids = um.getPublishersForProject(projectId);
 
         return new HashSet<>(orgUuids);
-
     }
 }
