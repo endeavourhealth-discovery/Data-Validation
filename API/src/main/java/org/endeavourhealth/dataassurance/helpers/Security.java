@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Security {
     private static final Logger LOG = LoggerFactory.getLogger(Security.class);
 
+
     private static Map<String, UUID> hmOdsCodeToUuidMap = new ConcurrentHashMap<>();
 
     public Set<String> getUserAllowedOrganisationIdsFromSecurityContext(SecurityContext securityContext, String projectId) {
