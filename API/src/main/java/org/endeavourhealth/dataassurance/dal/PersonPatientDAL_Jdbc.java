@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
 import org.endeavourhealth.common.config.ConfigManager;
 import org.endeavourhealth.common.fhir.FhirIdentifierUri;
+import org.endeavourhealth.core.database.rdbms.ConnectionManager;
 import org.endeavourhealth.coreui.framework.ContextShutdownHook;
 import org.endeavourhealth.coreui.framework.StartupConfig;
 import org.endeavourhealth.dataassurance.helpers.CUIFormatter;
@@ -17,16 +18,17 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
-public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownHook {
+public class PersonPatientDAL_Jdbc implements PersonPatientDAL { //, ContextShutdownHook {
     private static final Logger LOG = LoggerFactory.getLogger(PersonPatientDAL_Jdbc.class);
-    private Connection _connection = null;
+
+    //private Connection _connection = null;
 
     public PersonPatientDAL_Jdbc() {
-        StartupConfig.registerShutdownHook("PersonPatientDAL_Jdbc", this);
+        //StartupConfig.registerShutdownHook("PersonPatientDAL_Jdbc", this);
     }
 
     @Override
-    public List<Person> searchByNhsNumber(Set<String> serviceIds, String nhsNumber) {
+    public List<Person> searchByNhsNumber(Set<String> serviceIds, String nhsNumber) throws Exception {
         Connection conn = getConnection();
         try {
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt " +
@@ -46,6 +48,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         } catch (Exception e) {
             LOG.error("Error searching by NHS number  [" + nhsNumber + "]", e);
             return null;
+        } finally {
+            conn.close();
         }
     }
 
@@ -78,7 +82,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
     }
 
     @Override
-    public List<Person> searchByLocalId(Set<String> serviceIds, String emisNumber) {
+    public List<Person> searchByLocalId(Set<String> serviceIds, String emisNumber) throws Exception {
         Connection conn = getConnection();
         try {
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt, p.service_id, p.patient_id " +
@@ -95,11 +99,13 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         } catch (Exception e) {
             LOG.error("Error searching by Local ID  [" + emisNumber + "]", e);
             return null;
+        } finally {
+            conn.close();
         }
     }
 
     @Override
-    public List<Person> searchByDateOfBirth(Set<String> serviceIds, Date dateOfBirth) {
+    public List<Person> searchByDateOfBirth(Set<String> serviceIds, Date dateOfBirth) throws Exception {
         Connection conn = getConnection();
         try {
             String sql = "select distinct nhs_number, forenames, surname, count(*) as cnt, service_id, patient_id " +
@@ -124,11 +130,13 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         } catch (Exception e) {
             LOG.error("Error searching by NHS number  [" + dateOfBirth + "]", e);
             return null;
+        } finally {
+            conn.close();
         }
     }
 
     @Override
-    public List<Person> searchByNames(Set<String> serviceIds, List<String> names) {
+    public List<Person> searchByNames(Set<String> serviceIds, List<String> names) throws Exception {
         Connection conn = getConnection();
         try {
             String sql;
@@ -181,6 +189,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         } catch (Exception e) {
             LOG.error("Error searching by names  [" + String.join("],[", names) + "]", e);
             return null;
+        } finally {
+            conn.close();
         }
     }
 
@@ -232,7 +242,7 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
     }
 
     @Override
-    public List<Patient> getPatientsByNhsNumber(Set<String> serviceIds, String nhsNumber) {
+    public List<Patient> getPatientsByNhsNumber(Set<String> serviceIds, String nhsNumber) throws Exception {
         Connection conn = getConnection();
         try {
             String sql = "select ps.service_id, ps.patient_id, ps.forenames, ps.surname, ps.date_of_birth, li.local_id, li.local_id_system " +
@@ -273,11 +283,13 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         } catch (Exception e) {
             LOG.error("Error fetching patients for person [" + nhsNumber + "]", e);
             return null;
+        } finally {
+            conn.close();
         }
     }
 
     @Override
-    public Patient getPatient(String serviceId, String systemId, String patientId) {
+    public Patient getPatient(String serviceId, String systemId, String patientId) throws Exception {
         Patient patient = null;
         Connection conn = getConnection();
         try {
@@ -306,6 +318,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
             }
         } catch (Exception e) {
             LOG.error("Error fetching patient [" + serviceId+ ", " + systemId + ", " + patientId + "]", e);
+        } finally {
+            conn.close();
         }
 
         return patient;
@@ -327,48 +341,8 @@ public class PersonPatientDAL_Jdbc implements PersonPatientDAL, ContextShutdownH
         );
     }
 
-    private Connection getConnection() {
-        try {
-            return (_connection != null  && !_connection.isClosed() && _connection.isValid(5)) ? _connection : (_connection = createConnection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private Connection getConnection() throws Exception {
+        return ConnectionManager.getEdsConnection();
     }
 
-    private Connection createConnection() {
-        try {
-            JsonNode json = ConfigManager.getConfigurationAsJson("eds", "db_common");
-            String url = json.get("url").asText();
-            String user = json.get("username").asText();
-            String pass = json.get("password").asText();
-            String driver = json.get("class") == null ? null : json.get("class").asText();
-
-            if (driver != null && !driver.isEmpty())
-                Class.forName(driver);
-
-            Properties props = new Properties();
-
-            props.setProperty("user", user);
-            props.setProperty("password", pass);
-            props.setProperty("autoReconnect", "true");
-            props.setProperty("testOnBorrow", "true");
-            props.setProperty("validationQuery", "select 1");
-
-            return DriverManager.getConnection(url, props);
-        } catch (Exception e) {
-            LOG.error("Error getting connection", e);
-        }
-        return null;
-    }
-
-    @Override
-    public void contextShutdown() {
-        try{
-            if (_connection != null && !_connection.isClosed())
-                _connection.close();
-        } catch (Exception e) {
-            LOG.error("Error disconnecting", e);
-        }
-    }
 }

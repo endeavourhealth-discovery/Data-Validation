@@ -9,6 +9,7 @@ import org.endeavourhealth.core.database.dal.admin.models.ActiveItem;
 import org.endeavourhealth.core.database.dal.admin.models.Item;
 import org.endeavourhealth.core.database.dal.admin.models.Service;
 import org.endeavourhealth.core.database.dal.reference.models.Concept;
+import org.endeavourhealth.core.database.rdbms.ConnectionManager;
 import org.endeavourhealth.core.xml.QueryDocument.LibraryItem;
 import org.endeavourhealth.core.xml.QueryDocument.QueryDocument;
 import org.endeavourhealth.core.xml.QueryDocumentSerializer;
@@ -361,16 +362,11 @@ public class ReportDAL_Jdbc implements ReportDAL {
 		return ("workspace.rep_" + userUuid.toString().hashCode() + "_" + reportUuid.toString().hashCode()).replace('-','_');
 	}
 
-	private Connection getConnection() throws SQLException, IOException {
+	private Connection getConnection() throws Exception {
 		if (_conn == null) {
-			JsonNode config = ConfigManager.getConfigurationAsJson(this.enterpriseDb);
-			String url = config.get("url").asText();
-			String username = config.get("ui-username").asText();
-			String password = config.get("ui-password").asText();
-			_isPseudo = config.get("isPseudo").asBoolean(true);
-
-			_conn = DriverManager.getConnection(url, username, password);
+			_conn = ConnectionManager.getSubscriberNonPooledConnection(this.enterpriseDb);
 		}
 		return _conn;
 	}
+
 }

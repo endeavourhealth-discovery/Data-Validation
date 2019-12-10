@@ -177,7 +177,7 @@ public class PersonPatientLogicTest {
     }
 
     @Test
-    public void getPatient() {
+    public void getPatient() throws Exception {
         Patient patient = personPatient.getPatient(mockDal.organisationsPresent, mockDal.organisationMissing, null, null);
         Assert.assertNull(patient);
         Assert.assertFalse(mockDal.getPatientCalled);
