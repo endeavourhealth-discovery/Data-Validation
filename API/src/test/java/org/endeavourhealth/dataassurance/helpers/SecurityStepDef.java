@@ -27,7 +27,7 @@ public class SecurityStepDef implements En {
         });
 
         When("^the allowed organisations are checked$", () -> {
-            actual = new Security().getUserAllowedOrganisationIdsFromSecurityContext(securityContext, null);
+            actual = Security.getServiceIdsFromSecurityContext(securityContext);
         });
 
         Then("^The user allowed organisations will be (.*)$", (String expected) -> {

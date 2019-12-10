@@ -81,7 +81,7 @@ public class FHIREndpoint {
         SubscriberApiAudit audit = SubscriberApiAuditHelper.factory(userUuid, request, uriInfo);
 
         try {
-            Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId));
+            Bundle patients = new FHIRLogic().getPatientsByNHSNumber(nhsNumber, Security.getAllowedServiceUuids(projectId, sc));
             String result = ParserPool.getInstance().composeString("application/json", patients);
 
             Response r = Response
@@ -120,7 +120,7 @@ public class FHIREndpoint {
                 .setPatients((Bundle)ParserPool.getInstance().parse(json.get("patients").toString()))
                 .setResources(ObjectMapperPool.getInstance().readValue(json.get("resources").toString(), new TypeReference<List<String>>(){}));
 
-            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
+            Set<String> allowedOrgs = Security.getAllowedServiceUuids(projectId, sc);
 
             Bundle resources = new FHIRLogic().getPatientResources(allowedOrgs,fhirRequest);
 
@@ -157,7 +157,7 @@ public class FHIREndpoint {
 
         try {
 
-            Set<String> allowedOrgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
+            Set<String> allowedOrgs = Security.getAllowedServiceUuids(projectId, sc);
             Resource resource = new FHIRLogic().getAdminResource(allowedOrgs, reference);
             String result = resource == null ? null : ParserPool.getInstance().composeString("application/json", resource);
 

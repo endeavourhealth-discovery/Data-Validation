@@ -34,7 +34,7 @@ public class PersonEndpoint {
                         @ApiParam(value = "Mandatory Search terms") @HeaderParam("projectId") String projectId
     ) throws Exception {
         LOG.debug("Get Person Called");
-        Set<String> orgs = new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId);
+        Set<String> orgs = Security.getAllowedServiceUuids(projectId, sc);
 
         LOG.debug("Searching [" + searchTerms + "] in orgs [" + String.join(",", orgs)+ "]");
 
@@ -58,7 +58,7 @@ public class PersonEndpoint {
     ) throws Exception {
         LOG.debug("GetPatients Called");
 
-        List<Patient> patients = new PersonPatientLogic().getPatientsForPerson(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId), personId);
+        List<Patient> patients = new PersonPatientLogic().getPatientsForPerson(Security.getAllowedServiceUuids(projectId, sc), personId);
 
         return Response
             .ok()
@@ -81,7 +81,7 @@ public class PersonEndpoint {
     ) throws Exception {
         LOG.debug("GetPatient Called");
 
-        Patient patient = new PersonPatientLogic().getPatient(new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId), serviceId, systemId, patientId);
+        Patient patient = new PersonPatientLogic().getPatient(Security.getAllowedServiceUuids(projectId, sc), serviceId, systemId, patientId);
 
         return Response
             .ok()

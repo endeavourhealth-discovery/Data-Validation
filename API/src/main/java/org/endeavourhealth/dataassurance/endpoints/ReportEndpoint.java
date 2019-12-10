@@ -8,6 +8,7 @@ import org.endeavourhealth.core.database.dal.audit.models.AuditAction;
 import org.endeavourhealth.core.database.dal.audit.models.AuditModule;
 import org.endeavourhealth.core.xml.QueryDocument.LibraryItem;
 import org.endeavourhealth.coreui.endpoints.AbstractEndpoint;
+import org.endeavourhealth.dataassurance.helpers.Security;
 import org.endeavourhealth.dataassurance.logic.ReportLogic;
 import org.endeavourhealth.dataassurance.models.FhirConcept;
 import org.endeavourhealth.dataassurance.models.Practitioner;
@@ -47,7 +48,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
             "uuid", reportUuid,
             "params", reportParamsJson);
 
-        LibraryItem ret = new ReportLogic(getEnterpriseDb(sc)).runReport(reportUuid, reportParamsJson, userUuid);
+        LibraryItem ret = new ReportLogic(Security.getEnterpriseConfigName()).runReport(reportUuid, reportParamsJson, userUuid);
 
         return Response
             .ok(ret, MediaType.APPLICATION_JSON_TYPE)
@@ -69,7 +70,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
             userAudit.save(userUuid, getOrganisationUuidFromToken(sc), AuditAction.Run, "Export NHS Numbers",
                 "uuid", uuid);
 
-            String ret = new ReportLogic(getEnterpriseDb(sc)).getNhsExport(uuid, userUuid);
+            String ret = new ReportLogic(Security.getEnterpriseConfigName()).getNhsExport(uuid, userUuid);
 
             return Response
                 .ok(ret, MediaType.TEXT_PLAIN_TYPE)
@@ -90,7 +91,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
         UUID userUuid = SecurityUtils.getCurrentUserId(sc);
         userAudit.save(userUuid, getOrganisationUuidFromToken(sc), AuditAction.Run, "Export Data",
             "uuid", uuid);
-        String ret = new ReportLogic(getEnterpriseDb(sc)).getDataExport(uuid, userUuid);
+        String ret = new ReportLogic(Security.getEnterpriseConfigName()).getDataExport(uuid, userUuid);
 
         return Response
             .ok(ret, MediaType.TEXT_PLAIN_TYPE)
@@ -108,7 +109,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
     @Path("/encounterType")
     public Response getEncounterTypes(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Encounter Types");
-        List<FhirConcept> ret = new ReportLogic(getEnterpriseDb(sc)).getEncounterTypes();
+        List<FhirConcept> ret = new ReportLogic(Security.getEnterpriseConfigName()).getEncounterTypes();
 
         return Response
             .ok(ret, MediaType.APPLICATION_JSON_TYPE)
@@ -126,7 +127,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
     @Path("/referralTypes")
     public Response getReferralTypes(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Referral Types");
-        List<FhirConcept> ret = new ReportLogic(getEnterpriseDb(sc)).getReferralTypes();
+        List<FhirConcept> ret = new ReportLogic(Security.getEnterpriseConfigName()).getReferralTypes();
 
         return Response
             .ok(ret, MediaType.APPLICATION_JSON_TYPE)
@@ -144,7 +145,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
     @Path("/referralPriorities")
     public Response getReferralPriorities(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Referral Priorities");
-        List<FhirConcept> ret = new ReportLogic(getEnterpriseDb(sc)).getReferralPriorities();
+        List<FhirConcept> ret = new ReportLogic(Security.getEnterpriseConfigName()).getReferralPriorities();
 
         return Response
             .ok(ret, MediaType.APPLICATION_JSON_TYPE)
@@ -160,26 +161,11 @@ public final class ReportEndpoint extends AbstractEndpoint {
         @QueryParam("organisationUuid") UUID organisationUuid) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), organisationUuid, AuditAction.Load, "Practitioner Search");
 
-        List<Practitioner> ret = new ReportLogic(getEnterpriseDb(sc)).searchPractitioners(searchData, organisationUuid);
+        List<Practitioner> ret = new ReportLogic(Security.getEnterpriseConfigName()).searchPractitioners(searchData, organisationUuid);
 
         return Response
             .ok(ret, MediaType.APPLICATION_JSON_TYPE)
             .build();
     }
 
-    private String getEnterpriseDb(SecurityContext sc) {
-        try {
-            KeycloakPrincipal kp = (KeycloakPrincipal) sc.getUserPrincipal();
-            String entDb = (String) kp.getKeycloakSecurityContext().getToken().getOtherClaims().get("enterprise-db");
-            if (!Strings.isNullOrEmpty(entDb)) {
-                return entDb;
-            } else {
-                LOG.error("Failed to get enterprise DB for user, using default.");
-                return "enterprise-lite";
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to get enterprise DB for user", e);
-            return "enterprise-lite";
-        }
-    }
 }

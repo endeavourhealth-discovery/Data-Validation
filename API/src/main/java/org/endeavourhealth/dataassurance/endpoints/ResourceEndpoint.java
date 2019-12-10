@@ -59,7 +59,7 @@ public class ResourceEndpoint {
         ResourceRequest resourceRequest = ObjectMapperPool.getInstance().readValue(resourceRequestJson, ResourceRequest.class);
 
         List<PatientResource> resources = new ResourceLogic().getPatientResources(
-            new Security().getUserAllowedOrganisationIdsFromSecurityContext(sc, projectId),
+            Security.getAllowedServiceUuids(projectId, sc),
             resourceRequest.getPatients(),
             resourceRequest.getResourceTypes());
 
