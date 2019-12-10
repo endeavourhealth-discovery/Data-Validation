@@ -191,7 +191,9 @@ public class Security {
             }
 
             String endpoint = LibraryRepositoryHelper.getSubscriberEndpoint(serviceContract);
-            ret.add(endpoint);
+            if (!Strings.isNullOrEmpty(endpoint)) {
+                ret.add(endpoint);
+            }
         }
 
         if (ret.size() > 1) {
