@@ -23,7 +23,7 @@ public class TemplateEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    @Timed(absolute = true, name = "DataAssurance.TemplateEndpoint.Get")
+    @Timed(absolute = true, name = "TemplateEndpoint.Get")
     @ApiOperation(value = "Returns a the template for a given resource type")
     public Response getServiceName(@Context SecurityContext sc,
                                 @ApiParam(value = "Mandatory Resource Type") @QueryParam("resourceType") String resourceType

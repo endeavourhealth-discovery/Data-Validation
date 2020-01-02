@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.endpoints;
 
+import com.codahale.metrics.annotation.Timed;
 import org.endeavourhealth.core.database.dal.DalProvider;
 import org.endeavourhealth.core.database.dal.audit.UserAuditDalI;
 import org.endeavourhealth.core.database.dal.audit.models.AuditModule;
@@ -29,6 +30,7 @@ public final class EkbEndpoint extends AbstractEndpoint {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Timed(absolute = true, name = "EkbEndpoint.Search")
 	@Path("/search/sct")
 	public Response search(@Context SecurityContext sc, @QueryParam("term") String term, @QueryParam("maxResultsSize") int maxResultsSize, @QueryParam("start") int start) throws Exception {
 		super.setLogbackMarkers(sc);
@@ -48,6 +50,7 @@ public final class EkbEndpoint extends AbstractEndpoint {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Timed(absolute = true, name = "EkbEndpoint.Concepts")
 	@Path("/concepts/{code}")
 	public Response getConcept(@Context SecurityContext sc, @PathParam("code") String code) throws Exception {
 		super.setLogbackMarkers(sc);
@@ -67,6 +70,7 @@ public final class EkbEndpoint extends AbstractEndpoint {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Timed(absolute = true, name = "EkbEndpoint.ChildHierarchy")
 	@Path("/hierarchy/{code}/childHierarchy")
 	public Response getChildren(@Context SecurityContext sc, @PathParam("code") String code) throws Exception {
 		super.setLogbackMarkers(sc);
@@ -86,6 +90,7 @@ public final class EkbEndpoint extends AbstractEndpoint {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Timed(absolute = true, name = "EkbEndpoint.ParentHierarchy")
 	@Path("/hierarchy/{code}/parentHierarchy")
 	public Response getParents(@Context SecurityContext sc, @PathParam("code") String code) throws Exception {
 		super.setLogbackMarkers(sc);

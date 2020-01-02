@@ -37,7 +37,7 @@ public class FHIREndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Types")
+    @Timed(absolute = true, name = "FHIREndpoint.Types")
     @Path("/resourceType")
     @ApiOperation(value = "Returns a list of all resource types")
     public Response getResourceTypes(@Context HttpServletRequest request,
@@ -66,7 +66,7 @@ public class FHIREndpoint {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Patients")
+    @Timed(absolute = true, name = "FHIREndpoint.Patients")
     @Path("/patients")
     @ApiOperation(value = "Returns a list of patients base on NHS number")
     public Response getPatients(@Context HttpServletRequest request,
@@ -99,7 +99,7 @@ public class FHIREndpoint {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Get")
+    @Timed(absolute = true, name = "FHIREndpoint.Get")
     @Path("/resources")
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
     public Response getForPatient(@Context HttpServletRequest request,
@@ -142,7 +142,7 @@ public class FHIREndpoint {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.FHIREndpoint.Reference")
+    @Timed(absolute = true, name = "FHIREndpoint.Reference")
     @Path("/reference")
     @ApiOperation(value = "Returns the admin resource a given service and reference")
     public Response adminResource(@Context HttpServletRequest request,

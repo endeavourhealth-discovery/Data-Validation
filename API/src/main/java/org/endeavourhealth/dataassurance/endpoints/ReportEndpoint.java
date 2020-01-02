@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.endpoints;
 
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Strings;
 import org.endeavourhealth.common.security.SecurityUtils;
 import org.endeavourhealth.core.database.dal.DalProvider;
@@ -41,6 +42,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ReportEndpoint.RunReport")
     @Path("/runReport")
     public Response runReport(@Context SecurityContext sc, @QueryParam("reportUuid") UUID reportUuid, String reportParamsJson) throws Exception {
         UUID userUuid = SecurityUtils.getCurrentUserId(sc);
@@ -64,6 +66,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Timed(absolute = true, name = "ReportEndpoint.ExportNhsNumbers")
     @Path("/exportNHS")
     public Response exportNHSNumbers(@Context SecurityContext sc, @QueryParam("uuid") UUID uuid) throws Exception {
             UUID userUuid = SecurityUtils.getCurrentUserId(sc);
@@ -86,6 +89,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Timed(absolute = true, name = "ReportEndpoint.ExportData")
     @Path("/exportData")
     public Response exportData(@Context SecurityContext sc, @QueryParam("uuid") UUID uuid) throws Exception {
         UUID userUuid = SecurityUtils.getCurrentUserId(sc);
@@ -106,6 +110,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ReportEndpoint.GetEncounterTypes")
     @Path("/encounterType")
     public Response getEncounterTypes(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Encounter Types");
@@ -124,6 +129,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ReportEndpoint.GetReferralTypes")
     @Path("/referralTypes")
     public Response getReferralTypes(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Referral Types");
@@ -142,6 +148,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ReportEndpoint.GetReferralPriorities")
     @Path("/referralPriorities")
     public Response getReferralPriorities(@Context SecurityContext sc) throws Exception {
         userAudit.save(SecurityUtils.getCurrentUserId(sc), getOrganisationUuidFromToken(sc), AuditAction.Load, "Referral Priorities");
@@ -154,6 +161,7 @@ public final class ReportEndpoint extends AbstractEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ReportEndpoint.SearchPractitioner")
     @Path("/searchPractitioner")
     public Response searchPractitioner(
         @Context SecurityContext sc,

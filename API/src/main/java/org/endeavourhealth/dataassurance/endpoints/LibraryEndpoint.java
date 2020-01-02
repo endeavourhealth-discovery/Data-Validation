@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.endpoints;
 
+import com.codahale.metrics.annotation.Timed;
 import org.endeavourhealth.common.security.SecurityUtils;
 import org.endeavourhealth.core.database.dal.DalProvider;
 import org.endeavourhealth.core.database.dal.audit.UserAuditDalI;
@@ -24,6 +25,7 @@ public final class LibraryEndpoint extends AbstractEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "LibraryEndpoint.GetLibraryItem")
     @Path("/getLibraryItem")
     public Response getLibraryItem(@Context SecurityContext sc, @QueryParam("uuid") String uuidStr) throws Exception {
         super.setLogbackMarkers(sc);
@@ -45,6 +47,7 @@ public final class LibraryEndpoint extends AbstractEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "LibraryEndpoint.GetFolderContents")
     @Path("/getFolderContents")
     public Response getFolderContents(@Context SecurityContext sc, @QueryParam("folderUuid") String uuidStr) throws Exception {
         super.setLogbackMarkers(sc);

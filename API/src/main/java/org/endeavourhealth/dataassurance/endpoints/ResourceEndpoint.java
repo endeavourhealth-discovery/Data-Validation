@@ -30,7 +30,7 @@ public class ResourceEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.ResourceEndpoint.Types")
+    @Timed(absolute = true, name = "ResourceEndpoint.Types")
     @Path("/type")
     @ApiOperation(value = "Returns a list of all resource types")
     public Response get(@Context SecurityContext sc) throws Exception {
@@ -47,7 +47,7 @@ public class ResourceEndpoint {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.ResourceEndpoint.Get")
+    @Timed(absolute = true, name = "ResourceEndpoint.Get")
     @Path("/")
     @ApiOperation(value = "Returns a list of all resources of the given types for the given service patients")
     public Response getForPatient(@Context SecurityContext sc,
@@ -72,7 +72,7 @@ public class ResourceEndpoint {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.ResourceEndpoint.Reference")
+    @Timed(absolute = true, name = "ResourceEndpoint.Reference")
     @Path("/reference")
     @ApiOperation(value = "Returns the description for a given service, system and reference")
     public Response reference(@Context SecurityContext sc,
@@ -90,7 +90,7 @@ public class ResourceEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataAssurance.ResourceEndpoint.FieldMappings")
+    @Timed(absolute = true, name = "ResourceEndpoint.FieldMappings")
     @Path("/fieldMappings")
     @ApiOperation(value = "Returns the field mappings for a given resource")
     public Response fieldMappings(@Context SecurityContext sc,
@@ -113,7 +113,7 @@ public class ResourceEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name = "DataValidation.ResourceEndpoint.FieldMappingForField")
+    @Timed(absolute = true, name = "ResourceEndpoint.FieldMappingForField")
     @Path("/fieldMappingForField")
     @ApiOperation(value = "Returns the field mappings for a given resource and field")
     public Response fieldMappingForField(@Context SecurityContext sc,

@@ -23,7 +23,7 @@ public class AdminEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    @Timed(absolute = true, name = "DataAssurance.AdminEndpoint.Service.Name")
+    @Timed(absolute = true, name = "AdminEndpoint.Service.Name")
     @Path("/service/name")
     @ApiOperation(value = "Returns a the name for the given service id")
     public Response getServiceName(@Context SecurityContext sc,

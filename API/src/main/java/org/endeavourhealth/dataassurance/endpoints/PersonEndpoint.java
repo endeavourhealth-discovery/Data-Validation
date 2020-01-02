@@ -27,7 +27,7 @@ public class PersonEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name="DataAssurance.PersonEndpoint.Get")
+    @Timed(absolute = true, name="PersonEndpoint.Get")
     @ApiOperation(value = "Returns a list of matching persons")
     public Response get(@Context SecurityContext sc,
                         @ApiParam(value = "Mandatory Search terms") @QueryParam("searchTerms") String searchTerms,
@@ -49,7 +49,7 @@ public class PersonEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name="DataAssurance.PersonEndpoint.GetPatients")
+    @Timed(absolute = true, name="PersonEndpoint.GetPatients")
     @Path("/patients")
     @ApiOperation(value = "Returns a list patients for a given person")
     public Response getPatients(@Context SecurityContext sc,
@@ -70,7 +70,7 @@ public class PersonEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Timed(absolute = true, name="DataAssurance.PersonEndpoint.GetPatient")
+    @Timed(absolute = true, name="PersonEndpoint.GetPatient")
     @Path("/patient")
     @ApiOperation(value = "Returns a patient for given service/system/patient identifiers")
     public Response getPatients(@Context SecurityContext sc,
