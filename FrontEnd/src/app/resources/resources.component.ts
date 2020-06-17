@@ -477,7 +477,7 @@ export class ResourcesComponent implements OnInit {
     if (resource.resourceJson.extension) {
       for (let extension of resource.resourceJson.extension) {
         if (extension.url === 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-encounter-source')
-          description = '(' + extension.valueCoding.display + ') ';
+          description = '(' + extension.valueCodeableConcept.text + ') ';
       }
     }
 
