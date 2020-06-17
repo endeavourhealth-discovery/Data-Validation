@@ -320,14 +320,17 @@ export class ResourcesComponent implements OnInit {
     if (!resource || (!resource.resourceJson.extension && !resource.resourceJson.partOf))
       return null;
 
-    const extension = resource.resourceJson.extension.find((e) => e.url === PARENT_RESOURCE);
+    let extension = null;
+    if (resource.resourceJson.extension) {
+       extension = resource.resourceJson.extension.find((e) => e.url === PARENT_RESOURCE);
+    }
 
     if (!extension) {
-      const partOfRef = resource.resourceJson.partOf.reference;
+      const partOfRef = resource.resourceJson.partOf;
       if (!partOfRef)
         return null;
 
-      return partOfRef;
+      return partOfRef.reference;
     }
 
     return extension.valueReference.reference;
