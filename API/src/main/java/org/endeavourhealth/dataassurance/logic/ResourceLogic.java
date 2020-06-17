@@ -106,6 +106,7 @@ public class ResourceLogic {
             case AllergyIntolerance: return getAllergyDisplay((AllergyIntolerance)resource);
             case ReferralRequest: return getReferralRequest((ReferralRequest)resource);
             case ProcedureRequest: return getProcedureRequest((ProcedureRequest)resource);
+            case Encounter: return getEncounter((Encounter)resource);
         }
 
         return "Unknown type";
@@ -121,6 +122,29 @@ public class ResourceLogic {
             ret.add(resource.getGroup());
             return ret;
         }
+    }
+
+    private String getEncounter(Encounter resource) {
+
+        String display = "Encounter - ";
+        String encounterStartDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
+        String encounterEndDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
+        String date = " ("+encounterStartDate+" - "+encounterEndDate+")";
+
+        if (resource.hasExtension()) {
+
+            String SOURCE_EXT = "http://endeavourhealth.org/fhir/StructureDefinition/primarycare-encounter-source";
+            List<Extension> extensions = resource.getExtension();
+            for (Extension ext : extensions) {
+                if (ext.getUrl().equalsIgnoreCase(SOURCE_EXT)) {
+                    StringType value = (StringType) ext.getValue();
+                    display = display.concat(value.asStringValue());
+                    break;
+                }
+            }
+        }
+
+        return display.concat(date);
     }
 
     private String getProcedureRequest(ProcedureRequest resource) {

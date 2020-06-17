@@ -1,12 +1,8 @@
 package org.endeavourhealth.dataassurance.dal;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.endeavourhealth.common.cache.ObjectMapperPool;
 import org.endeavourhealth.core.database.dal.DalProvider;
-import org.endeavourhealth.core.database.dal.admin.models.Service;
 import org.endeavourhealth.core.database.dal.ehr.ResourceDalI;
 import org.endeavourhealth.core.database.dal.ehr.models.ResourceWrapper;
-import org.endeavourhealth.core.fhirStorage.JsonServiceInterfaceEndpoint;
 import org.endeavourhealth.dataassurance.models.ResourceType;
 import org.hl7.fhir.instance.model.Resource;
 import org.slf4j.Logger;
@@ -99,20 +95,20 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
             UUID.fromString(patientId));
     }
 
-    private static List<UUID> findSystemIds(Service service) throws Exception {
-        List<UUID> ret = new ArrayList<>();
-
-        List<JsonServiceInterfaceEndpoint> endpoints = null;
-        try {
-            endpoints = ObjectMapperPool.getInstance().readValue(service.getEndpoints(), new TypeReference<List<JsonServiceInterfaceEndpoint>>() {});
-            for (JsonServiceInterfaceEndpoint endpoint: endpoints) {
-                UUID endpointSystemId = endpoint.getSystemUuid();
-                ret.add(endpointSystemId);
-            }
-        } catch (Exception e) {
-            throw new Exception("Failed to get system endpoints from service " + service.getId());
-        }
-
-        return ret;
-    }
+//    private static List<UUID> findSystemIds(Service service) throws Exception {
+//        List<UUID> ret = new ArrayList<>();
+//
+//        List<JsonServiceInterfaceEndpoint> endpoints = null;
+//        try {
+//            endpoints = ObjectMapperPool.getInstance().readValue(service.getEndpoints(), new TypeReference<List<JsonServiceInterfaceEndpoint>>() {});
+//            for (JsonServiceInterfaceEndpoint endpoint: endpoints) {
+//                UUID endpointSystemId = endpoint.getSystemUuid();
+//                ret.add(endpointSystemId);
+//            }
+//        } catch (Exception e) {
+//            throw new Exception("Failed to get system endpoints from service " + service.getId());
+//        }
+//
+//        return ret;
+//    }
 }

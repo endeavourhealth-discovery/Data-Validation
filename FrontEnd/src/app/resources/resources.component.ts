@@ -317,13 +317,18 @@ export class ResourcesComponent implements OnInit {
   private getParentResourceExtension(resource: any): string {
     const PARENT_RESOURCE = 'http://endeavourhealth.org/fhir/StructureDefinition/parent-resource';
 
-    if (!resource || !resource.resourceJson.extension)
+    if (!resource || (!resource.resourceJson.extension && !resource.resourceJson.partOf))
       return null;
 
     const extension = resource.resourceJson.extension.find((e) => e.url === PARENT_RESOURCE);
 
-    if (!extension)
-      return null;
+    if (!extension) {
+      const partOfRef = resource.resourceJson.partOf.reference;
+      if (!partOfRef)
+        return null;
+
+      return partOfRef;
+    }
 
     return extension.valueReference.reference;
   }
@@ -400,7 +405,7 @@ export class ResourcesComponent implements OnInit {
       case 'ProcedureRequest':
         return this.getCodeTerm(resource.resourceJson.code);
       case 'Encounter':
-        return this.getCodeTerm((resource.resourceJson.reason && resource.resourceJson.reason.length > 0) ? resource.resourceJson.reason[0] : null);
+        return this.getEncounterDescription(resource);   // this.getCodeTerm((resource.resourceJson.reason && resource.resourceJson.reason.length > 0) ? resource.resourceJson.reason[0] : null);
       case 'EpisodeOfCare':
         return this.getCodeTerm(resource.resourceJson.type);
       case 'FamilyMemberHistory':
@@ -459,6 +464,21 @@ export class ResourcesComponent implements OnInit {
     }
 
     description += this.getCodeTerm((resource.resourceJson.medicationCodeableConcept) ? resource.resourceJson.medicationCodeableConcept : null);
+    return description;
+  }
+
+  private getEncounterDescription(resource: ServicePatientResource) {
+    let description = '';
+
+    //if the Encounter source is present, use that as the description prefix.
+    if (resource.resourceJson.extension) {
+      for (let extension of resource.resourceJson.extension) {
+        if (extension.url === 'http://endeavourhealth.org/fhir/StructureDefinition/primarycare-encounter-source')
+          description = '(' + extension.valueCoding.display + ') ';
+      }
+    }
+
+    description += this.getCodeTerm((resource.resourceJson.reason && resource.resourceJson.reason.length > 0) ? resource.resourceJson.reason[0] : null);
     return description;
   }
 
