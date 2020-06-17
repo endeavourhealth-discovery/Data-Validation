@@ -137,13 +137,12 @@ public class ResourceLogic {
             List<Extension> extensions = resource.getExtension();
             for (Extension ext : extensions) {
                 if (ext.getUrl().equalsIgnoreCase(SOURCE_EXT)) {
-                    StringType value = (StringType) ext.getValue();
-                    display = display.concat(value.asStringValue());
+                    CodeableConcept value = (CodeableConcept) ext.getValue();
+                    display = display.concat(value.getText());
                     break;
                 }
             }
         }
-
         return display.concat(date);
     }
 
