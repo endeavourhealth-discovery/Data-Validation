@@ -127,9 +127,19 @@ public class ResourceLogic {
     private String getEncounter(Encounter resource) {
 
         String display = "Encounter - ";
-        String encounterStartDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
-        String encounterEndDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getEnd());
-        String date = " ("+encounterStartDate+" - "+encounterEndDate+")";
+
+        String dateDisplay = "";
+        if (resource.hasPeriod()) {
+            String encounterStartDate = "";
+            String encounterEndDate = "";
+            if (resource.getPeriod().hasStart()) {
+                encounterStartDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
+            }
+            if (resource.getPeriod().hasEnd()) {
+                encounterEndDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getEnd());
+            }
+            dateDisplay = " (" + encounterStartDate + " - " + encounterEndDate + ")";
+        }
 
         if (resource.hasExtension()) {
 
@@ -143,7 +153,7 @@ public class ResourceLogic {
                 }
             }
         }
-        return display.concat(date);
+        return display.concat(dateDisplay);
     }
 
     private String getProcedureRequest(ProcedureRequest resource) {
