@@ -128,7 +128,7 @@ public class ResourceLogic {
 
         String display = "Encounter - ";
         String encounterStartDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
-        String encounterEndDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getStart());
+        String encounterEndDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(resource.getPeriod().getEnd());
         String date = " ("+encounterStartDate+" - "+encounterEndDate+")";
 
         if (resource.hasExtension()) {

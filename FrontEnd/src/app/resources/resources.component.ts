@@ -484,7 +484,10 @@ export class ResourcesComponent implements OnInit {
       }
     }
 
-    description += this.getCodeTerm((resource.resourceJson.reason && resource.resourceJson.reason.length > 0) ? resource.resourceJson.reason[0] : null);
+    let codeTerm = this.getCodeTerm((resource.resourceJson.reason && resource.resourceJson.reason.length > 0) ? resource.resourceJson.reason[0] : null);
+    if (codeTerm)
+      description += codeTerm;
+
     return description;
   }
 
