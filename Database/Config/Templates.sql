@@ -632,9 +632,6 @@ values (
           <div class="form-control looks-disabled">
             <div class="scrollbox-100">
               <div *ngFor="let containedItem of resource.resourceJson.contained">
-				<div *ngIf="containedItem.entry==null">
-					<div>No Items</div>
-                </div>
 				<div *ngFor="let linkedListResource of containedItem.entry">
 					<div>{{linkedListResource.item.display}}</div>
 				</div>
@@ -645,9 +642,6 @@ values (
           <div class="form-control looks-disabled">
             <div class="scrollbox-100">
               <div *ngFor="let containedItem of resource.resourceJson.contained">
-                <div *ngIf="containedItem.parameter==null">
-					<div>No Items</div>
-                </div>
 	            <div *ngFor="let linkedParameterResource of containedItem.parameter">
 					<div><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueString}} </div>
 				</div>
