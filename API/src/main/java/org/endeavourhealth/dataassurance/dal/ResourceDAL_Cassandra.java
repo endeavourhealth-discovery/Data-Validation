@@ -68,6 +68,17 @@ public class ResourceDAL_Cassandra implements ResourceDAL {
     }
 
     @Override
+    public ResourceWrapper getWrappedResource(org.hl7.fhir.instance.model.ResourceType resourceType, String resourceId, String serviceId) {
+        ResourceDalI resourceRepository = DalProvider.factoryResourceDal();
+        try {
+            return resourceRepository.getCurrentVersion(UUID.fromString(serviceId), resourceType.toString(), UUID.fromString(resourceId));
+        } catch (Exception e) {
+            LOG.error("Error fetching wrapped resource [" + resourceType.toString() + "|" + resourceId + "|" + serviceId +"]", e);
+            return null;
+        }
+    }
+
+    @Override
     public Resource getResource(org.hl7.fhir.instance.model.ResourceType resourceType, String resourceId, String serviceId) {
         ResourceDalI resourceRepository = DalProvider.factoryResourceDal();
         try {

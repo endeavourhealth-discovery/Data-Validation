@@ -32,6 +32,11 @@ public class Mock_ResourceDAL implements ResourceDAL {
     }
 
     @Override
+    public ResourceWrapper getWrappedResource(org.hl7.fhir.instance.model.ResourceType resourceType, String resourceId, String serviceId) {
+        return null;
+    }
+
+    @Override
     public Resource getResource(org.hl7.fhir.instance.model.ResourceType resourceType, String resourceId, String serviceId) {
         return resource;
     }

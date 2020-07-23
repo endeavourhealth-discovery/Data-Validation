@@ -70,11 +70,21 @@ export class ResourcesService {
   }
 
   public getTemplate(resourceType: string): Observable<string> {
+    console.log('Getting resource template [' + resourceType + ']');
     const params: URLSearchParams = new URLSearchParams();
     params.append('resourceType', resourceType);
 
     return this.http.get('api/template', {search: params, withCredentials: true})
       .map((response) => response.text());
+  }
+
+  public getResource(serviceId: string, reference: string): Observable<any> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.append('serviceId', serviceId);
+    params.append('reference', reference);
+
+    return this.http.get('api/resource/reference/resource', {search: params, withCredentials: true})
+      .map((response) => response.json());
   }
 
   public getReferenceDescription(serviceId: string, reference: string): Observable<string> {

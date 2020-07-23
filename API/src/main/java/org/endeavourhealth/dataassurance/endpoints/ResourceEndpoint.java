@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.endpoints;
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.astefanutti.metrics.aspectj.Metrics;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -81,9 +82,27 @@ public class ResourceEndpoint {
         LOG.debug("Get Reference Called");
 
         String referenceDescription = new ResourceLogic().getReferenceDescription(serviceId, reference);
-         LOG.debug("Reference:" + referenceDescription + "for ref:" + reference + " service:" + serviceId);
+         LOG.debug("Resource:" + referenceDescription + "for ref:" + reference + " service:" + serviceId);
         return Response
             .ok(referenceDescription)
+            .build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Timed(absolute = true, name = "ResourceEndpoint.ReferenceResource")
+    @Path("/reference/resource")
+    @ApiOperation(value = "Returns the resource for a given service and reference")
+    public Response referenceResource(@Context SecurityContext sc,
+                              @ApiParam(value = "Mandatory ServiceId") @QueryParam("serviceId") String serviceId,
+                              @ApiParam(value = "Mandatory reference") @QueryParam("reference") String reference) throws Exception {
+        LOG.debug("Get ReferenceResource Called");
+
+        JsonNode resource = new ResourceLogic().getResource(serviceId, reference);
+        LOG.debug("Resource:" + resource + "for ref:" + reference + " service:" + serviceId);
+        return Response
+            .ok(resource)
             .build();
     }
 

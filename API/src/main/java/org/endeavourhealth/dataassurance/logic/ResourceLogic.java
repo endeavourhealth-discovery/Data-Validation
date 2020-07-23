@@ -1,5 +1,6 @@
 package org.endeavourhealth.dataassurance.logic;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
 import org.endeavourhealth.common.cache.ObjectMapperPool;
 import org.endeavourhealth.core.database.dal.DalProvider;
@@ -16,6 +17,7 @@ import org.hl7.fhir.instance.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -67,6 +69,32 @@ public class ResourceLogic {
             }
         }
         return resourceObjects;
+    }
+
+
+    public JsonNode getResource(String serviceId, String reference) throws IOException {
+        if (reference == null || reference.isEmpty())
+            return null;
+
+        int slashPos = reference.indexOf('/');
+        if (slashPos == -1)
+            return null;
+
+        String resourceTypeStr = reference.substring(0, slashPos);
+        org.hl7.fhir.instance.model.ResourceType resourceType = org.hl7.fhir.instance.model.ResourceType.valueOf(resourceTypeStr);
+        String resourceId = reference.substring(slashPos + 1);
+
+        try {
+            UUID.fromString(resourceId);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+
+        ResourceWrapper wrappedResource = dal.getWrappedResource(resourceType, resourceId, serviceId);
+        if (wrappedResource == null)
+            return null;
+        else
+            return ObjectMapperPool.getInstance().readTree(wrappedResource.getResourceData());
     }
 
     public String getReferenceDescription(String serviceId, String reference) {
@@ -430,4 +458,5 @@ public class ResourceLogic {
             return new ArrayList<>();
         }
     }
+
 }

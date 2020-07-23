@@ -8,7 +8,7 @@
   <ngb-tabset>
     <ngb-tab title="Clinical">
       <ng-template ngbTabContent>
-        <app-template-view [resource]="resource"></app-template-view>
+        <app-template-view [resource]="resource" [title]="title"></app-template-view>
       </ng-template>
     </ngb-tab>
     <ngb-tab title="Technical">
@@ -31,6 +31,6 @@
   </ngb-tabset>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-info" (click)="activeModal.dismiss()" name="close">Close</button>
+  <button type="button" class="btn btn-info" (click)="activeModal.close()" name="close">Close</button>
 </div>
 

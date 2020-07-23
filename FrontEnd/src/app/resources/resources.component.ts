@@ -523,7 +523,11 @@ export class ResourcesComponent implements OnInit {
   }
 
   private viewResource(resource: ServicePatientResource) {
-    ViewerComponent.open(this.modal, this.getResourceName(resource), resource);
+    ViewerComponent.open(this.modal, this.getResourceName(resource), resource)
+      .result.then(
+      (ok) => console.log('OK'),
+      (error) => console.log(error)
+    );
   }
 
   private sortResources(array) {
