@@ -30,7 +30,7 @@ values (
 			    </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
-         <div *ngFor="let name of getActiveOnly(resource.resourceJson.name)"> 
+         <div *ngFor="let name of getActiveOnly(resource.resourceJson.name)">
            <div class="form-group">
              <label for="CuiName">Name</label>
              <input id="CuiName" class="form-control" type="text" disabled value="{{name | cuiNamePipe }} ({{ name.use }})">
@@ -98,8 +98,20 @@ values (
          <label for="DOD">Date of death</label>
          <input id="DOD" class="form-control" type="text" disabled value="{{resource.resourceJson.deceasedDateTime | date:''dd/MM/y''}}">
        </div>
+       <div class="form-group" *ngIf="resource.resourceJson.contained!=null">
+          <label for="Additional">Additional extensions</label>
+          <div class="form-control looks-disabled">
+            <div class="scrollbox-100">
+              <div *ngFor="let containedItem of resource.resourceJson.contained">
+	            <div *ngFor="let linkedParameterResource of containedItem.parameter">
+					<div><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueCodeableConcept.coding[0].code}} </div>
+				</div>
+              </div>
+            </div>
+          </div>
+       </div>
        <div class="form-group" *ngIf="resource.resourceJson.contact">
-        <div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">         
+        <div *ngFor="let contact of getActiveOnly(resource.resourceJson.contact)">
           <h5>Contact Information</h5>
          <div *ngFor="let relationship of contact.relationship" class="form-group">
            <label for="relationshipType">Relationship Type</label>
@@ -138,15 +150,15 @@ values (
                <div>{{contact.address.district}}</div>
                <div>{{contact.address.postalCode}}</div>
              </div>
-           </div>  
+           </div>
          </div>
          <div *ngFor="let telecom of contact.telecom">
           <div class="form-group">
             <label for="ContactTelecom">{{telecom.system | titlecase}} ({{telecom.use}})</label>
             <input id="ContactTelecom" class="form-control" type="text" disabled value="{{telecom.value}}">
           </div>
-         </div>         
-         </div>  
+         </div>
+         </div>
         </div>
      </div>
    </div>
@@ -638,12 +650,12 @@ values (
               </div>
             </div>
           </div>
-          <label for="Linked">Additional extensions</label>
+          <label for="Additional">Additional extensions</label>
           <div class="form-control looks-disabled">
             <div class="scrollbox-100">
               <div *ngFor="let containedItem of resource.resourceJson.contained">
 	            <div *ngFor="let linkedParameterResource of containedItem.parameter">
-					<div><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueString}} </div>
+					<div><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueCodeableConcept.coding[0].code}} </div>
 				</div>
               </div>
             </div>
@@ -860,7 +872,7 @@ values (
       <div class="form-group">
         <label for="Status">Status</label>
         <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
-      </div>		
+      </div>
     </div>
   </div>
 </form>
