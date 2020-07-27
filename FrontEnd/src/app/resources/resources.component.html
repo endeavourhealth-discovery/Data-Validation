@@ -85,6 +85,18 @@
                     <div class="col-md-12">
                       <h2>Clinical resources
                         <small>({{clinicalResourceList?.length}})</small>
+                        <div class="form-group col-md-2" style="display: inline-block">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Filter" aria-describedby="searchTerm" name="searchData"
+                                   [(ngModel)]="clinicalFilter" (keyup)="$event.keyCode == 13 ? filter() : null">
+                            <div class="input-group-append" (click)="clear()" style="cursor: pointer" id="clearButton">
+                              <i class="fa fa-times input-group-text" id="clear" aria-hidden="true"></i>
+                            </div>
+                            <div class="input-group-append" (click)="filter()" style="cursor: pointer" id="searchButton">
+                              <i class="fa fa-search input-group-text" id="filter" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </div>
                       </h2>
                       <loadingIndicator [done]="clinicalResourceList">
                         <div class="scroll-box-400">

@@ -31,6 +31,9 @@ export class ResourcesComponent implements OnInit {
 
   protected patientResourceList: ServicePatientResource[] = [];
   protected clinicalResourceList: ServicePatientResource[] = [];
+  protected fullClinicalResourceList: ServicePatientResource[] = [];
+
+  protected clinicalFilter: string;
 
   protected highlight: ServicePatientResource;
   protected lastHighlight: ServicePatientResource;
@@ -79,6 +82,8 @@ export class ResourcesComponent implements OnInit {
     const vm = this;
     this.patientResourceList = [];
     this.clinicalResourceList = [];
+    this.fullClinicalResourceList = [];
+    this.clinicalFilter = '';
     this.patients = [];
     this.patientFilter = [];
 
@@ -194,6 +199,8 @@ export class ResourcesComponent implements OnInit {
 
     this.patientResourceList = null;
     this.clinicalResourceList = null;
+    this.fullClinicalResourceList = null;
+    this.clinicalFilter = '';
 
     const vm = this;
     vm.resourceService.getResources(this.patientFilter, ['Patient'])
@@ -720,4 +727,23 @@ export class ResourcesComponent implements OnInit {
 
     return false;
   }
+
+  /** Filtering **/
+  filter() {
+    if (this.fullClinicalResourceList == null)
+      this.fullClinicalResourceList = this.clinicalResourceList;
+
+    this.clinicalResourceList = this.fullClinicalResourceList.filter(
+      (r) => JSON.stringify(r.resourceJson).indexOf(this.clinicalFilter) > 0
+    );
+  }
+
+  clear() {
+    this.clinicalFilter = '';
+    if (this.fullClinicalResourceList != null) {
+      this.clinicalResourceList = this.fullClinicalResourceList;
+      this.fullClinicalResourceList = null;
+    }
+  }
+
 }
