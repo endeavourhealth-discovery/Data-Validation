@@ -1053,11 +1053,17 @@ values (
       <div class="col-md-6">
         <div class="form-group">
           <label for="StartDate">Start Date</label>
-          <input id="StartDate" class="form-control" type="text" disabled value="{{resource.resourceJson.planningHorizon.start | date:''dd/MM/y HH:mm:ss''}}">
+          <input id="StartDate" class="form-control" type="text" disabled value="{{resource.resourceJson.planningHorizon?.start | date:''dd/MM/y HH:mm:ss''}}">
         </div>
         <div class="form-group">
           <label for="EndDate">End Date</label>
-          <input id="EndDate" class="form-control" type="text" disabled value="{{resource.resourceJson.planningHorizon.end | date:''dd/MM/y HH:mm:ss''}}">
+          <input id="EndDate" class="form-control" type="text" disabled value="{{resource.resourceJson.planningHorizon?.end | date:''dd/MM/y HH:mm:ss''}}">
+        </div>
+        <div class="form-group" *ngFor="let item of resource.resourceJson.extension">
+          <label>{{item.url.replace("http://endeavourhealth.org/fhir/StructureDefinition/", "")}}</label>
+          <input *ngIf="item.valueString" class="form-control" type="text" disabled value="{{item.valueString}}">
+          <input *ngIf="item.valueDateTime" class="form-control" type="text" disabled value="{{item.valueDateTime | date:''dd/MM/y HH:mm:ss''}}">
+          <input *ngIf="item.valueReference" class="form-control" type="text" disabled value="{{item.valueReference.display}}">
         </div>
       </div>
     </div>
