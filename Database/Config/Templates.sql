@@ -655,7 +655,8 @@ values (
             <div class="scrollbox-100">
               <div *ngFor="let containedItem of resource.resourceJson.contained">
 	            <div *ngFor="let linkedParameterResource of containedItem.parameter">
-					<div><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueCodeableConcept.coding[0].code}} </div>
+					<div *ngIf="linkedParameterResource.valueCodeableConcept!=null"><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueCodeableConcept.coding[0].code}} </div>
+                    <div *ngIf="linkedParameterResource.valueString!=null"><i>Property:</i> {{linkedParameterResource.name}}  <i>Value:</i> {{linkedParameterResource.valueString}} </div>
 				</div>
               </div>
             </div>
