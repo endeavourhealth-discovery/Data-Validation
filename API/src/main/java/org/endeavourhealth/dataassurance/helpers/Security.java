@@ -4,14 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
 import org.endeavourhealth.common.config.ConfigManager;
 import org.endeavourhealth.common.security.SecurityUtils;
-import org.endeavourhealth.common.utility.ExpiringCache;
 import org.endeavourhealth.core.database.dal.DalProvider;
-import org.endeavourhealth.core.database.dal.admin.LibraryRepositoryHelper;
 import org.endeavourhealth.core.database.dal.admin.ServiceDalI;
 import org.endeavourhealth.core.database.dal.admin.models.Service;
-import org.endeavourhealth.core.xml.QueryDocument.*;
+import org.endeavourhealth.core.database.dal.usermanager.caching.ProjectCache;
+import org.endeavourhealth.core.database.rdbms.datasharingmanager.models.ProjectEntity;
 import org.endeavourhealth.coreui.endpoints.UserManagerEndpoint;
-import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +51,7 @@ public class Security {
             }
         }
 
-        Set<String> protocolServiceIds = getServiceIdsFromProtocol();
+        Set<String> protocolServiceIds = getServiceIdsFromConfiguredProject();
         Set<String> scServiceIds = getServiceIdsFromSecurityContext(securityContext);
 
         //if we have a list of protocol service IDs, then intersect with the security context list
@@ -67,34 +65,22 @@ public class Security {
         return scServiceIds;
     }
 
-    private static Set<String> getServiceIdsFromProtocol() throws Exception {
+    /**
+     * we may have a config record giving an explicit DSM project UUID, so get the publishers to that
+     */
+    private static Set<String> getServiceIdsFromConfiguredProject() throws Exception {
 
-        JsonNode json = ConfigManager.getConfigurationAsJson("restrict-to-protocol");
+        JsonNode json = ConfigManager.getConfigurationAsJson("restrict-to-project");
         if (json == null) {
             return null;
         }
 
-        String protocolIdStr = json.get("uuid").asText();
-        UUID protocolId = UUID.fromString(protocolIdStr);
-        LibraryItem libraryItem = LibraryRepositoryHelper.getLibraryItemUsingCache(protocolId);
-        if (libraryItem == null) {
-            throw new Exception("Failed to find protocol for config JSON " + json);
+        String projectIdStr = json.get("uuid").asText();
+        if (Strings.isNullOrEmpty(projectIdStr)) {
+            throw new Exception("No DSM project UUID found in [restrict-to-protocol] config record");
         }
 
-        Set<String> ret = new HashSet<>();
-
-        Protocol protocol = libraryItem.getProtocol();
-        for (ServiceContract serviceContract: protocol.getServiceContract()) {
-            if (serviceContract.getType() != ServiceContractType.PUBLISHER
-                    || serviceContract.getActive() != ServiceContractActive.TRUE) {
-                continue;
-            }
-
-            String serviceId = serviceContract.getService().getUuid();
-            ret.add(serviceId);
-        }
-
-        return ret;
+        return getPublishingOrganisationIdsFromProject(projectIdStr);
     }
 
     private static UUID findServiceIdForKeyCloakValue(String keyCloakOrgId) {
@@ -165,45 +151,25 @@ public class Security {
 
     /**
      * returns the config name to use for the "enterprise-lite" DB to use for the Reports section of the Data Assurance
-     * app
+     * app. Uses a config record containing a DSM project UUID which has a subscriber config name.
      */
     public static String getEnterpriseConfigName() throws Exception {
+
         JsonNode json = ConfigManager.getConfigurationAsJson("restrict-to-protocol");
         if (json == null) {
             throw new Exception("No config record found to specify database");
         }
 
-        String protocolIdStr = json.get("uuid").asText();
-        UUID protocolId = UUID.fromString(protocolIdStr);
-        LibraryItem libraryItem = LibraryRepositoryHelper.getLibraryItemUsingCache(protocolId);
-        if (libraryItem == null) {
-            throw new Exception("Failed to find protocol for config JSON " + json);
+        String projectIdStr = json.get("uuid").asText();
+        if (Strings.isNullOrEmpty(projectIdStr)) {
+            throw new Exception("No DSM project UUID found in [restrict-to-protocol] config record");
         }
 
-        List<String> ret = new ArrayList<>();
-
-        Protocol protocol = libraryItem.getProtocol();
-        for (ServiceContract serviceContract: protocol.getServiceContract()) {
-
-            if (serviceContract.getType() != ServiceContractType.SUBSCRIBER
-                    || serviceContract.getActive() != ServiceContractActive.TRUE) {
-                continue;
-            }
-
-            String endpoint = LibraryRepositoryHelper.getSubscriberEndpoint(serviceContract);
-            if (!Strings.isNullOrEmpty(endpoint)) {
-                ret.add(endpoint);
-            }
+        ProjectEntity project = ProjectCache.getProjectDetails(projectIdStr);
+        if (project == null) {
+            throw new Exception("Failed to retrieve DSM project " + projectIdStr);
         }
 
-        if (ret.size() > 1) {
-            throw new Exception("More than one potential config record found " + ret);
-
-        } else if (ret.isEmpty()) {
-            throw new Exception("No potential subscriber/enterprise DB found");
-
-        } else {
-            return ret.get(0);
-        }
+        return project.getConfigName();
     }
 }
