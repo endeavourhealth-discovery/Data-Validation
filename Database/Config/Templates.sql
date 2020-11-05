@@ -942,12 +942,18 @@ values (
             <label for="Status">Status</label>
             <input id="Status" class="form-control" type="text" disabled value="{{resource.resourceJson.status}}">
         </div>
-        <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
-         <div class="form-group" *ngIf="identifier.system==''http://oneadvanced.com/identifier/adastra-case-no''" >
-           <label for="CaseNo">Case No</label>
-           <input id="CaseNo" class="form-control" type="text" disabled value="{{identifier.value}}">
-         </div>
-       </div>
+        <div *ngIf="resource.resourceJson.category" class="form-group">
+            <label for="Category">Category</label>
+            <input id="Category" class="form-control" type="text" disabled value="{{resource.resourceJson.category.text}}">
+        </div>
+        <div *ngIf="resource.resourceJson.identifier">
+            <div *ngFor="let identifier of getActiveOnly(resource.resourceJson.identifier)">
+                <div class="form-group" *ngIf="identifier.system==''http://oneadvanced.com/identifier/adastra-case-no''" >
+                    <label for="CaseNo">Case No</label>
+                    <input id="CaseNo" class="form-control" type="text" disabled value="{{identifier.value}}">
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </form>
