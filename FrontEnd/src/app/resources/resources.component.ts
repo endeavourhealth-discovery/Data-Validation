@@ -241,7 +241,7 @@ export class ResourcesComponent implements OnInit {
       case 'AllergyIntolerance':
         return resource.recordedDate = DateHelper.parse(resource.resourceJson.recordedDate);
       case 'Appointment':
-        return resource.recordedDate = DateHelper.parse(resource.resourceJson.start);
+        return resource.recordedDate = this.getAppointmentBookingDateExtension(resource.resourceJson);
       case 'DiagnosticOrder':
         return resource.recordedDate = this.getRecordedDateExtension(resource.resourceJson);
       case 'DiagnosticReport':
@@ -285,6 +285,20 @@ export class ResourcesComponent implements OnInit {
       return DateHelper.NOT_KNOWN;
 
     const extension = resource.extension.find((e) => e.url === RECORDED_DATE);
+
+    if (!extension)
+      return DateHelper.NOT_KNOWN;
+
+    return DateHelper.parse(extension.valueDateTime);
+  }
+
+  private getAppointmentBookingDateExtension(resource: any): Date {
+    const BOOKING_DATE = 'http://endeavourhealth.org/fhir/StructureDefinition/appointment-booking-date-extension';
+
+    if (!resource || !resource.extension)
+      return DateHelper.NOT_KNOWN;
+
+    const extension = resource.extension.find((e) => e.url === BOOKING_DATE);
 
     if (!extension)
       return DateHelper.NOT_KNOWN;
@@ -354,7 +368,7 @@ export class ResourcesComponent implements OnInit {
       case 'AllergyIntolerance':
         return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onset);
       case 'Appointment':
-        return resource.recordedDate = DateHelper.parse(resource.resourceJson.end);
+        return resource.effectiveDate = DateHelper.parse(resource.resourceJson.start);
       case 'Condition':
         return resource.effectiveDate = DateHelper.parse(resource.resourceJson.onsetDateTime);
       case 'DiagnosticOrder':
