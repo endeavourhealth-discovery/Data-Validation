@@ -27,6 +27,14 @@ values (
 					    <label for="NHS">Local patient number</label>
 					    <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
 				    </div>
+					<div class="form-group" *ngIf="identifier.system==''''http://endeavourhealth.org/fhir/id/v2-local-patient-id/homerton-cnn''''" >
+					    <label for="CNN">CNN number</label>
+					    <input id="CNN" class="form-control" type="text" disabled value="{{identifier.value}}">
+				    </div>
+					<div class="form-group" *ngIf="identifier.system==''''http://endeavourhealth.org/fhir/id/v2-local-patient-id/royal-free-mrn''''" >
+					    <label for="MRN">MRN number</label>
+					    <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}}">
+				    </div>
 			    </div>
        </div>
        <div class="form-group" *ngIf="resource.resourceJson.name">
@@ -71,7 +79,8 @@ values (
          </div>
          <div class="form-group" *ngIf="extension.url==''http://endeavourhealth.org/fhir/StructureDefinition/primarycare-religion-category-extension''" >
            <label for="Religion">Religion</label>
-           <input id="Religion" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
+           <input id="Religion" *ngIf="extension.valueCodeableConcept.coding" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.coding[0].display}}">
+           <input id="Religion" *ngIf="!extension.valueCodeableConcept.coding" class="form-control" type="text" disabled value="{{extension.valueCodeableConcept.text}}">
          </div>
        </div>
        <div *ngFor="let careProvider of resource.resourceJson.careProvider">
