@@ -27,11 +27,11 @@ values (
 					    <label for="NHS">Local patient number</label>
 					    <input id="NHS" class="form-control" type="text" disabled value="{{identifier.value}}">
 				    </div>
-					<div class="form-group" *ngIf="identifier.system==''''http://endeavourhealth.org/fhir/id/v2-local-patient-id/homerton-cnn''''" >
+					<div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/homerton-cnn''" >
 					    <label for="CNN">CNN number</label>
 					    <input id="CNN" class="form-control" type="text" disabled value="{{identifier.value}}">
 				    </div>
-					<div class="form-group" *ngIf="identifier.system==''''http://endeavourhealth.org/fhir/id/v2-local-patient-id/royal-free-mrn''''" >
+					<div class="form-group" *ngIf="identifier.system==''http://endeavourhealth.org/fhir/id/v2-local-patient-id/royal-free-mrn''" >
 					    <label for="MRN">MRN number</label>
 					    <input id="MRN" class="form-control" type="text" disabled value="{{identifier.value}}">
 				    </div>
